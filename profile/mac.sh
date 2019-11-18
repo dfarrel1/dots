@@ -1,3 +1,4 @@
+alias src="source ~/.bashrc"
 #bash-completion
 [[ -f "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
 
