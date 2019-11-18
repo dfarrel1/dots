@@ -1,0 +1,18 @@
+name, type, desc, file, note
+clearcont, alias, 'docker rm $(docker ps -a -q)'             , docker.sh, <-> 
+clearimages, alias, 'docker rmi $(docker images -q)'           , docker.sh, <-> 
+cld, alias, 'clearcont;clearimages;docker system pru..., docker.sh, <-> 
+dc, alias, 'docker-compose'                           , docker.sh, <-> 
+dcbuild, alias, 'docker-compose build --no-cache'          , docker.sh, <-> 
+dcup, alias, 'docker-compose up'                        , docker.sh, <-> 
+buildup, alias, 'dcbuild;dcup'                             , docker.sh, <-> 
+dcrun, alias, 'docker-compose run --rm'                  , docker.sh, <-> 
+burn, alias, 'buildup;dcrun'                            , docker.sh, <-> 
+drun, alias, 'docker run -it'                           , docker.sh, <-> 
+drunproxy, alias, $"$http_proxy" -it'                        , docker.sh, <-> 
+dbuild, alias, $http_proxy'                               , docker.sh, <-> 
+dinfo, alias, 'docker history'                           , docker.sh, <-> 
+dhist, alias, 'docker history --no-trunc'                , docker.sh, <-> 
+dbash, function, <what does dbash do ?>, docker.sh, <->
+dlogs, function, <what does dlogs do ?>, docker.sh, <->
+dsh, function, <what does dsh do ?>, docker.sh, <->

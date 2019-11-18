@@ -1,0 +1,15 @@
+name, type, desc, file, note
+worldcom, alias, 'mvn clean install'                        , java.sh, <-> 
+sbr, alias, 'mvn spring-boot:run'                      , java.sh, <-> 
+cr, alias, 'cargorun'                                 , java.sh, <-> 
+vcr, alias, 'worldcom;jcr'                             , java.sh, <-> 
+intellij, alias, 'open -a "IntelliJ IDEA CE"'               , java.sh, <-> 
+kafkaup, alias, 'zookeeper-server-start /usr/local/etc/k..., java.sh, <-> 
+kafkadown, alias, 'zookeeper-server-stop'                    , java.sh, <-> 
+_jenv, function, <what does _jenv do ?>, java.sh, <->
+cargorun, function, <what does cargorun do ?>, java.sh, <->
+jcr, function, <what does jcr do ?>, java.sh, <->
+jenv, function, <what does jenv do ?>, java.sh, <->
+kafkacomm, function, <what does kafkacomm do ?>, java.sh, <->
+mcr, function, <what does mcr do ?>, java.sh, <->
+wcr, function, <what does wcr do ?>, java.sh, <->

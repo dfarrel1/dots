@@ -1,0 +1,42 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "8d36650e6edb84e0af017aee0df121046f42c34351019f8dadac750b52ae0870"
+        },
+        "host-environment-markers": {
+            "implementation_name": "cpython",
+            "implementation_version": "3.6.1",
+            "os_name": "posix",
+            "platform_machine": "x86_64",
+            "platform_python_implementation": "CPython",
+            "platform_release": "18.5.0",
+            "platform_system": "Darwin",
+            "platform_version": "Darwin Kernel Version 18.5.0: Mon Mar 11 20:40:32 PDT 2019; root:xnu-4903.251.3~3/RELEASE_X86_64",
+            "python_full_version": "3.6.1",
+            "python_version": "3.6",
+            "sys_platform": "darwin"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "csv2md": {
+            "hashes": [
+                "sha256:970cda5f1b6dc0cce1940a2c2f198d554ba065240b95e3248fd2203af097355c",
+                "sha256:1a6593b5d70a8a6e952fb795f0f1ac7fc8546494fe8ba5d66aaef0c2e5570103",
+                "sha256:ca55613ac3aa48523b2be4591af631a70bbcf696a6433a6fc738585dfcfdc2c9"
+            ],
+            "version": "==1.0.1"
+        }
+    },
+    "develop": {}
+}
