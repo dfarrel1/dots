@@ -1,11 +1,15 @@
-#WIP
+function stest {    
+    eval "sbt \" testOnly $1 \" "
+}
 
-# DEFAULT_EMAIL='name=${name:-dene.farrell@latch.com}'
+function get_test_name {    
+    b=$(basename $1)
+    echo "${b%.*}"
+}
 
-# read -e -p "Enter Your Name:" -i "Ricardo" NAME
-
-alias submit='sbt "submit dene.farrell@latch.com $(read -e -p \" Assignment Password: \" pass")'
-
-alias subm-test='read -p "Assignment Password:" pass; echo $pass'
-
-# sbt "submit e-mail@university.org suBmISsioNPasSwoRd"
+get_tests() {
+  export choice_set=`find . -type f | grep ".*test/*.scala"`
+  get_choice $1
+  testname=$(get_test_name "$2$choice_set$3")  
+  [ "$choice_set" != "" ] && ( stest "*${testname}"  )
+}

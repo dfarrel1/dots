@@ -12,7 +12,11 @@ alias xx='chmod +x'
 alias g2='goto'
 alias gd='go_deep'
 alias gf='go_find'
-alias hg='history | grep '
+alias hg='history | grepe '
+
+function grepe {
+    grep --color -E "$1|$" $2
+}
 
 newtab() {
   osascript -e 'tell application "Terminal" to activate' -e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down'
