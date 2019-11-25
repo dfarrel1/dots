@@ -6,6 +6,7 @@ alias tt='newtab open_repo'
 
 alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias gg='git grep --line-number'
+alias gs='git status'
 
 alias gclu='git_clean_untracked_safely'
 alias gclb='git_clean_local_branches'
