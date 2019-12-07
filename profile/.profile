@@ -2,8 +2,8 @@
 
 GOPATH=~
 
-sources=( core navigation git docker python java latch git-completion scala mac)
+sources=( core navigation git-completion docker python java latch scala mac git )
 for i in "${sources[@]}"
 do
-    source "$PROFILE_DIR/$i.sh"
+    source "$PROFILE_DIR/$i.sh" > /dev/null
 done

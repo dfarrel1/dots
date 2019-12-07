@@ -16,7 +16,15 @@ gslice() {
   svn export "${1%.*}/trunk/$2" $3
 }
 
-source ../xtra/frills/.git-prompt-colors.sh
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+GIT_PROMPT_ONLY_IN_REPO=1 # Use the default prompt when not in a git repo.
+GIT_PROMPT_FETCH_REMOTE_STATUS=0 # Avoid fetching remote status
+GIT_PROMPT_SHOW_UPSTREAM=0 # Don't display upstream tracking branch
+GIT_SHOW_UNTRACKED_FILES=no # Don't count untracked files (no, normal, all)
+GIT_PROMPT_THEME=Custom # looks for ~/.git-prompt-colors.sh
+[[ ! -f ~/.git-prompt-colors.sh ]] && cp "${HERE}/../xtra/.git-prompt-colors.sh" ~/.git-prompt-colors.sh
+
 
 repo_info() {
   dir=`pwd`
