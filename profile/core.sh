@@ -1,6 +1,7 @@
 # Applications
-alias code='open -a "Visual Studio Code"'
-alias c.='repo_info -s;code $git_local_path'
+alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+alias open_with_code='open -a "Visual Studio Code"'
+alias c.='repo_info -s;open_with_code $git_local_path'
 alias a.='repo_info -s;atom $git_local_path'
 # after ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
 alias s.='repo_info -s;sublime $git_local_path'
@@ -13,7 +14,7 @@ alias chfox='open -a Charles;open -a Firefox'
 alias excel='open -a "Microsoft Excel"'
 
 alias ports='lsof -i | grep -E "(LISTEN|ESTABLISHED)"'
-alias epc='code $PROFILE_DIR'
+alias epc='open_with_code $PROFILE_DIR'
 alias epa='atom $PROFILE_DIR'
 alias ep='epc'
 

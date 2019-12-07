@@ -1,4 +1,6 @@
 alias src="source ~/.bashrc"
+alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
+
 #bash-completion
 [[ -f "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
 
@@ -23,5 +25,8 @@ GIT_SHOW_UNTRACKED_FILES=no # Don't count untracked files (no, normal, all)
 PS1='\[\e[1;33m\][ \W ]\[\e[0m\] $ '
 
 #update vscode plugins list
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-alias code-plugs='ls ~/.vscode/extensions > ${DIR}/../xtras/vscode-exts && cat ${DIR}/../xtras/vscode-exts'
+alias code-plugs="""
+code --list-extensions | xargs -L 1 echo code --install-extension > \
+${HERE}/../xtra/install-vscode-exts.sh \
+&& chmod +x ${HERE}/../xtra/install-vscode-exts.sh
+"""
