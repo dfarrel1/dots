@@ -8,6 +8,3 @@ using plugin: [settings-sync](https://marketplace.visualstudio.com/items?itemNam
 
 needs github personal access token
 gist id: a6bd450e6ce1355890c6c8bfafb737f3
-
-
-There is no way to programmatically sync or import settings without linking to github with a personal access token.
