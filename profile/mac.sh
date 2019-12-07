@@ -6,8 +6,8 @@ alias src="source ~/.bashrc"
 [[ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]] && source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
 
 #history-completion+
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-bind -f ${DIR}/.inputrc
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+bind -f ${HERE}/.inputrc
 
 GIT_PROMPT_ONLY_IN_REPO=1 # Use the default prompt when not in a git repo.
 GIT_PROMPT_FETCH_REMOTE_STATUS=0 # Avoid fetching remote status

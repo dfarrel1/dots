@@ -1,2 +1,3 @@
+# needed for history completion (./mac.sh)
 "\e[A": history-search-backward
 "\e[B": history-search-forward
