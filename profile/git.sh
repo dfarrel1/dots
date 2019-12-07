@@ -11,6 +11,11 @@ alias gs='git status'
 alias gclu='git_clean_untracked_safely'
 alias gclb='git_clean_local_branches'
 
+gslice() {
+  # Usage: gslice <git-repo> <git-dir> <output-path>"
+  svn export "${1%.*}/trunk/$2" $3
+}
+
 source ../xtra/frills/.git-prompt-colors.sh
 
 repo_info() {
