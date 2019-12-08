@@ -1,5 +1,6 @@
 alias src="source ~/.bashrc > /dev/null"
 alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
+alias whatami='ps -p $$'
 
 #bash-completion
 [[ -f "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
