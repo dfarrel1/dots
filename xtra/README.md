@@ -16,6 +16,6 @@
 
 ```
 mv .zshrc .zshrc.bkup
-chsh -s $(which zsh)
+chsh -s $(which bash)
 ps -p $$
 ```
