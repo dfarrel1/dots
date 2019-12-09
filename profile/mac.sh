@@ -20,7 +20,8 @@ PS1='\[\e[1;33m\][ \W ]\[\e[0m\] $ '
 
 #update vscode plugins list
 alias code-plugs="""
-code --list-extensions | xargs -L 1 echo code --install-extension > \
+echo '#!/bin/bash' > ${HERE}/../xtra/install-vscode-exts.sh \
+&& code --list-extensions | xargs -L 1 echo code --install-extension >> \
 ${HERE}/../xtra/install-vscode-exts.sh \
 && chmod +x ${HERE}/../xtra/install-vscode-exts.sh
 """

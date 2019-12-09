@@ -1,11 +1,15 @@
+#!/bin/bash
 code --install-extension aaron-bond.better-comments
+code --install-extension DavidAnson.vscode-markdownlint
 code --install-extension EFanZh.graphviz-preview
 code --install-extension lightbend.vscode-sbt-scala
 code --install-extension ms-azuretools.vscode-docker
+code --install-extension ms-ossdata.vscode-postgresql
 code --install-extension ms-python.python
 code --install-extension redhat.java
 code --install-extension scala-lang.scala
 code --install-extension scalameta.metals
+code --install-extension Shan.code-settings-sync
 code --install-extension Stephanvs.dot
 code --install-extension stkb.rewrap
 code --install-extension streetsidesoftware.code-spell-checker
