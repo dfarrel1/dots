@@ -9,5 +9,9 @@ Bash profile modifying files
 
 Longwinded **[Documentation](./README-LONG.md)**
 
+---
+
+The extended purpose of this repo is allow for easy migration of most essential developer tools and environments from one linux based machine to another. [xtra](./xtra) is scoped beyond the bash profile.
+
 
 
