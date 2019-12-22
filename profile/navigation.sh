@@ -15,7 +15,7 @@ alias gf='go_find'
 alias hg='history | grepe '
 
 function grepe {
-    grep --color -E "$1|$" $2
+    grep $1 | grep --color -E "$1|$" $2
 }
 
 newtab() {
