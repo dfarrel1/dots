@@ -23,7 +23,7 @@ GIT_PROMPT_FETCH_REMOTE_STATUS=0 # Avoid fetching remote status
 GIT_PROMPT_SHOW_UPSTREAM=0 # Don't display upstream tracking branch
 GIT_SHOW_UNTRACKED_FILES=no # Don't count untracked files (no, normal, all)
 GIT_PROMPT_THEME=Custom # looks for ~/.git-prompt-colors.sh
-[[ ! -f ~/.git-prompt-colors.sh ]] && cp "${HERE}/../xtra/.git-prompt-colors.sh" ~/.git-prompt-colors.sh
+[[ ! -f ~/.git-prompt-colors.sh ]] && cp "${HERE}/.git-prompt-colors.sh" ~/.git-prompt-colors.sh
 
 
 repo_info() {
