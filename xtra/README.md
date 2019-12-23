@@ -3,6 +3,10 @@
 ## xplain
 
 - Managing settings for IDEs and Applications
+  - Intellij Idea
+  - VSCode
+  - Sublime
+  - SourceTree
 - Managing Mac OS brew installs
 
 ### Brewfile
