@@ -11,7 +11,4 @@ Longwinded **[Documentation](./README-LONG.md)**
 
 ---
 
-The extended purpose of this repo is allow for easy migration of most essential developer tools and environments from one MacOS machine to another. [xtra](./xtra) is scoped beyond the bash profile.
-
-
-
+The extended purpose of this repo is to allow for easy migration of most essential developer tools and environments from one MacOS machine to another. [xtra](./xtra) is scoped beyond the bash profile.

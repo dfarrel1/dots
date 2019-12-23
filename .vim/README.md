@@ -2,4 +2,4 @@
 
 ## everything
 
-symlink this folder to `~/.vim/`
+symlinking this folder to `~/.vim/`

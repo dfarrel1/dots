@@ -3,6 +3,7 @@ code --install-extension aaron-bond.better-comments
 code --install-extension DavidAnson.vscode-markdownlint
 code --install-extension EFanZh.graphviz-preview
 code --install-extension lightbend.vscode-sbt-scala
+code --install-extension mikestead.dotenv
 code --install-extension ms-azuretools.vscode-docker
 code --install-extension ms-ossdata.vscode-postgresql
 code --install-extension ms-python.python
@@ -19,3 +20,4 @@ code --install-extension vscjava.vscode-java-dependency
 code --install-extension vscjava.vscode-java-pack
 code --install-extension vscjava.vscode-java-test
 code --install-extension vscjava.vscode-maven
+code --install-extension zhouronghui.propertylist
