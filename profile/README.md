@@ -1,5 +1,9 @@
-This directory is self-sufficient. The surrounding repo exists for documentation.
+This directory is self-sufficient. 
 
-[xtra](../xtra) has become a moved beyond bash to am IDE and macOS management scope.
+[docs](../docs) and [doc_maker](../doc_maker) exist for documentation of files within this directory.
+
+[xtra](../xtra) has expanded to IDE and macOS management scopes.
+
+[vim](../vim) for vim.
 
 .
