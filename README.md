@@ -1,4 +1,4 @@
-Bash profile modifying files
+Aliases and Functions for a happy bash experience.
 
 **tldr**; everything you need: **[profile](./profile)**
 
