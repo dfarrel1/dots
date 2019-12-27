@@ -13,11 +13,12 @@ xx, alias, 'chmod +x'                                 , navigation.sh, <->
 g2, alias, 'goto'                                     , navigation.sh, <-> 
 gd, alias, 'go_deep'                                  , navigation.sh, <-> 
 gf, alias, 'go_find'                                  , navigation.sh, <-> 
-hg, alias, 'history &#124; grep '                          , navigation.sh, <-> 
+hg, alias, 'history &#124; grepe '                         , navigation.sh, <-> 
 b, function, <what does b do ?>, navigation.sh, <->
 go_deep, function, <what does go_deep do ?>, navigation.sh, <->
 go_find, function, <what does go_find do ?>, navigation.sh, <->
 goto, function, <what does goto do ?>, navigation.sh, <->
+grepe, function, <what does grepe do ?>, navigation.sh, <->
 mkd, function, <what does mkd do ?>, navigation.sh, <->
 newtab, function, <what does newtab do ?>, navigation.sh, <->
 revisit, function, <what does revisit do ?>, navigation.sh, <->

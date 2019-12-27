@@ -1,4 +1,10 @@
-| name      |  type  |  desc                                        |  file     |  note |
-| --------- | ------ | -------------------------------------------- | --------- | ----- |
-| submit    |  alias |  'sbt "submit dene.farrell@latch.com $(re... |  scala.sh |  <->  |
-| subm-test |  alias |  'read -p "Assignment Password:" pass; ec... |  scala.sh |  <->  |
+| name              |  type     |  desc                               |  file     |  note |
+| ----------------- | --------- | ----------------------------------- | --------- | ----- |
+| FILE2LINK         |  function |  <what does FILE2LINK do ?>         |  scala.sh |  <->  |
+| LINES2FILES       |  function |  <what does LINES2FILES do ?>       |  scala.sh |  <->  |
+| RM_COLOR          |  function |  <what does RM_COLOR do ?>          |  scala.sh |  <->  |
+| RM_TRAILING_COLON |  function |  <what does RM_TRAILING_COLON do ?> |  scala.sh |  <->  |
+| clicks            |  function |  <what does clicks do ?>            |  scala.sh |  <->  |
+| get_test_name     |  function |  <what does get_test_name do ?>     |  scala.sh |  <->  |
+| get_tests         |  function |  <what does get_tests do ?>         |  scala.sh |  <->  |
+| stest             |  function |  <what does stest do ?>             |  scala.sh |  <->  |

@@ -4,26 +4,27 @@
 
 
 
-| name       |  type     |  desc                                                  |  file    |  note |
-| ---------- | --------- | ------------------------------------------------------ | -------- | ----- |
-| code       |  alias    |  'open -a "Visual Studio Code"'                        |  core.sh |  <->  |
-| c.         |  alias    |  'repo_info -s;code $git_local_path'                   |  core.sh |  <->  |
-| a.         |  alias    |  'repo_info -s;atom $git_local_path'                   |  core.sh |  <->  |
-| s.         |  alias    |  'repo_info -s;sublime $git_local_path'                |  core.sh |  <->  |
-| i.         |  alias    |  'repo_info -s;intellij $git_local_path'               |  core.sh |  <->  |
-| o.         |  alias    |  'open .'                                              |  core.sh |  <->  |
-| chrome     |  alias    |  'open -a "Google Chrome"'                             |  core.sh |  <->  |
-| pn.        |  alias    |  'chrome http://127.0.0.1:8192/ && /Appli...           |  core.sh |  <->  |
-| chfox      |  alias    |  'open -a Charles;open -a Firefox'                     |  core.sh |  <->  |
-| excel      |  alias    |  'open -a "Microsoft Excel"'                           |  core.sh |  <->  |
-| ports      |  alias    |  'lsof -i &#124; grep -E "(LISTEN&#124;ESTABLISHED)... |  core.sh |  <->  |
-| epc        |  alias    |  'code $PROFILE_DIR'                                   |  core.sh |  <->  |
-| epa        |  alias    |  'atom $PROFILE_DIR'                                   |  core.sh |  <->  |
-| ep         |  alias    |  'epc'                                                 |  core.sh |  <->  |
-| ckh        |  function |  <what does ckh do ?>                                  |  core.sh |  <->  |
-| close      |  function |  <what does close do ?>                                |  core.sh |  <->  |
-| get_choice |  function |  <what does get_choice do ?>                           |  core.sh |  <->  |
-| source_env |  function |  <what does source_env do ?>                           |  core.sh |  <->  |
+| name           |  type     |  desc                                                  |  file    |  note |
+| -------------- | --------- | ------------------------------------------------------ | -------- | ----- |
+| code           |  alias    |  '/Applications/Visual\ Studio\ Code.app/...           |  core.sh |  <->  |
+| open_with_code |  alias    |  'open -a "Visual Studio Code"'                        |  core.sh |  <->  |
+| c.             |  alias    |  'repo_info -s;open_with_code $git_local_...           |  core.sh |  <->  |
+| a.             |  alias    |  'repo_info -s;atom $git_local_path'                   |  core.sh |  <->  |
+| s.             |  alias    |  'repo_info -s;sublime $git_local_path'                |  core.sh |  <->  |
+| i.             |  alias    |  'repo_info -s;intellij $git_local_path'               |  core.sh |  <->  |
+| o.             |  alias    |  'open .'                                              |  core.sh |  <->  |
+| chrome         |  alias    |  'open -a "Google Chrome"'                             |  core.sh |  <->  |
+| pn.            |  alias    |  'chrome http://127.0.0.1:8192/ && /Appli...           |  core.sh |  <->  |
+| chfox          |  alias    |  'open -a Charles;open -a Firefox'                     |  core.sh |  <->  |
+| excel          |  alias    |  'open -a "Microsoft Excel"'                           |  core.sh |  <->  |
+| ports          |  alias    |  'lsof -i &#124; grep -E "(LISTEN&#124;ESTABLISHED)... |  core.sh |  <->  |
+| epc            |  alias    |  'open_with_code $PROFILE_DIR'                         |  core.sh |  <->  |
+| epa            |  alias    |  'atom $PROFILE_DIR'                                   |  core.sh |  <->  |
+| ep             |  alias    |  'epc'                                                 |  core.sh |  <->  |
+| ckh            |  function |  <what does ckh do ?>                                  |  core.sh |  <->  |
+| close          |  function |  <what does close do ?>                                |  core.sh |  <->  |
+| get_choice     |  function |  <what does get_choice do ?>                           |  core.sh |  <->  |
+| source_env     |  function |  <what does source_env do ?>                           |  core.sh |  <->  |
 
 
 **docker**
@@ -84,6 +85,7 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 | tt                         |  alias    |  'newtab open_repo'                          |  git.sh |  <->  |
 | glog                       |  alias    |  format:"%Cred%h%Creset -%C(yellow)%d%Cre... |  git.sh |  <->  |
 | gg                         |  alias    |  'git grep --line-number'                    |  git.sh |  <->  |
+| gs                         |  alias    |  'git status'                                |  git.sh |  <->  |
 | gclu                       |  alias    |  'git_clean_untracked_safely'                |  git.sh |  <->  |
 | gclb                       |  alias    |  'git_clean_local_branches'                  |  git.sh |  <->  |
 | base                       |  function |  <what does base do ?>                       |  git.sh |  <->  |
@@ -91,6 +93,7 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 | clone                      |  function |  <what does clone do ?>                      |  git.sh |  <->  |
 | git_clean_local_branches   |  function |  <what does git_clean_local_branches do ?>   |  git.sh |  <->  |
 | git_clean_untracked_safely |  function |  <what does git_clean_untracked_safely do ?> |  git.sh |  <->  |
+| gslice                     |  function |  <what does gslice do ?>                     |  git.sh |  <->  |
 | open_repo                  |  function |  <what does open_repo do ?>                  |  git.sh |  <->  |
 | origin                     |  function |  <what does origin do ?>                     |  git.sh |  <->  |
 | repo_info                  |  function |  <what does repo_info do ?>                  |  git.sh |  <->  |
@@ -101,33 +104,28 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 
 
 
-| name      |  type     |  desc                                        |  file    |  note |
-| --------- | --------- | -------------------------------------------- | -------- | ----- |
-| worldcom  |  alias    |  'mvn clean install'                         |  java.sh |  <->  |
-| sbr       |  alias    |  'mvn spring-boot:run'                       |  java.sh |  <->  |
-| cr        |  alias    |  'cargorun'                                  |  java.sh |  <->  |
-| vcr       |  alias    |  'worldcom;jcr'                              |  java.sh |  <->  |
-| intellij  |  alias    |  'open -a "IntelliJ IDEA CE"'                |  java.sh |  <->  |
-| kafkaup   |  alias    |  'zookeeper-server-start /usr/local/etc/k... |  java.sh |  <->  |
-| kafkadown |  alias    |  'zookeeper-server-stop'                     |  java.sh |  <->  |
-| _jenv     |  function |  <what does _jenv do ?>                      |  java.sh |  <->  |
-| cargorun  |  function |  <what does cargorun do ?>                   |  java.sh |  <->  |
-| jcr       |  function |  <what does jcr do ?>                        |  java.sh |  <->  |
-| jenv      |  function |  <what does jenv do ?>                       |  java.sh |  <->  |
-| kafkacomm |  function |  <what does kafkacomm do ?>                  |  java.sh |  <->  |
-| mcr       |  function |  <what does mcr do ?>                        |  java.sh |  <->  |
-| wcr       |  function |  <what does wcr do ?>                        |  java.sh |  <->  |
+| name     |  type     |  desc                                        |  file    |  note |
+| -------- | --------- | -------------------------------------------- | -------- | ----- |
+| worldcom |  alias    |  'mvn clean install'                         |  java.sh |  <->  |
+| sbr      |  alias    |  'mvn spring-boot:run'                       |  java.sh |  <->  |
+| cr       |  alias    |  'cargorun'                                  |  java.sh |  <->  |
+| vcr      |  alias    |  'worldcom;jcr'                              |  java.sh |  <->  |
+| intellij |  alias    |  'open -a "IntelliJ IDEA CE"'                |  java.sh |  <->  |
+| _jenv    |  function |  <what does _jenv do ?>                      |  java.sh |  <->  |
+| jenv     |  function |  <what does jenv do ?>                       |  java.sh |  <->  |
 
 
 **latch**
 
 
 
-| name     |  type  |  desc                                        |  file     |  note |
-| -------- | ------ | -------------------------------------------- | --------- | ----- |
-| sts      |  alias |  'gimme-aws-creds'                           |  latch.sh |  <->  |
-| cdp      |  alias |  './target/universal/stage/bin/cdp-data-t... |  latch.sh |  <->  |
-| cdp-prod |  alias |  prod" && cdp'                               |  latch.sh |  <->  |
+| name     |  type  |  desc                                             |  file     |  note |
+| -------- | ------ | ------------------------------------------------- | --------- | ----- |
+| sts      |  alias |  'gimme-aws-creds'                                |  latch.sh |  <->  |
+| cdp      |  alias |  './target/universal/stage/bin/cdp-data-t...      |  latch.sh |  <->  |
+| cdp-prod |  alias |  prod" && cdp'                                    |  latch.sh |  <->  |
+| gvpn     |  alias |  'ps aux &#124; grep -i "openvpn --config"'       |  latch.sh |  <->  |
+| vpnlog   |  alias |  'sudo tail -f  /var/log/openvpn.log'             |  latch.sh |  <->  |
 
 
 **mac**
@@ -136,7 +134,11 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 
 | name       |  type  |  desc                                        |  file   |  note |
 | ---------- | ------ | -------------------------------------------- | ------- | ----- |
-| code-plugs |  alias |  'ls ~/.vscode/extensions > ${DIR}/../xtr... |  mac.sh |  <->  |
+| src        |  alias |  "source ~/.bashrc > /dev/null"              |  mac.sh |  <->  |
+| snowsql    |  alias |  '/Applications/SnowSQL.app/Contents/MacO... |  mac.sh |  <->  |
+| whatami    |  alias |  'ps -p $$'                                  |  mac.sh |  <->  |
+| syslog     |  alias |  'tail -f /var/log/system.log'               |  mac.sh |  <->  |
+| code-plugs |  alias |  """                                         |  mac.sh |  <->  |
 
 
 **navigation**
@@ -159,11 +161,12 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 | g2      |  alias    |  'goto'                                           |  navigation.sh |  <->  |
 | gd      |  alias    |  'go_deep'                                        |  navigation.sh |  <->  |
 | gf      |  alias    |  'go_find'                                        |  navigation.sh |  <->  |
-| hg      |  alias    |  'history &#124; grep '                           |  navigation.sh |  <->  |
+| hg      |  alias    |  'history &#124; grepe '                          |  navigation.sh |  <->  |
 | b       |  function |  <what does b do ?>                               |  navigation.sh |  <->  |
 | go_deep |  function |  <what does go_deep do ?>                         |  navigation.sh |  <->  |
 | go_find |  function |  <what does go_find do ?>                         |  navigation.sh |  <->  |
 | goto    |  function |  <what does goto do ?>                            |  navigation.sh |  <->  |
+| grepe   |  function |  <what does grepe do ?>                           |  navigation.sh |  <->  |
 | mkd     |  function |  <what does mkd do ?>                             |  navigation.sh |  <->  |
 | newtab  |  function |  <what does newtab do ?>                          |  navigation.sh |  <->  |
 | revisit |  function |  <what does revisit do ?>                         |  navigation.sh |  <->  |
@@ -186,7 +189,29 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 
 
 
-| name      |  type  |  desc                                        |  file     |  note |
-| --------- | ------ | -------------------------------------------- | --------- | ----- |
-| submit    |  alias |  'sbt "submit dene.farrell@latch.com $(re... |  scala.sh |  <->  |
-| subm-test |  alias |  'read -p "Assignment Password:" pass; ec... |  scala.sh |  <->  |
+| name              |  type     |  desc                               |  file     |  note |
+| ----------------- | --------- | ----------------------------------- | --------- | ----- |
+| FILE2LINK         |  function |  <what does FILE2LINK do ?>         |  scala.sh |  <->  |
+| LINES2FILES       |  function |  <what does LINES2FILES do ?>       |  scala.sh |  <->  |
+| RM_COLOR          |  function |  <what does RM_COLOR do ?>          |  scala.sh |  <->  |
+| RM_TRAILING_COLON |  function |  <what does RM_TRAILING_COLON do ?> |  scala.sh |  <->  |
+| clicks            |  function |  <what does clicks do ?>            |  scala.sh |  <->  |
+| get_test_name     |  function |  <what does get_test_name do ?>     |  scala.sh |  <->  |
+| get_tests         |  function |  <what does get_tests do ?>         |  scala.sh |  <->  |
+| stest             |  function |  <what does stest do ?>             |  scala.sh |  <->  |
+
+
+**sls**
+
+
+
+| name |  type |  desc |  file |  note |
+| ---- | ----- | ----- | ----- | ----- |
+
+
+**vim**
+
+
+
+| name |  type |  desc |  file |  note |
+| ---- | ----- | ----- | ----- | ----- |

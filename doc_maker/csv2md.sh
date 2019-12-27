@@ -10,7 +10,7 @@ OUTPUT=${2:-${BASEDIR}/../docs/${SHORT}.auto.md}
 ### ref: [https://github.com/lzakharov/csv2md]
 ### pip install csv2md
 
-csv2md ${PARSEE} > ${OUTPUT}
+# csv2md ${PARSEE} > ${OUTPUT}
 
 ### alternatively
-# python ${BASEDIR}/csv2md/csv2md.py ${PARSEE} > ${OUTPUT}
+python3 ${BASEDIR}/csv2md/csv2md.py ${PARSEE} > ${OUTPUT}

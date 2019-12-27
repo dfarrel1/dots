@@ -1,3 +1,7 @@
 | name       |  type  |  desc                                        |  file   |  note |
 | ---------- | ------ | -------------------------------------------- | ------- | ----- |
-| code-plugs |  alias |  'ls ~/.vscode/extensions > ${DIR}/../xtr... |  mac.sh |  <->  |
+| src        |  alias |  "source ~/.bashrc > /dev/null"              |  mac.sh |  <->  |
+| snowsql    |  alias |  '/Applications/SnowSQL.app/Contents/MacO... |  mac.sh |  <->  |
+| whatami    |  alias |  'ps -p $$'                                  |  mac.sh |  <->  |
+| syslog     |  alias |  'tail -f /var/log/system.log'               |  mac.sh |  <->  |
+| code-plugs |  alias |  """                                         |  mac.sh |  <->  |

@@ -42,3 +42,14 @@ clicks() {
   tee >( RM_COLOR | LINES2FILES | FILE2LINK |  RM_TRAILING_COLON | \
   xargs -I {} sh -c 'printf "'${CYAN}'{}'${NC}' \n"' ) 
 }
+
+
+help() {
+  typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
+}
+
+if [ "_$1" = "_" ]; then
+    help
+else
+    "$@"
+fi
