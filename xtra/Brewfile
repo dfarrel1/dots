@@ -32,4 +32,5 @@ cask "java"
 brew "wget"
 brew "vim"
 brew "openvpn"
+brew "gnu-sed"
 

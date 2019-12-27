@@ -17,3 +17,28 @@ get_tests() {
     ( stest "*${testname}"  )
   fi
 }
+
+
+# grep and print a list of clickable files for hits
+# requires gnu-sed (brew install gnu-sed)
+export CYAN='\033[0;36m'
+export NC='\033[0m' # No Color
+export ESC_PWD=$(echo "${PWD}" | sed 's/\//\\\//g')
+function RM_COLOR { 
+  gsed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" 
+  }
+function LINES2FILES { 
+  cut -d " " -f1 | sort -u | cut -d ':' -f 1 
+  }
+function FILE2LINK { 
+  sed -e 's/^/idea:\/\/open\?file='"${ESC_PWD}\/"'/' 
+  }
+function RM_TRAILING_COLON { 
+  sed 's/:*$//g' 
+  }
+
+clicks() {
+  git grep --color=always $1 | \
+  tee >( RM_COLOR | LINES2FILES | FILE2LINK |  RM_TRAILING_COLON | \
+  xargs -I {} sh -c 'printf "'${CYAN}'{}'${NC}' \n"' ) 
+}
