@@ -28,7 +28,7 @@ function RM_COLOR {
   gsed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" 
   }
 function LINES2FILES { 
-  cut -d " " -f1 | sort -u | cut -d ':' -f 1 
+  cut -d " " -f1 | cut -d ':' -f 1 | sort -u 
   }
 function FILE2LINK { 
   sed -e 's/^/idea:\/\/open\?file='"${ESC_PWD}\/"'/' 
