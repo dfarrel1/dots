@@ -38,7 +38,7 @@ function RM_TRAILING_COLON {
   }
 
 clicks() {
-  git grep --color=always $1 | \
+  git grep -n --color=always $1 | \
   tee >( RM_COLOR | LINES2FILES | FILE2LINK |  RM_TRAILING_COLON | \
   xargs -I {} sh -c 'printf "'${CYAN}'{}'${NC}' \n"' ) 
 }
