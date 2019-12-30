@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd";>
+<plist version="1.0">
+<dict>
+  <key>Disabled</key>
+  <true/>
+  <key>Label</key>
+  <string>openvpn.latch.client</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/opt/openvpn/sbin/openvpn</string>
+  	<string>--config</string>
+  	<string>/usr/local/etc/openvpn/client.ovpn</string>
+  	<string>--log-append</string>
+  	<string>/usr/local/var/log/openvpn/openvpn.latch.log</string>		        
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>WorkingDirectory</key>
+  <string>/usr/local/etc/openvpn/</string>
+  <key>KeepAlive</key>
+  <false/>
+  <key>SessionCreate</key>
+  <true/>
+  <key>StandardErrorPath</key>
+  <string>/tmp/openvpn.latch.err</string>
+  <key>StandardOutPath</key>
+  <string>/tmp/openvpn.latch.out</string>
+</dict>
+</plist>

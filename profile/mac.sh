@@ -2,6 +2,11 @@ alias src="source ~/.bashrc > /dev/null"
 alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
 alias whatami='ps -p $$'
 alias syslog='tail -f /var/log/system.log'
+alias ipecho='curl ipecho.net/plain ; echo'
+alias whereami='pwd ; ipecho'
+alias speed='speedtest-cli'
+alias awake='caffeinate &'
+alias decaf='killall caffeinate'
 
 #bash-completion
 [[ -f "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
@@ -16,8 +21,9 @@ bind -f ${HERE}/.inputrc
 # work out colors later [http://tldp.org/HOWTO/Bash-Prompt-HOWTO/x860.html]
 
 # PS1="(/•-•)/ >"
-# PS1="\W 🐙 " 
-PS1='\[\e[1;33m\][ \W ]\[\e[0m\] $ '
+# PS1="\W 🐙$ " 
+# PS1='\[\e[1;33m\][ \W ]\[\e[0m\] $ '
+PS1='\[\e[1;33m\][ \W ]\[\e[0m\] 🐣  $ '
 
 #update vscode plugins list
 alias code-plugs="""
