@@ -18,6 +18,17 @@ alias decaf='killall caffeinate'
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 bind -f ${HERE}/.inputrc
 
+#for bash error in vscode terminal
+update_terminal_cwd() {
+    # Identify the directory using a "file:" scheme URL,
+    # including the host name to disambiguate local vs.
+    # remote connections. Percent-escape spaces.
+    local SEARCH=' '
+    local REPLACE='%20'
+    local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}"
+    printf '\e]7;%s\a' "$PWD_URL"
+}
+
 # work out colors later [http://tldp.org/HOWTO/Bash-Prompt-HOWTO/x860.html]
 
 # PS1="(/•-•)/ >"
@@ -32,3 +43,9 @@ echo '#!/bin/bash' > ${HERE}/../xtra/IDEs/install-vscode-exts.sh \
 ${HERE}/../xtra/IDEs/install-vscode-exts.sh \
 && chmod +x ${HERE}/../xtra/IDEs/install-vscode-exts.sh
 """
+
+# https://github.com/dvorka/hstr
+source ${HERE}/.hstrrc
+
+# to include in docs
+alias hstr='hstr'
