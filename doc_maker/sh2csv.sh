@@ -19,7 +19,11 @@ schema="name, type, desc, file, note"
 
 ############# aliases ##################
 export aliases=($(grep "^alias\s"  ${PARSEE} | awk '{print $2}' | awk -F'=' '{print $1}'))
-export targets=($(grep "^alias\s"  ${PARSEE} | sed 's:.*=::' | awk 'length > 40{$0 = substr($0, 1, 40) "..."} {printf "%-43s\n", $0}' | sed 's/,/;/g' | sed "s/'/\'/g" | sed 's/"/\"/g' | sed 's/|/\&#124;/g' ))
+export targets=(\
+    $(grep "^alias\s"  ${PARSEE} | \
+    grep -o -E "=.*" |  cut -f2- -d= | \
+    awk 'length > 40{$0 = substr($0, 1, 40) "..."} {printf "%-43s\n", $0}' | \
+    sed 's/,/;/g' | sed "s/'/\'/g" | sed 's/"/\"/g' | sed 's/|/\&#124;/g' ))
 echo ${targets[@]}
 unset aliases_zip
 for i in "${!aliases[@]}";
