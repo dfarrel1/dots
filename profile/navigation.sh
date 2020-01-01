@@ -53,7 +53,7 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
 function server() {
 	local port="${1:-8000}";
 	sleep 1 && open "http://localhost:${port}/" &
-	python -m http.server 8000
+	python -m http.server ${port}
 }
 
 newtab() {
