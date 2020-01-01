@@ -1,8 +1,12 @@
 #!/bin/bash
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-### Need to get config file
+### Need to get config file (assuming it's in Downloads dir here)
 conf_file=$(cd ~; pwd)/Downloads/client.ovpn
+
+# need to add openvpn creds to keyychain
+# security add-generic-password -a ${USER} -s openvpn-user -w <vpn-user>
+# security add-generic-password -a ${USER} -s openvpn -w <vpn-password>
 
 [[ ! $(grep "openvpn.log" ${conf_file}) ]] \
 && echo "log /var/log/openvpn.log" >> ${conf_file}
@@ -22,12 +26,11 @@ auth-user-pass ${auth_user_pass_file}
 """ >> ${conf_file}
 
 ### Set to appropriate user (bc running from root)
-pass_user="dene-latch"
-echo `security find-generic-password -a ${pass_user} -s openvpn -w` > ${auth_file} \
+echo `security find-generic-password -a ${USER} -s openvpn -w` > ${auth_file} \
 && chmod 600 ${auth_file}
 
-echo `security find-generic-password -a ${pass_user} -s openvpn-user -w` > ${auth_user_pass_file} \
-&& echo `security find-generic-password -a ${pass_user} -s openvpn -w` >> ${auth_user_pass_file} \
+echo `security find-generic-password -a ${USER} -s openvpn-user -w` > ${auth_user_pass_file} \
+&& echo `security find-generic-password -a ${USER} -s openvpn -w` >> ${auth_user_pass_file} \
 && chmod 600 ${auth_user_pass_file}
 
 [[ -f ${conf_file} ]] &&  cp ${conf_file} /usr/local/etc/openvpn/client.ovpn
