@@ -36,7 +36,7 @@ funs=($(${PARSEE} help))
 unset funs_zip
 for i in "${!funs[@]}";
 do 
-    funs_zip+=( "${funs[i]}, function, <what does ${funs[i]} do ?>, $(basename -- ${PARSEE}), <->"); 
+    [[ ! ${funs[i]} = _* ]] && funs_zip+=( "${funs[i]}, function, <what does ${funs[i]} do ?>, $(basename -- ${PARSEE}), <->"); 
 done
 
 for f in "${funs_zip[@]}"; do echo $f >> ${OUTPUT}; done;
