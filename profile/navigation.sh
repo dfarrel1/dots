@@ -4,6 +4,7 @@ alias ld='dirs -p | nl -v 0'
 alias rv='revisit'
 alias cls='newtab;exit'
 # cd variants
+alias home='cd ~'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
