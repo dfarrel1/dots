@@ -12,8 +12,8 @@ export PATH=/usr/local/opt/openvpn/sbin:$PATH
 # [cli openvpn is super slow (?)]
 # download connection profile from server: https://vpn.latch.com/?src=connect 
 #
-# security add-generic-password -a ${USER} -s openvpn-user -w <user>
-# security add-generic-password -a ${USER} -s openvpn -w <password>
+# security add-generic-password -a ${USER} -s openvpn-user -w <vpn-user>
+# security add-generic-password -a ${USER} -s openvpn -w <vpn-password>
 #
 # visudo #(not working)
 # <user>             ALL = (ALL) NOPASSWD: /bin/bash vpn
