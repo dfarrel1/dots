@@ -1,2 +1,5 @@
 # openvpn # just as precaution
 client.ovpn
+
+# vscode
+.vscode

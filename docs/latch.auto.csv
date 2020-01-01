@@ -2,5 +2,12 @@ name, type, desc, file, note
 sts, alias, 'gimme-aws-creds'                          , latch.sh, <-> 
 cdp, alias, './target/universal/stage/bin/cdp-data-t..., latch.sh, <-> 
 cdp-prod, alias, prod" && cdp'                              , latch.sh, <-> 
+fresh_vpn, alias, "sudo ${HERE}/../xtra/vpn/refresh-vpn.sh..., latch.sh, <-> 
 gvpn, alias, 'ps aux &#124; grep -i "openvpn --config"'      , latch.sh, <-> 
+killvpn, alias, "ps aux &#124; grep -i 'openvpn --config' &#124; a..., latch.sh, <-> 
 vpnlog, alias, 'sudo tail -f  /var/log/openvpn.log'       , latch.sh, <-> 
+loadvpn, alias, 'sudo launchctl load -w /Library/LaunchD..., latch.sh, <-> 
+unloadvpn, alias, 'sudo launchctl unload -w /Library/Launc..., latch.sh, <-> 
+startvpn, alias, 'sudo launchctl start openvpn.latch.clie..., latch.sh, <-> 
+stopvpn, alias, 'sudo launchctl stop openvpn.latch.clien..., latch.sh, <-> 
+listvpn, alias, 'sudo launchctl list &#124; grep vpn'           , latch.sh, <-> 

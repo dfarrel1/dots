@@ -47,8 +47,35 @@
 | dbuild      |  alias    |  $http_proxy'                                |  docker.sh |  <->  |
 | dinfo       |  alias    |  'docker history'                            |  docker.sh |  <->  |
 | dhist       |  alias    |  'docker history --no-trunc'                 |  docker.sh |  <->  |
+| k           |  alias    |  "kubectl"                                   |  docker.sh |  <->  |
+| ka          |  alias    |  "kubectl apply -f"                          |  docker.sh |  <->  |
+| kpa         |  alias    |  "kubectl patch -f"                          |  docker.sh |  <->  |
+| ked         |  alias    |  "kubectl edit"                              |  docker.sh |  <->  |
+| ksc         |  alias    |  "kubectl scale"                             |  docker.sh |  <->  |
+| kex         |  alias    |  "kubectl exec -i -t"                        |  docker.sh |  <->  |
+| kg          |  alias    |  "kubectl get"                               |  docker.sh |  <->  |
+| kga         |  alias    |  "kubectl get all"                           |  docker.sh |  <->  |
+| kgall       |  alias    |  "kubectl get all --all-namespaces"          |  docker.sh |  <->  |
+| kinfo       |  alias    |  "kubectl cluster-info"                      |  docker.sh |  <->  |
+| kdesc       |  alias    |  "kubectl describe"                          |  docker.sh |  <->  |
+| ktp         |  alias    |  "kubectl top"                               |  docker.sh |  <->  |
+| klo         |  alias    |  "kubectl logs -f"                           |  docker.sh |  <->  |
+| kn          |  alias    |  "kubectl get nodes"                         |  docker.sh |  <->  |
+| kpv         |  alias    |  "kubectl get pv"                            |  docker.sh |  <->  |
+| kpvc        |  alias    |  "kubectl get pvc"                           |  docker.sh |  <->  |
 | dbash       |  function |  <what does dbash do ?>                      |  docker.sh |  <->  |
 | dlogs       |  function |  <what does dlogs do ?>                      |  docker.sh |  <->  |
+| dock-do     |  function |  <what does dock-do do ?>                    |  docker.sh |  <->  |
+| dock-exec   |  function |  <what does dock-exec do ?>                  |  docker.sh |  <->  |
+| dock-ip     |  function |  <what does dock-ip do ?>                    |  docker.sh |  <->  |
+| dock-log    |  function |  <what does dock-log do ?>                   |  docker.sh |  <->  |
+| dock-port   |  function |  <what does dock-port do ?>                  |  docker.sh |  <->  |
+| dock-rm     |  function |  <what does dock-rm do ?>                    |  docker.sh |  <->  |
+| dock-rmc    |  function |  <what does dock-rmc do ?>                   |  docker.sh |  <->  |
+| dock-rmi    |  function |  <what does dock-rmi do ?>                   |  docker.sh |  <->  |
+| dock-run    |  function |  <what does dock-run do ?>                   |  docker.sh |  <->  |
+| dock-stop   |  function |  <what does dock-stop do ?>                  |  docker.sh |  <->  |
+| dock-vol    |  function |  <what does dock-vol do ?>                   |  docker.sh |  <->  |
 | dsh         |  function |  <what does dsh do ?>                        |  docker.sh |  <->  |
 
 
@@ -56,21 +83,8 @@
 
 
 
-| name                                                                                                           |  type              |  desc                                        |
-| -------------------------------------------------------------------------------------------------------------- | ------------------ | -------------------------------------------- |
-| --list-cmds                                                                                                    |  alias             |  main;others;alias;nohelpers)                |
-| ()                                                                                                             |  alias             |  __git_pretty_aliases ()                     |
-| ()                                                                                                             |  alias             |  __git_aliased_command ()                    |
-| word                                                                                                           |  alias             |  $(__git config --get "alias.$1")            |
-| :                                                                                                              |  alias             |  		\!*)	: shell command alias ;;             |
-| $GIT_TESTING_ALL_COMMAND_LIST, alias, alias;list-guide) gitk                                                   |  git-completion.sh |  <->                                         |
-| $(__git, alias, main;nohelpers;alias;list-guide) gitk                                                          |  git-completion.sh |  <->                                         |
-| $__git_log_pretty_formats, alias, 		__gitcomp $__git_log_pretty_formats $...                                   |  git-completion.sh |  <->                                         |
-| $(__git, alias, 		__gitcomp $(__git send-email --dump-a...                                                     |  git-completion.sh |  <->                                         |
-| $(__git, alias, }                                                                                              |  git-completion.sh |  <->                                         |
-| $__git_log_pretty_formats, alias, 	sendemail.aliasfiletype)                  , git-completion.sh, <-> 
-$(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
-| expansion                                                                                                      |  alias             |  list-mainporcelain;others;nohelpers;alia... |
+| name |  type |  desc |  file |  note |
+| ---- | ----- | ----- | ----- | ----- |
 
 
 **git**
@@ -86,6 +100,7 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 | glog                       |  alias    |  format:"%Cred%h%Creset -%C(yellow)%d%Cre... |  git.sh |  <->  |
 | gg                         |  alias    |  'git grep --line-number'                    |  git.sh |  <->  |
 | gs                         |  alias    |  'git status'                                |  git.sh |  <->  |
+| amend                      |  alias    |  'git commit --amend --no-edit && git pus... |  git.sh |  <->  |
 | gclu                       |  alias    |  'git_clean_untracked_safely'                |  git.sh |  <->  |
 | gclb                       |  alias    |  'git_clean_local_branches'                  |  git.sh |  <->  |
 | base                       |  function |  <what does base do ?>                       |  git.sh |  <->  |
@@ -119,26 +134,41 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 
 
 
-| name     |  type  |  desc                                             |  file     |  note |
-| -------- | ------ | ------------------------------------------------- | --------- | ----- |
-| sts      |  alias |  'gimme-aws-creds'                                |  latch.sh |  <->  |
-| cdp      |  alias |  './target/universal/stage/bin/cdp-data-t...      |  latch.sh |  <->  |
-| cdp-prod |  alias |  prod" && cdp'                                    |  latch.sh |  <->  |
-| gvpn     |  alias |  'ps aux &#124; grep -i "openvpn --config"'       |  latch.sh |  <->  |
-| vpnlog   |  alias |  'sudo tail -f  /var/log/openvpn.log'             |  latch.sh |  <->  |
+| name      |  type  |  desc                                                  |  file     |  note |
+| --------- | ------ | ------------------------------------------------------ | --------- | ----- |
+| sts       |  alias |  'gimme-aws-creds'                                     |  latch.sh |  <->  |
+| cdp       |  alias |  './target/universal/stage/bin/cdp-data-t...           |  latch.sh |  <->  |
+| cdp-prod  |  alias |  prod" && cdp'                                         |  latch.sh |  <->  |
+| fresh_vpn |  alias |  "sudo ${HERE}/../xtra/vpn/refresh-vpn.sh...           |  latch.sh |  <->  |
+| gvpn      |  alias |  'ps aux &#124; grep -i "openvpn --config"'            |  latch.sh |  <->  |
+| killvpn   |  alias |  "ps aux &#124; grep -i 'openvpn --config' &#124; a... |  latch.sh |  <->  |
+| vpnlog    |  alias |  'sudo tail -f  /var/log/openvpn.log'                  |  latch.sh |  <->  |
+| loadvpn   |  alias |  'sudo launchctl load -w /Library/LaunchD...           |  latch.sh |  <->  |
+| unloadvpn |  alias |  'sudo launchctl unload -w /Library/Launc...           |  latch.sh |  <->  |
+| startvpn  |  alias |  'sudo launchctl start openvpn.latch.clie...           |  latch.sh |  <->  |
+| stopvpn   |  alias |  'sudo launchctl stop openvpn.latch.clien...           |  latch.sh |  <->  |
+| listvpn   |  alias |  'sudo launchctl list &#124; grep vpn'                 |  latch.sh |  <->  |
 
 
 **mac**
 
 
 
-| name       |  type  |  desc                                        |  file   |  note |
-| ---------- | ------ | -------------------------------------------- | ------- | ----- |
-| src        |  alias |  "source ~/.bashrc > /dev/null"              |  mac.sh |  <->  |
-| snowsql    |  alias |  '/Applications/SnowSQL.app/Contents/MacO... |  mac.sh |  <->  |
-| whatami    |  alias |  'ps -p $$'                                  |  mac.sh |  <->  |
-| syslog     |  alias |  'tail -f /var/log/system.log'               |  mac.sh |  <->  |
-| code-plugs |  alias |  """                                         |  mac.sh |  <->  |
+| name       |  type  |  desc                                                  |  file   |  note |
+| ---------- | ------ | ------------------------------------------------------ | ------- | ----- |
+| src        |  alias |  "source ~/.bashrc > /dev/null"                        |  mac.sh |  <->  |
+| snowsql    |  alias |  '/Applications/SnowSQL.app/Contents/MacO...           |  mac.sh |  <->  |
+| whatami    |  alias |  'ps -p $$'                                            |  mac.sh |  <->  |
+| syslog     |  alias |  'tail -f /var/log/system.log'                         |  mac.sh |  <->  |
+| ipecho     |  alias |  'curl ipecho.net/plain ; echo'                        |  mac.sh |  <->  |
+| myip       |  alias |  "ifconfig en0 &#124; grep inet &#124; grep -v inet... |  mac.sh |  <->  |
+| whereami   |  alias |  'pwd ; ipecho'                                        |  mac.sh |  <->  |
+| speed      |  alias |  'speedtest-cli'                                       |  mac.sh |  <->  |
+| awake      |  alias |  'caffeinate &'                                        |  mac.sh |  <->  |
+| decaf      |  alias |  'killall caffeinate'                                  |  mac.sh |  <->  |
+| code-plugs |  alias |  """                                                   |  mac.sh |  <->  |
+| hstr       |  alias |  'hstr'                                                |  mac.sh |  <->  |
+| json       |  alias |  'python -m json.tool'                                 |  mac.sh |  <->  |
 
 
 **navigation**
@@ -156,13 +186,21 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 | ...     |  alias    |  'cd ../..'                                       |  navigation.sh |  <->  |
 | ....    |  alias    |  'cd ../../..'                                    |  navigation.sh |  <->  |
 | .....   |  alias    |  'cd ../../../..'                                 |  navigation.sh |  <->  |
-| ll      |  alias    |  'pwd;ls -la'                                     |  navigation.sh |  <->  |
+| .3      |  alias    |  'cd ../../../'                                   |  navigation.sh |  <->  |
+| .4      |  alias    |  'cd ../../../../'                                |  navigation.sh |  <->  |
+| .5      |  alias    |  'cd ../../../../..'                              |  navigation.sh |  <->  |
+| ll      |  alias    |  'ls -la'                                         |  navigation.sh |  <->  |
 | xx      |  alias    |  'chmod +x'                                       |  navigation.sh |  <->  |
 | g2      |  alias    |  'goto'                                           |  navigation.sh |  <->  |
 | gd      |  alias    |  'go_deep'                                        |  navigation.sh |  <->  |
 | gf      |  alias    |  'go_find'                                        |  navigation.sh |  <->  |
 | hg      |  alias    |  'history &#124; grepe '                          |  navigation.sh |  <->  |
+| h       |  alias    |  "history"                                        |  navigation.sh |  <->  |
+| h1      |  alias    |  "history 10"                                     |  navigation.sh |  <->  |
+| h2      |  alias    |  "history 20"                                     |  navigation.sh |  <->  |
+| h3      |  alias    |  "history 30"                                     |  navigation.sh |  <->  |
 | b       |  function |  <what does b do ?>                               |  navigation.sh |  <->  |
+| cdf     |  function |  <what does cdf do ?>                             |  navigation.sh |  <->  |
 | go_deep |  function |  <what does go_deep do ?>                         |  navigation.sh |  <->  |
 | go_find |  function |  <what does go_find do ?>                         |  navigation.sh |  <->  |
 | goto    |  function |  <what does goto do ?>                            |  navigation.sh |  <->  |
@@ -170,6 +208,16 @@ $(__git |  alias             |  		__gitcomp "$__git_log_pretty_formats $... |
 | mkd     |  function |  <what does mkd do ?>                             |  navigation.sh |  <->  |
 | newtab  |  function |  <what does newtab do ?>                          |  navigation.sh |  <->  |
 | revisit |  function |  <what does revisit do ?>                         |  navigation.sh |  <->  |
+| server  |  function |  <what does server do ?>                          |  navigation.sh |  <->  |
+
+
+**private**
+
+
+
+| name      |  type  |  desc                                                  |  file       |  note |
+| --------- | ------ | ------------------------------------------------------ | ----------- | ----- |
+| fresh_env |  alias |  "pew workon `pew ls &#124; tr ' ' '\n' &#124; grep... |  private.sh |  <->  |
 
 
 **python**

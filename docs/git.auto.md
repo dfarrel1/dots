@@ -7,6 +7,7 @@
 | glog                       |  alias    |  format:"%Cred%h%Creset -%C(yellow)%d%Cre... |  git.sh |  <->  |
 | gg                         |  alias    |  'git grep --line-number'                    |  git.sh |  <->  |
 | gs                         |  alias    |  'git status'                                |  git.sh |  <->  |
+| amend                      |  alias    |  'git commit --amend --no-edit && git pus... |  git.sh |  <->  |
 | gclu                       |  alias    |  'git_clean_untracked_safely'                |  git.sh |  <->  |
 | gclb                       |  alias    |  'git_clean_local_branches'                  |  git.sh |  <->  |
 | base                       |  function |  <what does base do ?>                       |  git.sh |  <->  |

@@ -1,14 +1,1 @@
 name, type, desc, file, note
---list-cmds, alias, main;others;alias;nohelpers)               , git-completion.sh, <-> 
-(), alias, __git_pretty_aliases ()                    , git-completion.sh, <-> 
-(), alias, __git_aliased_command ()                   , git-completion.sh, <-> 
-word, alias, $(__git config --get "alias.$1")           , git-completion.sh, <-> 
-:, alias, 		\!*)	: shell command alias ;;            , git-completion.sh, <-> 
-"$GIT_TESTING_ALL_COMMAND_LIST, alias, alias;list-guide) gitk"                    , git-completion.sh, <-> 
-"$(__git, alias, main;nohelpers;alias;list-guide) gitk"     , git-completion.sh, <-> 
-"$__git_log_pretty_formats, alias, 		__gitcomp "$__git_log_pretty_formats $..., git-completion.sh, <-> 
-"$(__git, alias, 		__gitcomp "$(__git send-email --dump-a..., git-completion.sh, <-> 
-"$(__git, alias, }"                                         , git-completion.sh, <-> 
-"$__git_log_pretty_formats, alias, 	sendemail.aliasfiletype)                  , git-completion.sh, <-> 
-"$(__git, alias, 		__gitcomp "$__git_log_pretty_formats $..., git-completion.sh, <-> 
-expansion, alias, list-mainporcelain;others;nohelpers;alia..., git-completion.sh, <-> 
