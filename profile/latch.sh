@@ -41,4 +41,24 @@ alias startvpn='sudo launchctl start openvpn.latch.client'
 alias stopvpn='sudo launchctl stop openvpn.latch.client'
 alias listvpn='sudo launchctl list | grep vpn'
 
-
+# quick nav to work dirs
+work() {
+    # use local to avoid cmd shadowing    
+    local stay="$(pwd)"
+    local cdp="${GOPATH}/src/bitbucket.org/latchMaster/cdp/"
+    local dots="${GOPATH}/src/github.com/dfarrel1/dots/"
+    local airflow="${GOPATH}/src/github.com/Latch/cdp-airflow-dags/" 
+    local docker="${GOPATH}/src/github.com/Latch/docker-images/"
+    local ARR=('stay' 'cdp' 'dots' 'airflow' 'docker')
+    [[ $# -eq 0 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
+    [[ $# -eq 1 ]] && choice_set=$1    
+    IFS=@
+    case "@${ARR[*]}@" in
+        (*"@$choice_set@"*)
+            eval "cd \$$choice_set";;
+        (*)
+            echo "${choice_set} is not a valid choice."
+            IFS='|'; echo "[${ARR[*]}]";;
+    esac 
+    unset IFS   
+}
