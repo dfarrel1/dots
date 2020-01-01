@@ -12,7 +12,7 @@ alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
 
-alias ll='pwd;ls -la'
+alias ll='ls -la'
 alias xx='chmod +x'
 alias g2='goto'
 alias gd='go_deep'
