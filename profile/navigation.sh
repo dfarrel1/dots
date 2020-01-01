@@ -3,16 +3,27 @@ alias back='popd >> /dev/null'
 alias ld='dirs -p | nl -v 0'
 alias rv='revisit'
 alias cls='newtab;exit'
+# cd variants
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+
 alias ll='pwd;ls -la'
 alias xx='chmod +x'
 alias g2='goto'
 alias gd='go_deep'
 alias gf='go_find'
+
+#history
 alias hg='history | grepe '
+alias h="history"
+alias h1="history 10"
+alias h2="history 20"
+alias h3="history 30"
 
 function grepe {
     grep $1 | grep --color -E "$1|$" $2
