@@ -2,6 +2,8 @@ export AWS_PROFILE=DataTeamRole
 
 # add application password to keychain, okta-user
 # add application password to keychain, okta
+# security add-generic-password -a ${USER} -s okta-user -w <okta-user>
+# security add-generic-password -a <okta-user> -s okta -w <okta-pass>
 # bc keyring + gimme-aws-creds is buggy
 okta_user=`security find-generic-password -a ${USER} -s okta-user -w`
 alias sts='OKTA_PASSWORD="`security find-generic-password -a ${okta_user} -s okta -w`"  gimme-aws-creds'
@@ -13,7 +15,6 @@ alias cdp-prod='export JAVA_OPTS="-Xmx4g -Denv=prod" && cdp'
 # OpenVPN
 export PATH=/usr/local/opt/openvpn/sbin:$PATH
 ######## SETUP ######
-# [cli openvpn is super slow (?)]
 # download connection profile from server: https://vpn.latch.com/?src=connect 
 #
 # security add-generic-password -a ${USER} -s openvpn-user -w <vpn-user>
@@ -53,7 +54,8 @@ work() {
     local dots="${GOPATH}/src/github.com/dfarrel1/dots/"
     local airflow="${GOPATH}/src/github.com/Latch/cdp-airflow-dags/" 
     local docker="${GOPATH}/src/github.com/Latch/docker-images/"
-    local ARR=('stay' 'cdp' 'dots' 'airflow' 'docker')
+    local repos="${GOPATH}/src/github.com/dfarrel1/repo-cross-talk/"
+    local ARR=('stay' 'cdp' 'dots' 'airflow' 'docker' 'repos')
     [[ $# -eq 0 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
     [[ $# -eq 1 ]] && choice_set=$1    
     IFS=@
