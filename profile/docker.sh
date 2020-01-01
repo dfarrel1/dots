@@ -39,6 +39,44 @@ dlogs() {
   [ "$choice_set" != "" ] && local c_id="`printf \"$choice_set\" | cut -d" " -f1 | sed -n $s$p 2>/dev/null`" && echo "Entering container $c_id" && docker logs $c_id
 }
 
+dock-run() { sudo docker run -i -t --privileged $@ ;}
+dock-exec() { sudo docker exec -i -t $@ /bin/bash ;}
+dock-log() { sudo docker logs --tail=all -f $@ ;}
+dock-port() { sudo docker port $@ ;}
+dock-vol() { sudo docker inspect --format '{{ .Volumes }}' $@ ;}
+dock-ip() { sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' $@ ;}
+dock-rmc() { sudo docker rm sudo docker ps -qa --filter 'status=exited' ;}
+dock-rmi() { sudo docker rmi -f sudo docker images | grep '^<none>' | awk '{print $3}' ;}
+dock-stop() { sudo docker stop $(docker ps -a -q); }
+dock-rm() { sudo docker rm $(docker ps -a -q); }
+dock-do() { 
+  if [ "$#" -ne 1 ]; 
+    then echo "Usage: $0 start|stop|pause|unpause|" 
+  fi
+  for c in $(sudo docker ps -a | awk '{print $1}' | sed "1 d") 
+  do 
+    sudo docker $1 $c 
+  done 
+}
+
+alias k="kubectl"
+alias ka="kubectl apply -f"
+alias kpa="kubectl patch -f"
+alias ked="kubectl edit"
+alias ksc="kubectl scale"
+alias kex="kubectl exec -i -t"
+alias kg="kubectl get"
+alias kga="kubectl get all"
+alias kgall="kubectl get all --all-namespaces"
+alias kinfo="kubectl cluster-info"
+alias kdesc="kubectl describe"
+alias ktp="kubectl top"
+alias klo="kubectl logs -f"
+alias kn="kubectl get nodes"
+alias kpv="kubectl get pv"
+alias kpvc="kubectl get pvc"
+
+
 help() {
   typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
 }
