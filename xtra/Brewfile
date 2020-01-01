@@ -35,4 +35,5 @@ brew "vim"
 brew "openvpn"
 brew "gnu-sed"
 brew "speedtest-cli"
+brew "hstr"
 
