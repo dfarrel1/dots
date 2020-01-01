@@ -35,5 +35,6 @@ echo `security find-generic-password -a ${pass_user} -s openvpn-user -w` > ${aut
 cp ${HERE}/openvpn.conf /etc/newsyslog.d/
 cp ${HERE}/openvpn.latch.client.plist /Library/LaunchDaemons/
 [[ ! -d /var/log/openvpn/ ]] && mkdir /var/log/openvpn/
+touch /var/log/openvpn.log
 touch /var/log/openvpn/openvpn.log
 
