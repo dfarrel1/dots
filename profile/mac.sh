@@ -21,6 +21,11 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# Homebrew PATH
+export PATH="/usr/local/sbin:$PATH"
+alias fix_brew_perms='sudo chown -R $(whoami) $(brew --prefix)/*'
+alias fix_all_perms='sudo chown -R "$USER":admin /usr/local && sudo chown -R "$USER":admin /Library/Caches/Homebrew'
+
 #for bash error in vscode terminal
 update_terminal_cwd() {
     # Identify the directory using a "file:" scheme URL,
