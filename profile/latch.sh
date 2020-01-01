@@ -1,6 +1,10 @@
 export AWS_PROFILE=DataTeamRole
 
-alias sts='gimme-aws-creds'
+# add application password to keychain, okta-user
+# add application password to keychain, okta
+# bc keyring + gimme-aws-creds is buggy
+okta_user=`security find-generic-password -a ${USER} -s okta-user -w`
+alias sts='OKTA_PASSWORD="`security find-generic-password -a ${okta_user} -s okta -w`"  gimme-aws-creds'
 
 # for use with `sbt stage`
 alias cdp='./target/universal/stage/bin/cdp-data-transformer'
