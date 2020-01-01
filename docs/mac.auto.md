@@ -10,9 +10,9 @@
 | speed               |  alias    |  'speedtest-cli'                                       |  mac.sh |  <->  |
 | awake               |  alias    |  'caffeinate &'                                        |  mac.sh |  <->  |
 | decaf               |  alias    |  'killall caffeinate'                                  |  mac.sh |  <->  |
-| grep                |  alias    |  auto"                                                 |  mac.sh |  <->  |
-| fgrep               |  alias    |  auto"                                                 |  mac.sh |  <->  |
-| egrep               |  alias    |  auto"                                                 |  mac.sh |  <->  |
+| grep                |  alias    |  'grep --color=auto'                                   |  mac.sh |  <->  |
+| fgrep               |  alias    |  'fgrep --color=auto'                                  |  mac.sh |  <->  |
+| egrep               |  alias    |  'egrep --color=auto'                                  |  mac.sh |  <->  |
 | code-plugs          |  alias    |  """                                                   |  mac.sh |  <->  |
 | hstr                |  alias    |  'hstr'                                                |  mac.sh |  <->  |
 | json                |  alias    |  'python -m json.tool'                                 |  mac.sh |  <->  |

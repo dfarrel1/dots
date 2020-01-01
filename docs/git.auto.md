@@ -4,7 +4,7 @@
 | forcepush                  |  alias    |  'git push origin `git rev-parse --abbrev... |  git.sh |  <->  |
 | or                         |  alias    |  'open_repo'                                 |  git.sh |  <->  |
 | tt                         |  alias    |  'newtab open_repo'                          |  git.sh |  <->  |
-| glog                       |  alias    |  format:"%Cred%h%Creset -%C(yellow)%d%Cre... |  git.sh |  <->  |
+| glog                       |  alias    |  'git log --graph --pretty=format:"%Cred%... |  git.sh |  <->  |
 | gg                         |  alias    |  'git grep --line-number'                    |  git.sh |  <->  |
 | gs                         |  alias    |  'git status'                                |  git.sh |  <->  |
 | amend                      |  alias    |  'git commit --amend --no-edit && git pus... |  git.sh |  <->  |

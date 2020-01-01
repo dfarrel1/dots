@@ -17,9 +17,9 @@ export CLICOLOR=1
 # export LSCOLORS=Exfxcxdxbxegedabagacad # (dirs in blue)
 
 # Always enable colored `grep` output`
-alias grep="grep --color=auto"
-alias fgrep="fgrep --color=auto"
-alias egrep="egrep --color=auto"
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 #for bash error in vscode terminal
 update_terminal_cwd() {

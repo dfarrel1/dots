@@ -9,8 +9,8 @@ buildup, alias, 'dcbuild;dcup'                             , docker.sh, <->
 dcrun, alias, 'docker-compose run --rm'                  , docker.sh, <-> 
 burn, alias, 'buildup;dcrun'                            , docker.sh, <-> 
 drun, alias, 'docker run -it'                           , docker.sh, <-> 
-drunproxy, alias, $"$http_proxy" -it'                        , docker.sh, <-> 
-dbuild, alias, $http_proxy'                               , docker.sh, <-> 
+drunproxy, alias, 'docker run -e http_proxy=$"$http_proxy"..., docker.sh, <-> 
+dbuild, alias, 'docker build --build-arg HTTP_PROXY=$ht..., docker.sh, <-> 
 dinfo, alias, 'docker history'                           , docker.sh, <-> 
 dhist, alias, 'docker history --no-trunc'                , docker.sh, <-> 
 k, alias, "kubectl"                                  , docker.sh, <-> 

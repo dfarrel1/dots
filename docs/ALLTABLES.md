@@ -43,8 +43,8 @@
 | dcrun       |  alias    |  'docker-compose run --rm'                   |  docker.sh |  <->  |
 | burn        |  alias    |  'buildup;dcrun'                             |  docker.sh |  <->  |
 | drun        |  alias    |  'docker run -it'                            |  docker.sh |  <->  |
-| drunproxy   |  alias    |  $"$http_proxy" -it'                         |  docker.sh |  <->  |
-| dbuild      |  alias    |  $http_proxy'                                |  docker.sh |  <->  |
+| drunproxy   |  alias    |  'docker run -e http_proxy=$"$http_proxy"... |  docker.sh |  <->  |
+| dbuild      |  alias    |  'docker build --build-arg HTTP_PROXY=$ht... |  docker.sh |  <->  |
 | dinfo       |  alias    |  'docker history'                            |  docker.sh |  <->  |
 | dhist       |  alias    |  'docker history --no-trunc'                 |  docker.sh |  <->  |
 | k           |  alias    |  "kubectl"                                   |  docker.sh |  <->  |
@@ -97,7 +97,7 @@
 | forcepush                  |  alias    |  'git push origin `git rev-parse --abbrev... |  git.sh |  <->  |
 | or                         |  alias    |  'open_repo'                                 |  git.sh |  <->  |
 | tt                         |  alias    |  'newtab open_repo'                          |  git.sh |  <->  |
-| glog                       |  alias    |  format:"%Cred%h%Creset -%C(yellow)%d%Cre... |  git.sh |  <->  |
+| glog                       |  alias    |  'git log --graph --pretty=format:"%Cred%... |  git.sh |  <->  |
 | gg                         |  alias    |  'git grep --line-number'                    |  git.sh |  <->  |
 | gs                         |  alias    |  'git status'                                |  git.sh |  <->  |
 | amend                      |  alias    |  'git commit --amend --no-edit && git pus... |  git.sh |  <->  |
@@ -135,9 +135,9 @@
 
 | name      |  type     |  desc                                                  |  file     |  note |
 | --------- | --------- | ------------------------------------------------------ | --------- | ----- |
-| sts       |  alias    |  "`security find-generic-password -a ${ok...           |  latch.sh |  <->  |
+| sts       |  alias    |  'OKTA_PASSWORD="`security find-generic-p...           |  latch.sh |  <->  |
 | cdp       |  alias    |  './target/universal/stage/bin/cdp-data-t...           |  latch.sh |  <->  |
-| cdp-prod  |  alias    |  prod" && cdp'                                         |  latch.sh |  <->  |
+| cdp-prod  |  alias    |  'export JAVA_OPTS="-Xmx4g -Denv=prod" &&...           |  latch.sh |  <->  |
 | fresh_vpn |  alias    |  "sudo ${HERE}/../xtra/vpn/refresh-vpn.sh...           |  latch.sh |  <->  |
 | gvpn      |  alias    |  'ps aux &#124; grep -i "openvpn --config"'            |  latch.sh |  <->  |
 | killvpn   |  alias    |  "ps aux &#124; grep -i 'openvpn --config' &#124; a... |  latch.sh |  <->  |
@@ -167,9 +167,9 @@
 | speed               |  alias    |  'speedtest-cli'                                       |  mac.sh |  <->  |
 | awake               |  alias    |  'caffeinate &'                                        |  mac.sh |  <->  |
 | decaf               |  alias    |  'killall caffeinate'                                  |  mac.sh |  <->  |
-| grep                |  alias    |  auto"                                                 |  mac.sh |  <->  |
-| fgrep               |  alias    |  auto"                                                 |  mac.sh |  <->  |
-| egrep               |  alias    |  auto"                                                 |  mac.sh |  <->  |
+| grep                |  alias    |  'grep --color=auto'                                   |  mac.sh |  <->  |
+| fgrep               |  alias    |  'fgrep --color=auto'                                  |  mac.sh |  <->  |
+| egrep               |  alias    |  'egrep --color=auto'                                  |  mac.sh |  <->  |
 | code-plugs          |  alias    |  """                                                   |  mac.sh |  <->  |
 | hstr                |  alias    |  'hstr'                                                |  mac.sh |  <->  |
 | json                |  alias    |  'python -m json.tool'                                 |  mac.sh |  <->  |

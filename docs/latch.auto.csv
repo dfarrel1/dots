@@ -1,7 +1,7 @@
 name, type, desc, file, note
-sts, alias, "`security find-generic-password -a ${ok..., latch.sh, <-> 
+sts, alias, 'OKTA_PASSWORD="`security find-generic-p..., latch.sh, <-> 
 cdp, alias, './target/universal/stage/bin/cdp-data-t..., latch.sh, <-> 
-cdp-prod, alias, prod" && cdp'                              , latch.sh, <-> 
+cdp-prod, alias, 'export JAVA_OPTS="-Xmx4g -Denv=prod" &&..., latch.sh, <-> 
 fresh_vpn, alias, "sudo ${HERE}/../xtra/vpn/refresh-vpn.sh..., latch.sh, <-> 
 gvpn, alias, 'ps aux &#124; grep -i "openvpn --config"'      , latch.sh, <-> 
 killvpn, alias, "ps aux &#124; grep -i 'openvpn --config' &#124; a..., latch.sh, <-> 
