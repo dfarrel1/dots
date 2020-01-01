@@ -57,7 +57,6 @@ chp() {
     local ARR=('dflt' 'flip' 'pus' 'wdir' 'ogre' 'chick' 'zoid' 'long')
     [[ $# -eq 0 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
     [[ $# -eq 1 ]] && choice_set=$1
-    [[ ${#choice_set} -eq 0 ]] && echo "need a prompt choice" && return
 
     IFS=@
     case "@${ARR[*]}@" in
@@ -66,7 +65,8 @@ chp() {
         (*)
             echo "${choice_set} is not a valid choice."
             IFS='|'; echo "[${ARR[*]}]";;
-    esac    
+    esac
+    unset IFS 
 }
 
 #update vscode plugins list
