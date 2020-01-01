@@ -26,8 +26,10 @@ export CLICOLOR=1
   export LSCOLORS=GxBxhxDxfxhxhxhxhxcxcx # (dirs in cyan)
 # export LSCOLORS=Exfxcxdxbxegedabagacad # (dirs in blue)
 
-# Tell grep to highlight matches
-export GREP_OPTIONS='--color=auto'
+# Always enable colored `grep` output`
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
 
 #for bash error in vscode terminal
 update_terminal_cwd() {
