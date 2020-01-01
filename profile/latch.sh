@@ -68,3 +68,13 @@ work() {
     esac 
     unset IFS   
 }
+
+help() {
+  typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
+}
+
+if [ "_$1" = "_" ]; then
+    help
+else
+    "$@"
+fi

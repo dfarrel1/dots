@@ -5,5 +5,4 @@
 | cr       |  alias    |  'cargorun'                                  |  java.sh |  <->  |
 | vcr      |  alias    |  'worldcom;jcr'                              |  java.sh |  <->  |
 | intellij |  alias    |  'open -a "IntelliJ IDEA CE"'                |  java.sh |  <->  |
-| _jenv    |  function |  <what does _jenv do ?>                      |  java.sh |  <->  |
 | jenv     |  function |  <what does jenv do ?>                       |  java.sh |  <->  |

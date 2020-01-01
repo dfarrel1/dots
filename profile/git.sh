@@ -13,6 +13,7 @@ alias amend='git commit --amend --no-edit && git push origin `git rev-parse --ab
 alias gclu='git_clean_untracked_safely'
 alias gclb='git_clean_local_branches'
 
+#TODO Change to git only version
 gslice() {
   # Usage: gslice <git-repo> <git-dir> <output-path>"
   svn export "${1%.*}/trunk/$2" $3

@@ -9,16 +9,6 @@ alias speed='speedtest-cli'
 alias awake='caffeinate &'
 alias decaf='killall caffeinate'
 
-#bash-completion
-[[ -f "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
-
-#bash-git-prompt
-[[ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]] && source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-
-#history-completion+
-HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-bind -f ${HERE}/.inputrc
-
 # Tell ls to be colourful
 export CLICOLOR=1
 # shell colors for a black background 
@@ -87,3 +77,13 @@ alias hstr='hstr'
 
 # Json tools (pipe unformatted here to test + prettify JSON)
 alias json='python -m json.tool'
+
+help() {
+  typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
+}
+
+if [ "_$1" = "_" ]; then
+    help
+else
+    "$@"
+fi

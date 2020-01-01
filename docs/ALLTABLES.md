@@ -126,7 +126,6 @@
 | cr       |  alias    |  'cargorun'                                  |  java.sh |  <->  |
 | vcr      |  alias    |  'worldcom;jcr'                              |  java.sh |  <->  |
 | intellij |  alias    |  'open -a "IntelliJ IDEA CE"'                |  java.sh |  <->  |
-| _jenv    |  function |  <what does _jenv do ?>                      |  java.sh |  <->  |
 | jenv     |  function |  <what does jenv do ?>                       |  java.sh |  <->  |
 
 
@@ -134,41 +133,48 @@
 
 
 
-| name      |  type  |  desc                                                  |  file     |  note |
-| --------- | ------ | ------------------------------------------------------ | --------- | ----- |
-| sts       |  alias |  'gimme-aws-creds'                                     |  latch.sh |  <->  |
-| cdp       |  alias |  './target/universal/stage/bin/cdp-data-t...           |  latch.sh |  <->  |
-| cdp-prod  |  alias |  prod" && cdp'                                         |  latch.sh |  <->  |
-| fresh_vpn |  alias |  "sudo ${HERE}/../xtra/vpn/refresh-vpn.sh...           |  latch.sh |  <->  |
-| gvpn      |  alias |  'ps aux &#124; grep -i "openvpn --config"'            |  latch.sh |  <->  |
-| killvpn   |  alias |  "ps aux &#124; grep -i 'openvpn --config' &#124; a... |  latch.sh |  <->  |
-| vpnlog    |  alias |  'sudo tail -f  /var/log/openvpn.log'                  |  latch.sh |  <->  |
-| loadvpn   |  alias |  'sudo launchctl load -w /Library/LaunchD...           |  latch.sh |  <->  |
-| unloadvpn |  alias |  'sudo launchctl unload -w /Library/Launc...           |  latch.sh |  <->  |
-| startvpn  |  alias |  'sudo launchctl start openvpn.latch.clie...           |  latch.sh |  <->  |
-| stopvpn   |  alias |  'sudo launchctl stop openvpn.latch.clien...           |  latch.sh |  <->  |
-| listvpn   |  alias |  'sudo launchctl list &#124; grep vpn'                 |  latch.sh |  <->  |
+| name      |  type     |  desc                                                  |  file     |  note |
+| --------- | --------- | ------------------------------------------------------ | --------- | ----- |
+| sts       |  alias    |  "`security find-generic-password -a ${ok...           |  latch.sh |  <->  |
+| cdp       |  alias    |  './target/universal/stage/bin/cdp-data-t...           |  latch.sh |  <->  |
+| cdp-prod  |  alias    |  prod" && cdp'                                         |  latch.sh |  <->  |
+| fresh_vpn |  alias    |  "sudo ${HERE}/../xtra/vpn/refresh-vpn.sh...           |  latch.sh |  <->  |
+| gvpn      |  alias    |  'ps aux &#124; grep -i "openvpn --config"'            |  latch.sh |  <->  |
+| killvpn   |  alias    |  "ps aux &#124; grep -i 'openvpn --config' &#124; a... |  latch.sh |  <->  |
+| vpnlog    |  alias    |  'sudo tail -f  /var/log/openvpn.log'                  |  latch.sh |  <->  |
+| loadvpn   |  alias    |  'sudo launchctl load -w /Library/LaunchD...           |  latch.sh |  <->  |
+| unloadvpn |  alias    |  'sudo launchctl unload -w /Library/Launc...           |  latch.sh |  <->  |
+| startvpn  |  alias    |  'sudo launchctl start openvpn.latch.clie...           |  latch.sh |  <->  |
+| stopvpn   |  alias    |  'sudo launchctl stop openvpn.latch.clien...           |  latch.sh |  <->  |
+| listvpn   |  alias    |  'sudo launchctl list &#124; grep vpn'                 |  latch.sh |  <->  |
+| vpn       |  function |  <what does vpn do ?>                                  |  latch.sh |  <->  |
+| work      |  function |  <what does work do ?>                                 |  latch.sh |  <->  |
 
 
 **mac**
 
 
 
-| name       |  type  |  desc                                                  |  file   |  note |
-| ---------- | ------ | ------------------------------------------------------ | ------- | ----- |
-| src        |  alias |  "source ~/.bashrc > /dev/null"                        |  mac.sh |  <->  |
-| snowsql    |  alias |  '/Applications/SnowSQL.app/Contents/MacO...           |  mac.sh |  <->  |
-| whatami    |  alias |  'ps -p $$'                                            |  mac.sh |  <->  |
-| syslog     |  alias |  'tail -f /var/log/system.log'                         |  mac.sh |  <->  |
-| ipecho     |  alias |  'curl ipecho.net/plain ; echo'                        |  mac.sh |  <->  |
-| myip       |  alias |  "ifconfig en0 &#124; grep inet &#124; grep -v inet... |  mac.sh |  <->  |
-| whereami   |  alias |  'pwd ; ipecho'                                        |  mac.sh |  <->  |
-| speed      |  alias |  'speedtest-cli'                                       |  mac.sh |  <->  |
-| awake      |  alias |  'caffeinate &'                                        |  mac.sh |  <->  |
-| decaf      |  alias |  'killall caffeinate'                                  |  mac.sh |  <->  |
-| code-plugs |  alias |  """                                                   |  mac.sh |  <->  |
-| hstr       |  alias |  'hstr'                                                |  mac.sh |  <->  |
-| json       |  alias |  'python -m json.tool'                                 |  mac.sh |  <->  |
+| name                |  type     |  desc                                                  |  file   |  note |
+| ------------------- | --------- | ------------------------------------------------------ | ------- | ----- |
+| src                 |  alias    |  "source ~/.bashrc > /dev/null"                        |  mac.sh |  <->  |
+| snowsql             |  alias    |  '/Applications/SnowSQL.app/Contents/MacO...           |  mac.sh |  <->  |
+| whatami             |  alias    |  'ps -p $$'                                            |  mac.sh |  <->  |
+| syslog              |  alias    |  'tail -f /var/log/system.log'                         |  mac.sh |  <->  |
+| ipecho              |  alias    |  'curl ipecho.net/plain ; echo'                        |  mac.sh |  <->  |
+| myip                |  alias    |  "ifconfig en0 &#124; grep inet &#124; grep -v inet... |  mac.sh |  <->  |
+| whereami            |  alias    |  'pwd ; ipecho'                                        |  mac.sh |  <->  |
+| speed               |  alias    |  'speedtest-cli'                                       |  mac.sh |  <->  |
+| awake               |  alias    |  'caffeinate &'                                        |  mac.sh |  <->  |
+| decaf               |  alias    |  'killall caffeinate'                                  |  mac.sh |  <->  |
+| grep                |  alias    |  auto"                                                 |  mac.sh |  <->  |
+| fgrep               |  alias    |  auto"                                                 |  mac.sh |  <->  |
+| egrep               |  alias    |  auto"                                                 |  mac.sh |  <->  |
+| code-plugs          |  alias    |  """                                                   |  mac.sh |  <->  |
+| hstr                |  alias    |  'hstr'                                                |  mac.sh |  <->  |
+| json                |  alias    |  'python -m json.tool'                                 |  mac.sh |  <->  |
+| chp                 |  function |  <what does chp do ?>                                  |  mac.sh |  <->  |
+| update_terminal_cwd |  function |  <what does update_terminal_cwd do ?>                  |  mac.sh |  <->  |
 
 
 **navigation**
@@ -182,6 +188,7 @@
 | ld      |  alias    |  'dirs -p &#124; nl -v 0'                         |  navigation.sh |  <->  |
 | rv      |  alias    |  'revisit'                                        |  navigation.sh |  <->  |
 | cls     |  alias    |  'newtab;exit'                                    |  navigation.sh |  <->  |
+| home    |  alias    |  'cd ~'                                           |  navigation.sh |  <->  |
 | ..      |  alias    |  'cd ..'                                          |  navigation.sh |  <->  |
 | ...     |  alias    |  'cd ../..'                                       |  navigation.sh |  <->  |
 | ....    |  alias    |  'cd ../../..'                                    |  navigation.sh |  <->  |
@@ -215,9 +222,10 @@
 
 
 
-| name      |  type  |  desc                                                  |  file       |  note |
-| --------- | ------ | ------------------------------------------------------ | ----------- | ----- |
-| fresh_env |  alias |  "pew workon `pew ls &#124; tr ' ' '\n' &#124; grep... |  private.sh |  <->  |
+| name      |  type     |  desc                                                  |  file       |  note |
+| --------- | --------- | ------------------------------------------------------ | ----------- | ----- |
+| fresh_env |  alias    |  "pew workon `pew ls &#124; tr ' ' '\n' &#124; grep... |  private.sh |  <->  |
+| freshen   |  function |  <what does freshen do ?>                              |  private.sh |  <->  |
 
 
 **python**

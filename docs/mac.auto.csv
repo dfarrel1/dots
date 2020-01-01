@@ -9,6 +9,11 @@ whereami, alias, 'pwd ; ipecho'                             , mac.sh, <->
 speed, alias, 'speedtest-cli'                            , mac.sh, <-> 
 awake, alias, 'caffeinate &'                             , mac.sh, <-> 
 decaf, alias, 'killall caffeinate'                       , mac.sh, <-> 
+grep, alias, auto"                                      , mac.sh, <-> 
+fgrep, alias, auto"                                      , mac.sh, <-> 
+egrep, alias, auto"                                      , mac.sh, <-> 
 code-plugs, alias, """                                        , mac.sh, <-> 
 hstr, alias, 'hstr'                                     , mac.sh, <-> 
 json, alias, 'python -m json.tool'                      , mac.sh, <-> 
+chp, function, <what does chp do ?>, mac.sh, <->
+update_terminal_cwd, function, <what does update_terminal_cwd do ?>, mac.sh, <->

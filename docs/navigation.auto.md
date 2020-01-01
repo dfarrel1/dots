@@ -5,6 +5,7 @@
 | ld      |  alias    |  'dirs -p &#124; nl -v 0'                         |  navigation.sh |  <->  |
 | rv      |  alias    |  'revisit'                                        |  navigation.sh |  <->  |
 | cls     |  alias    |  'newtab;exit'                                    |  navigation.sh |  <->  |
+| home    |  alias    |  'cd ~'                                           |  navigation.sh |  <->  |
 | ..      |  alias    |  'cd ..'                                          |  navigation.sh |  <->  |
 | ...     |  alias    |  'cd ../..'                                       |  navigation.sh |  <->  |
 | ....    |  alias    |  'cd ../../..'                                    |  navigation.sh |  <->  |

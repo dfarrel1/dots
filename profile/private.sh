@@ -12,3 +12,12 @@ freshen() {
 # freshen needs to know where the pipenv virtual env is for repo-tools
 alias fresh_env="pew workon `pew ls | tr ' ' '\n' | grep repo-cross-talk`"
 
+help() {
+  typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
+}
+
+if [ "_$1" = "_" ]; then
+    help
+else
+    "$@"
+fi

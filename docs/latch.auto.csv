@@ -1,5 +1,5 @@
 name, type, desc, file, note
-sts, alias, 'gimme-aws-creds'                          , latch.sh, <-> 
+sts, alias, "`security find-generic-password -a ${ok..., latch.sh, <-> 
 cdp, alias, './target/universal/stage/bin/cdp-data-t..., latch.sh, <-> 
 cdp-prod, alias, prod" && cdp'                              , latch.sh, <-> 
 fresh_vpn, alias, "sudo ${HERE}/../xtra/vpn/refresh-vpn.sh..., latch.sh, <-> 
@@ -11,3 +11,5 @@ unloadvpn, alias, 'sudo launchctl unload -w /Library/Launc..., latch.sh, <->
 startvpn, alias, 'sudo launchctl start openvpn.latch.clie..., latch.sh, <-> 
 stopvpn, alias, 'sudo launchctl stop openvpn.latch.clien..., latch.sh, <-> 
 listvpn, alias, 'sudo launchctl list &#124; grep vpn'           , latch.sh, <-> 
+vpn, function, <what does vpn do ?>, latch.sh, <->
+work, function, <what does work do ?>, latch.sh, <->
