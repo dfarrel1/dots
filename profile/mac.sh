@@ -66,6 +66,8 @@ chp() {
     unset IFS 
 }
 
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 #update vscode plugins list
 alias code-plugs="""
 echo '#!/bin/bash' > ${HERE}/../xtra/IDEs/install-vscode-exts.sh \
