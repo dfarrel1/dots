@@ -1,3 +1,5 @@
+alias note='jupyter notebook'
+
 pipup() {
   curl https://bootstrap.pypa.io/get-pip.py | python
 }
