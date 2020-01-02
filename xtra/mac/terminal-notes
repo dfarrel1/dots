@@ -1,0 +1,8 @@
+1. Use Automator to create a new 'Quick Action' which is installed as a new 'Service' on the OS.
+[Saved an installable service in ~/Dropbox/LatchDropbox/LaunchTerminal]
+
+2. System Preferences -> Keyboard -> Shortcuts -> Find your service (e.g. Launch Terminal) -> Add a shortcut
+
+-- Should be good to go after that.
+
+refs: https://stackoverflow.com/questions/35954184/is-there-a-keyboard-shortcut-hotkey-to-open-terminal-in-macos/35954589#35954589
