@@ -3,4 +3,5 @@ gimme-aws-creds==2.2.0
 okta==0.0.4
 pew==1.2.0
 pipenv==2018.11.26
+jupyter==1.0.0
 
