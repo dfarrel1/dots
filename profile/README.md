@@ -36,18 +36,12 @@ security add-generic-password -a <okta-user> -s okta -w <okta-pass>
 #
 ```
 
-4. Remove extra stuff
-
-Inside [profile/.profile](profile/.profile) you can remove from the list of 
-sourced files ( on the line starting with `sources=( ...` ) `private` and anything else 
-that you don't want.
-
-5. Add system python reqs
+4. Add system python reqs
 
 `pip install -r ${dots_dir}/xtra/python/global-reqs.txt`
 
 
-6. Open up a terminal and have fun!
+5. Open up a terminal and have fun!
 
 
 ## Uninstall
