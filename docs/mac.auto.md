@@ -13,6 +13,8 @@
 | grep                |  alias    |  'grep --color=auto'                                   |  mac.sh |  <->  |
 | fgrep               |  alias    |  'fgrep --color=auto'                                  |  mac.sh |  <->  |
 | egrep               |  alias    |  'egrep --color=auto'                                  |  mac.sh |  <->  |
+| fix_brew_perms      |  alias    |  'sudo chown -R $(whoami) $(brew --prefix...           |  mac.sh |  <->  |
+| fix_all_perms       |  alias    |  'sudo chown -R "$USER":admin /usr/local ...           |  mac.sh |  <->  |
 | code-plugs          |  alias    |  """                                                   |  mac.sh |  <->  |
 | hstr                |  alias    |  'hstr'                                                |  mac.sh |  <->  |
 | json                |  alias    |  'python -m json.tool'                                 |  mac.sh |  <->  |

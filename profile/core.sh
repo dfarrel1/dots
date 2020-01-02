@@ -1,4 +1,6 @@
 # Applications
+#
+# instructions to install cli for code: https://code.visualstudio.com/docs/setup/mac
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 alias open_with_code='open -a "Visual Studio Code"'
 alias c.='repo_info -s;open_with_code $git_local_path'
@@ -14,7 +16,7 @@ alias chfox='open -a Charles;open -a Firefox'
 alias excel='open -a "Microsoft Excel"'
 
 alias ports='lsof -i | grep -E "(LISTEN|ESTABLISHED)"'
-alias epc='open_with_code $PROFILE_DIR'
+alias epc='open_with_code $PROFILE_DIR' # [E]dit [P]rofile (with) [C]ode
 alias epa='atom $PROFILE_DIR'
 alias ep='epc'
 

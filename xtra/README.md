@@ -1,6 +1,6 @@
 # xtra
 
-## xplain
+## overview
 
 - Managing settings for IDEs and Applications
   - Intellij Idea
@@ -8,6 +8,18 @@
   - Sublime
   - SourceTree
 - Managing Mac OS brew installs
+
+### IDEs
+
+IDE settings
+
+### mac
+
+notes about customizing MacOS
+
+### python
+
+global system python reqs
 
 ### Brewfile
 

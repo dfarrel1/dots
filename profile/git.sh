@@ -9,6 +9,7 @@ alias gg='git grep --line-number'
 alias gs='git status'
 
 alias amend='git commit --amend --no-edit && git push origin `git rev-parse --abbrev-ref HEAD` --force'
+alias amendall='git add . && git commit --amend --no-edit && git push origin `git rev-parse --abbrev-ref HEAD` --force'
 
 alias gclu='git_clean_untracked_safely'
 alias gclb='git_clean_local_branches'
