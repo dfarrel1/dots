@@ -1,4 +1,6 @@
 alias note='jupyter notebook'
+alias python='/usr/local/bin/python3'
+alias pip='/usr/local/bin/pip3'
 
 pipup() {
   curl https://bootstrap.pypa.io/get-pip.py | python
@@ -25,9 +27,22 @@ new_venv() {
   venv "$name"
 }
 
-alias python=/usr/local/bin/python3
-alias pip=/usr/local/bin/pip3
-
+# WIP
+python_server='''
+import http.server
+import socketserver
+PORT = 8000
+Handler = http.server.SimpleHTTPRequestHandler
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    print("serving at port", PORT)
+    httpd.serve_forever()
+'''
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+	local port="${1:-8000}";
+	sleep 1 && open "http://localhost:${port}/" &
+	python -m http.server ${port}
+}
 
 help() {
   typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'

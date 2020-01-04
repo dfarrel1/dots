@@ -7,6 +7,8 @@ Aliases and Functions for a happy bash experience.
 
 > **_NOTE:_** Use only `/bin/bash` with these dotfiles. Things get hairy with other flavors like zsh.
 
+---
+
 **[Installation](./profile/README.md#Installation)**
 
 ---

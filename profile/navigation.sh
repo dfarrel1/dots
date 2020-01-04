@@ -26,6 +26,9 @@ alias h1="history 10"
 alias h2="history 20"
 alias h3="history 30"
 
+# Pretty print the path
+alias path='echo $PATH | tr -s ":" "\n"'
+
 function grepe {
     grep $1 | grep --color -E "$1|$" $2
 }
@@ -40,22 +43,6 @@ function cdf() { # short for `cdfinder`
 	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
 }
 
-# WIP
-python_server='''
-import http.server
-import socketserver
-PORT = 8000
-Handler = http.server.SimpleHTTPRequestHandler
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print("serving at port", PORT)
-    httpd.serve_forever()
-'''
-# Start an HTTP server from a directory, optionally specifying the port
-function server() {
-	local port="${1:-8000}";
-	sleep 1 && open "http://localhost:${port}/" &
-	python -m http.server ${port}
-}
 
 newtab() {
   osascript -e 'tell application "Terminal" to activate' -e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down'
