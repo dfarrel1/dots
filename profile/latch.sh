@@ -1,10 +1,10 @@
 export AWS_PROFILE=DataTeamRole
 
-# add application password to keychain, okta-user
-# add application password to keychain, okta
+# add application passwords to keychain, 'okta-user' and 'okta'
 # security add-generic-password -a ${USER} -s okta-user -w <okta-user>
 # security add-generic-password -a <okta-user> -s okta -w <okta-pass>
-# bc keyring + gimme-aws-creds is buggy
+
+# keyring + gimme-aws-creds is buggy
 okta_user=`security find-generic-password -a ${USER} -s okta-user -w`
 alias sts='OKTA_PASSWORD="`security find-generic-password -a ${okta_user} -s okta -w`"  gimme-aws-creds'
 
@@ -15,22 +15,26 @@ alias cdp-prod='export JAVA_OPTS="-Xmx4g -Denv=prod" && cdp'
 # OpenVPN
 export PATH=/usr/local/opt/openvpn/sbin:$PATH
 ######## SETUP ######
-# download connection profile from server: https://vpn.latch.com/?src=connect 
+# # 1. download connection profile from server: https://vpn.latch.com/?src=connect 
 #
-# security add-generic-password -a ${USER} -s openvpn-user -w <vpn-user>
-# security add-generic-password -a ${USER} -s openvpn -w <vpn-password>
+# # 2. make sure 'okta-user' and 'okta' are set in os-x-keychain
 #
-# visudo #(not working)
-# <user>             ALL = (ALL) NOPASSWD: /bin/bash vpn
-# <user>             ALL = (ALL) NOPASSWD: /bin/bash killvpn
+# # 3. sudoers
+# visudo
+# <user>             ALL = (ALL) NOPASSWD: /bin/bash openvpn
+#
+# # note: make sure you don't shadow user with admin group rule 
+# # bc that will nullify these additions to the sudoers file
 
-alias fresh_vpn="sudo ${HERE}/../xtra/vpn/refresh-vpn.sh"
+alias fresh_vpn="${HERE}/../xtra/vpn/refresh-vpn.sh"
 
 # from terminal
 vpn () {
+    local okta_user=`security find-generic-password -a ${USER} -s okta-user -w`
+    local okta_pass=`security find-generic-password -a ${okta_user} -s okta -w`
     tmpfile=$(mktemp /tmp/openvpn-creds.XXXXXX)
-    echo `security find-generic-password -a ${USER} -s openvpn-user -w` >&${tmpfile}
-    echo `security find-generic-password -a ${USER} -s openvpn -w` >>${tmpfile}
+    echo ${okta_user} >&${tmpfile}
+    echo ${okta_pass} >>${tmpfile}
     sudo openvpn --config /usr/local/etc/openvpn/client.ovpn --auth-user-pass $tmpfile --daemon
     rm "$tmpfile"
 }
