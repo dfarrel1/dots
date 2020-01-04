@@ -49,3 +49,15 @@ security add-generic-password -a <okta-user> -s okta -w <okta-pass>
 To remove, you just need to take out the line you added in `~/.bashrc`
 
 You can also delete the directory containing this repo.
+
+## dotfile design pattern
+
+`./profile/<category>.sh` files will include env, aliases, and functions for a scope of functionality. This modularity should make discoverability and management easier.
+
+The following files are core dependencies:
+
+- [.profile](./profile/.profile)
+- [core.sh](./profile/core.sh)
+- [navigation.sh](./profile/navigation.sh)
+
+Everything else is (and should remain) self-contained and independent of one another with the exception of the those dependencies above. That means you can start your own dotfiles repo by stripping down to those three files if you want to avoid the overhead of inspecting so many files.
