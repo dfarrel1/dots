@@ -2,7 +2,7 @@
 
 Bash profile modifying files
 
-> **_NOTE:_** Use only `/bin/bash` with these dotfiles. Things get hairy with other flavors.
+> **_NOTE:_** Use only `/bin/bash` with these dotfiles. Things get hairy with other flavors like zsh.
 
 The following is WIP. I'm trying to document code to make it more easily digestible. 
 These manual outlines written out below are not yet complete. 
@@ -58,8 +58,6 @@ A comprehensive list of all aliases and functions.
 
 \>\>**[everything](./docs/ALLTABLES.md)**<<
  
-### Disclaimer
-I am slowly incorporating these functions and aliases into my workflow. I cannot guarantee that all of these work as expected yet. Use at your own risk ;)
 
 ### Note about documentation
 The `./profile` directory is self-sufficient. The surrounding repo is for automatically constructing documentation.
