@@ -3,6 +3,7 @@ tap "homebrew/cask"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "AdoptOpenJDK/openjdk"
+tap "mongodb/brew"
 brew "gcc"
 # brew "apache-spark", link: false # for local spark
 brew "python"
@@ -38,4 +39,5 @@ brew "openvpn"
 brew "gnu-sed"
 brew "speedtest-cli"
 brew "hstr"
-
+brew "mongodb-community@4.2"
+cask "eclipse-jee" # for netsuite work
