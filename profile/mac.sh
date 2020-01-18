@@ -9,6 +9,11 @@ alias speed='speedtest-cli'
 alias awake='caffeinate &'
 alias decaf='killall caffeinate'
 
+# copy last command
+pb() {
+    fc -lnr -1 | awk '{$1=$1};1' | tr -d '\n' | pbcopy 
+}
+
 # Tell ls to be colourful
 export CLICOLOR=1
 # shell colors for a black background 
