@@ -41,4 +41,5 @@ brew "speedtest-cli"
 brew "hstr"
 brew "mongodb-community@4.2"
 brew "aws-iam-authenticator"
+brew "watson"
 cask "eclipse-jee" # for netsuite work
