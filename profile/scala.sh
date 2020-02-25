@@ -2,6 +2,11 @@ function stest {
     eval "sbt \" testOnly $1 \" "
 }
 
+function dc_stest {    
+    echo "sbt dockerComposeTest \" testOnly $1 \" "
+    eval "sbt dockerComposeTest \" testOnly $1 \" "
+}
+
 function get_test_name {    
     b=$(basename $1)
     echo "${b%.*}"
