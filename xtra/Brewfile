@@ -41,5 +41,6 @@ brew "speedtest-cli"
 brew "hstr"
 brew "mongodb-community@4.2"
 brew "aws-iam-authenticator"
-brew "watson"
+brew "watson" # time tracking
+brew "bloop" # fast scala builds
 cask "eclipse-jee" # for netsuite work
