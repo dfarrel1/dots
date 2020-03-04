@@ -3,8 +3,7 @@ function stest {
 }
 
 function dc_stest {    
-    echo "sbt dockerComposeTest \" testOnly $1 \" "
-    eval "sbt dockerComposeTest \" testOnly $1 \" "
+    eval "docker exec -it cdp-etl-container /bin/bash -c 'sbt \"testOnly *${1}\"'"
 }
 
 function get_test_name {    
@@ -19,7 +18,7 @@ get_tests() {
     [ ! -z "$1" ] && export choice_set=`grep -l $1 $choice_set` #use input to filter
     [[ ! $choice_set == *$'\n'* ]] && echo -e "running test: $choice_set" #print if only one
     get_choice $1 && testname=$(get_test_name "$2$choice_set$3")  #chose if more than one
-    ( stest "*${testname}"  )
+    ( dc_stest "*${testname}"  )
   fi
 }
 
