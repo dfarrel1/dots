@@ -10,6 +10,7 @@ alias gs='git status'
 
 alias amend='git commit --amend --no-edit && git push origin `git rev-parse --abbrev-ref HEAD` --force'
 alias amendall='git add . && git commit --amend --no-edit && git push origin `git rev-parse --abbrev-ref HEAD` --force'
+alias gitclean='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
 gadd() {
  git add . && git commit -m "$1" && git push
