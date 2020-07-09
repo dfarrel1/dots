@@ -153,7 +153,7 @@ function git_clean_local_branches {
     OPTION="-D";
   fi;
 
-  TO_REMOVE=`git branch -r | awk "{print \\$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \\$1}"`;
+  TO_REMOVE=`git branch -r | grep -v "master" | grep -v ^* | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin | grep -v "master") | awk "{print \$1}"`;
   if [[ "$TO_REMOVE" != "" ]] && [[ `echo $TO_REMOVE | wc -l | bc` != "0" ]]; then
     echo "Removing branches...";
     echo "";
