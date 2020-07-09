@@ -1,0 +1,17 @@
+[DEFAULT]
+okta_org_url = <fillme>
+okta_auth_server = 
+client_id = 
+gimme_creds_server = appurl
+aws_appname = 
+aws_rolename = 
+write_aws_creds = True
+cred_profile = role
+okta_username = <fillme>
+app_url = <fillme>
+resolve_aws_alias = False
+preferred_mfa_type = push
+remember_device = True
+aws_default_duration = 43200 
+device_token = 
+output_format = export
