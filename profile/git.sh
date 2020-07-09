@@ -20,9 +20,22 @@ alias gclu='git_clean_untracked_safely'
 alias gclb='git_clean_local_branches'
 
 #TODO Change to git only version
+# gslice() {
+#   # Usage: gslice <git-repo> <git-dir> <output-path>"
+#   svn export "${1%.*}/trunk/$2" $3
+# }
+
 gslice() {
   # Usage: gslice <git-repo> <git-dir> <output-path>"
-  svn export "${1%.*}/trunk/$2" $3
+  mkdir $3 \
+  && cd $3 \
+  && git init \
+  && echo -e "[core]\nsparseCheckout = true" > .git/config \
+  && git remote add origin $1 \
+  && echo $2 >> .git/info/sparse-checkout \
+  && git pull origin master \
+  && rm -rf .git \
+  && ( mv $2/* $2/.* . || rmdir $2 )
 }
 
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
