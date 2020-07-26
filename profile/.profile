@@ -29,3 +29,6 @@ fi
 
 # history-completion+
 bind -f ${HERE}/.inputrc
+
+#rbenv for ruby
+eval "$(rbenv init -)"
