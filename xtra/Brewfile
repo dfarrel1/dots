@@ -43,4 +43,5 @@ brew "mongodb-community@4.2"
 brew "aws-iam-authenticator"
 brew "watson" # time tracking
 brew "scalacenter/bloop/bloop" # fast scala builds
-cask "eclipse-jee" # for netsuite work
+brew "ruby"
+brew "ruby-build"
