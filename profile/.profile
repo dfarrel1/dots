@@ -10,13 +10,19 @@ do
     source "$PROFILE_DIR/$i.sh" > /dev/null
 done
 
-# some stuff just for me. go ahead and personalize your own :)
+# some stuff that's just for me. 
+# go ahead and personalize your own
+# you will need to fork your own repo at this point if you want
+# to use this aspect of the dot files
 if [ "$NONPUBLIC_DOTS_BOOL" = true ] ; then
-    private_sources=( private )
-    for i in "${private_sources[@]}"
-    do
-        source "$PROFILE_DIR/$i.sh" > /dev/null
-    done
+    private_sources=( "${GOPATH}/src/github.com/dfarrel1/dots-private/" )    
+    for private_dir in "${private_sources[@]}"    
+        do
+            for i in "${private_dir}"/*.sh
+                do
+                    source "$i"
+                done
+        done
 fi
 
 # More third-party stuff

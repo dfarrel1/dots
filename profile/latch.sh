@@ -1,3 +1,6 @@
+# A few convenience functions to make 
+# life easier as a developer at Latch
+
 export AWS_PROFILE=DataTeamRole
 
 # add application passwords to keychain, 'okta-user' and 'okta'
