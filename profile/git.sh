@@ -19,12 +19,6 @@ gadd() {
 alias gclu='git_clean_untracked_safely'
 alias gclb='git_clean_local_branches'
 
-#TODO Change to git only version
-# gslice() {
-#   # Usage: gslice <git-repo> <git-dir> <output-path>"
-#   svn export "${1%.*}/trunk/$2" $3
-# }
-
 gslice() {
   # Usage: gslice <git-repo> <git-dir> <output-path>"
   mkdir $3 \
