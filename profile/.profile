@@ -25,9 +25,11 @@ if [ "$NONPUBLIC_DOTS_BOOL" = true ] ; then
         done
 fi
 
-# More third-party stuff
 
 # bash-completion
+# TODO: maybe remove this since asdf installed a bash completion
+# Bash completion has been installed to:
+#  /usr/local/etc/bash_completion.d
 [[ -f "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
 
 # bash-git-prompt
@@ -38,3 +40,8 @@ bind -f ${HERE}/.inputrc
 
 #rbenv for ruby
 eval "$(rbenv init -)"
+
+#asdf
+# TODO: this might need more love: https://dev.to/0xdonut/manage-your-runtime-environments-using-asdf-and-not-nvm-or-rvm-etc-2c7c
+# according to official instructions though, this is all we need ( https://asdf-vm.com/#/core-manage-asdf-vm )
+. $(brew --prefix asdf)/asdf.sh
