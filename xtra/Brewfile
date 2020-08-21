@@ -4,12 +4,22 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "AdoptOpenJDK/openjdk"
 tap "mongodb/brew"
+
+### convenience and small apps
+brew "jq"
+brew "tldr"
 brew "gcc"
+brew "htop"
+brew "bash-completion"
+brew "bash-git-prompt"
+brew "speedtest-cli"
+brew "hstr"
+brew "watson" # time tracking
+
+### applications and big dependencies
 # brew "apache-spark", link: false # for local spark
 brew "python"
 brew "awscli"
-brew "bash-completion"
-brew "bash-git-prompt"
 brew "glib"
 brew "graphviz"
 brew "helm"
@@ -24,8 +34,7 @@ cask "sublime-text"
 cask "visual-studio-code"
 cask "google-chrome"
 brew "chrome-cli"
-# cask "spectacle" # switched to rectangle
-cask "rectangle"
+cask "rectangle" ## cask "spectacle" # switched to rectangle
 brew "npm"
 cask "adoptopenjdk8"
 cask "adoptopenjdk12"
@@ -37,11 +46,19 @@ brew "wget"
 brew "vim"
 brew "openvpn"
 brew "gnu-sed"
-brew "speedtest-cli"
-brew "hstr"
 brew "mongodb-community@4.2"
 brew "aws-iam-authenticator"
-brew "watson" # time tracking
 brew "scalacenter/bloop/bloop" # fast scala builds
 brew "ruby"
 brew "ruby-build"
+
+### flutter stuff
+brew "asdf"
+cask "android-sdk"
+cask "android-studio"
+cask "intel-haxm"
+# already have adoptopenjdk8
+
+# personal apps
+cask "telegram"
+cast "whatsapp"
