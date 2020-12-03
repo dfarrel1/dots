@@ -8,7 +8,6 @@ tap "mongodb/brew"
 ### convenience and small apps
 brew "jq"
 brew "tldr"
-brew "gcc"
 brew "htop"
 brew "bash-completion"
 brew "bash-git-prompt"
@@ -18,6 +17,8 @@ brew "watson" # time tracking
 
 ### applications and big dependencies
 # brew "apache-spark", link: false # for local spark
+brew "rbenv"
+brew "gcc"
 brew "python"
 brew "awscli"
 brew "glib"
@@ -61,4 +62,17 @@ cask "intel-haxm"
 
 # personal apps
 cask "telegram"
-cast "whatsapp"
+cask "whatsapp"
+
+# work apps
+brew slack
+brew tableau
+brew 1password
+
+# problem casks
+# cask "java" # Xcode Developer Tools missing # didn't retest
+# cask "java11" # didn't retest
+# one of these two failed. Didn't retest.
+# cask "adoptopenjdk8"
+# cask "adoptopenjdk12"
+
