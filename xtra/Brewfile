@@ -68,6 +68,7 @@ cask "whatsapp"
 brew slack
 brew tableau
 brew 1password
+cask dbvisualizer
 
 # problem casks
 # cask "java" # Xcode Developer Tools missing # didn't retest
