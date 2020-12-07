@@ -23,6 +23,7 @@ brew "python"
 brew "awscli"
 brew "glib"
 brew "graphviz"
+brew "kubectl"
 brew "helm"
 brew "jenv"
 brew "mysql"
@@ -30,19 +31,8 @@ brew "pipenv"
 brew "postgresql"
 brew "sbt"
 brew "scala@2.13"
-cask "intellij-idea"
-cask "sublime-text"
-cask "visual-studio-code"
-cask "google-chrome"
 brew "chrome-cli"
-cask "rectangle" ## cask "spectacle" # switched to rectangle
 brew "npm"
-cask "adoptopenjdk8"
-cask "adoptopenjdk12"
-cask "java11"
-cask "java"
-cask "snowflake-snowsql"
-cask "sourcetree"
 brew "wget"
 brew "vim"
 brew "openvpn"
@@ -52,6 +42,17 @@ brew "aws-iam-authenticator"
 brew "scalacenter/bloop/bloop" # fast scala builds
 brew "ruby"
 brew "ruby-build"
+cask "intellij-idea"
+cask "sublime-text"
+cask "visual-studio-code"
+cask "google-chrome"
+cask "rectangle" ## cask "spectacle" # switched to rectangle
+cask "adoptopenjdk8"
+cask "adoptopenjdk12"
+cask "java11"
+cask "java"
+cask "snowflake-snowsql"
+cask "sourcetree"
 
 ### flutter stuff
 brew "asdf"
@@ -77,3 +78,7 @@ cask dbvisualizer
 # cask "adoptopenjdk8"
 # cask "adoptopenjdk12"
 
+#docker
+brew docker
+cask docker
+brew docker-compose
