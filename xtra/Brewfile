@@ -42,6 +42,7 @@ brew "aws-iam-authenticator"
 brew "scalacenter/bloop/bloop" # fast scala builds
 brew "ruby"
 brew "ruby-build"
+# GUI type installs
 cask "intellij-idea"
 cask "sublime-text"
 cask "visual-studio-code"
@@ -53,6 +54,7 @@ cask "java11"
 cask "java"
 cask "snowflake-snowsql"
 cask "sourcetree"
+cask "microsoft-excel"
 
 ### flutter stuff
 brew "asdf"
