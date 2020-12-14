@@ -9,11 +9,13 @@ tap "mongodb/brew"
 brew "jq"
 brew "tldr"
 brew "htop"
+brew "git"
 brew "bash-completion"
 brew "bash-git-prompt"
 brew "speedtest-cli"
 brew "hstr"
 brew "watson" # time tracking
+brew "z"
 
 ### applications and big dependencies
 # brew "apache-spark", link: false # for local spark

@@ -4,7 +4,7 @@ export PATH="/usr/local/bin:${PATH}"
 export GOPATH=~
 
 # these are for everyone
-sources=( core navigation git-completion docker python java scala mac git sls vim z )
+sources=( core navigation docker mac git vim )
 for i in "${sources[@]}"
 do
     source "$PROFILE_DIR/$i.sh" > /dev/null
