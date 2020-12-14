@@ -1,0 +1,22 @@
+####~/.ssh/config###
+
+# Default SSH config for github.com
+Host github.com
+  HostName github.com
+  IdentityFile ~/.ssh/<ssh-private-key>
+
+# ALIAS specific SSH config
+Host <alias-name>
+  HostName github.com 
+  IdentityFile ~/.ssh/<ssh-private-key>
+
+
+chmod 600 ~/.ssh/config
+
+###CONFIG GIT REPO###
+
+# default usage
+git remote add origin git@github.com:<user>/<repo>.git
+
+#alias usage
+git remote add dfarrel1 git@<alias-name>:<user>/<repo>.git
