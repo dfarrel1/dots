@@ -4,6 +4,7 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "AdoptOpenJDK/openjdk"
 tap "mongodb/brew"
+tap "hashicorp/tap"
 
 ### convenience and small apps
 brew "jq"
@@ -45,6 +46,8 @@ brew "aws-iam-authenticator"
 brew "scalacenter/bloop/bloop" # fast scala builds
 brew "ruby"
 brew "ruby-build"
+brew "hashicorp/tap/terraform"
+
 # GUI type installs
 cask "intellij-idea"
 cask "sublime-text"
@@ -58,6 +61,7 @@ cask "java"
 cask "snowflake-snowsql"
 cask "sourcetree"
 cask "microsoft-excel"
+cask "microsoft-powerpoint"
 
 ### flutter stuff
 brew "asdf"
