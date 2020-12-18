@@ -101,9 +101,13 @@ open_repo() {
   fi
 }
 
+alias2host() {
+  ssh -G $1 | awk '$1 == "hostname" { print $2 }'
+}
+
 browse() {
   repo_info -s || (echo "no repo found" && return 1)
-  current_path="$git_domain/$git_org/$git_repo"
+  current_path="$(alias2host $git_domain)/$git_org/$git_repo"
   [ ! -z $git_tree ] && [ $git_tree != "" ] && current_path="$current_path/tree/$git_branch/$git_tree" && [ ! -z $1 ] && current_path="$current_path/$1"
   open -a "Google Chrome" "http://$current_path"
 }

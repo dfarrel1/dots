@@ -11,7 +11,7 @@ Host <alias-name>
   IdentityFile ~/.ssh/<ssh-private-key>
 
 # NOTE: aliasing host breaks 'browse' (alias: 'bro') function in profile/navigation.sh
-# TODO: use a different path, or make 'brows' smarter about host aliases
+# FIXED: alias2host in profile/git.sh
 
 chmod 600 ~/.ssh/config
 
