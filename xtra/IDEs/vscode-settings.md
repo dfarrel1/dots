@@ -16,3 +16,6 @@ Shortcuts
 2. Download Key : Shift + Alt + D
 
 (on macOS: Shift + Option + U / Shift + Option + D)
+
+custom key binding
+settings json file: shift+alt+cmd+p
