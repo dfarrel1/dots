@@ -46,7 +46,12 @@ brew "aws-iam-authenticator"
 brew "scalacenter/bloop/bloop" # fast scala builds
 brew "ruby"
 brew "ruby-build"
-brew "hashicorp/tap/terraform"
+#use tfenv to install terraform
+#brew "hashicorp/tap/terraform"
+brew "chamber"
+brew "direnv"
+brew "tfenv"
+brew "terraform-docs"
 
 # GUI type installs
 cask "intellij-idea"
@@ -62,6 +67,7 @@ cask "snowflake-snowsql"
 cask "sourcetree"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
+cask "aws-vault"
 
 ### flutter stuff
 brew "asdf"
