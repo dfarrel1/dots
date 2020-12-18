@@ -45,3 +45,6 @@ eval "$(rbenv init -)"
 # TODO: this might need more love: https://dev.to/0xdonut/manage-your-runtime-environments-using-asdf-and-not-nvm-or-rvm-etc-2c7c
 # according to official instructions though, this is all we need ( https://asdf-vm.com/#/core-manage-asdf-vm )
 . $(brew --prefix asdf)/asdf.sh
+
+# z
+. $(brew --prefix z)/etc/profile.d/z.sh

@@ -1,3 +1,5 @@
+# NOTE -- started using brew install instead. Leaving this file here
+# as a deprecation step.
 # Copyright (c) 2009 rupa deadwyler. Licensed under the WTFPL license, Version 2
 # https://github.com/rupa/z
 
