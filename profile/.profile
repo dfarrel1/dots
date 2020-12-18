@@ -2,6 +2,7 @@
 
 export PATH="/usr/local/bin:${PATH}"
 export GOPATH=~
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # these are for everyone
 sources=( core navigation docker mac git vim )

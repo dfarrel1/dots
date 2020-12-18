@@ -42,10 +42,12 @@ brew "vim"
 brew "openvpn"
 brew "gnu-sed"
 brew "mongodb-community@4.2"
+# ARM ISSUES START
 brew "aws-iam-authenticator"
 brew "scalacenter/bloop/bloop" # fast scala builds
 brew "ruby"
 brew "ruby-build"
+# ARM ISSUES END
 #use tfenv to install terraform
 #brew "hashicorp/tap/terraform"
 brew "chamber"
@@ -59,32 +61,35 @@ cask "sublime-text"
 cask "visual-studio-code"
 cask "google-chrome"
 cask "rectangle" ## cask "spectacle" # switched to rectangle
-cask "adoptopenjdk8"
-cask "adoptopenjdk12"
-cask "java11"
-cask "java"
 cask "snowflake-snowsql"
 cask "sourcetree"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
 cask "aws-vault"
 
+# java
+cask "adoptopenjdk/openjdk/adoptopenjdk8"
+cask "adoptopenjdk12"
+brew "java11"
+brew "java"
+
 ### flutter stuff
 brew "asdf"
 cask "android-sdk"
 cask "android-studio"
-cask "intel-haxm"
+# cask "intel-haxm" # fails due to AMD # "The machine doesn't support VT-X."
 # already have adoptopenjdk8
 
 # personal apps
 cask "telegram"
 cask "whatsapp"
+cask "spotify"
 
 # work apps
-brew slack
-brew tableau
-brew 1password
-cask dbvisualizer
+cask "slack"
+cask "tableau"
+cask "1password"
+cask "dbvisualizer"
 
 # problem casks
 # cask "java" # Xcode Developer Tools missing # didn't retest
@@ -94,6 +99,10 @@ cask dbvisualizer
 # cask "adoptopenjdk12"
 
 #docker
-brew docker
-cask docker
-brew docker-compose
+brew "docker"
+cask "docker"
+brew "docker-compose"
+
+
+# Mac App Store
+mas "Bear", id: 1091189122
