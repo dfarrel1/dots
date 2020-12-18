@@ -1,0 +1,45 @@
+Brew install on ARM Mac
+
+cd /opt
+
+mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
+
+sudo chown -R $(whoami) /opt/homebrew
+
+/etc/paths:
+/usr/bin
+/usr/sbin
+/bin
+/opt/homebrew/bin
+/opt/homebrew/opt
+
+# stop typing in password for every sudo
+Modify /etc/sudoers to include
+sudo chmod +w /etc/sudoers
+sudo vim /etc/sudoers
+<username> ALL=(ALL) NOPASSWD: ALL
+
+Edit the line:
+%admin ALL=(ALL) ALL
+To say:
+%admin ALL=(ALL) NOPASSWD: ALL
+
+
+### home-brew install warning
+
+Warning: You are running macOS on a arm64 CPU architecture.
+We do not provide support for this (yet).
+Reinstall Homebrew under Rosetta 2 until we support it.
+You will encounter build failures with some formulae.
+Please create pull requests instead of asking for help on Homebrew's GitHub,
+Twitter or any other official channels. You are responsible for resolving
+any issues you experience while you are running this
+unsupported configuration.
+
+https://github.com/Homebrew/discussions/discussions
+
+https://github.com/Homebrew/discussions/discussions/149
+
+arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+Echo ‘alias mbrew="arch -x86_64 brew”’ >> ~/.bashrc
