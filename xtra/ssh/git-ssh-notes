@@ -20,3 +20,6 @@ git remote add origin git@github.com:<user>/<repo>.git
 
 #alias usage
 git remote add <whatever> git@<alias-name>:<user>/<repo>.git
+
+### SOURCE TREE AUTHENTICATION FAILURE FIX ###
+Sourcetree > Preferences > Git > Use System Git
