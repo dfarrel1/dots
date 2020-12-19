@@ -1,5 +1,7 @@
 # entire .profile should take about 0.9 seconds to load (+ ASL on standard bash)
 # see xtra/mac/faster-bash-notes if terminal load is more than a second
+# TODO: port over to zsh.
+
 [[ "$0" =~ "dotfiles/profile" ]] && PROFILE_DIR=$(dirname $0) || PROFILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export PATH="/usr/local/bin:${PATH}"
