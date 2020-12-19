@@ -90,6 +90,7 @@ cask "slack"
 cask "tableau"
 cask "1password"
 cask "dbvisualizer"
+cask "signal"
 
 # problem casks
 # cask "java" # Xcode Developer Tools missing # didn't retest
