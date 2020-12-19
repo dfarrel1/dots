@@ -72,8 +72,18 @@ clone() {
     repo_info -s || (echo "no repo found" && return 1)
     repo="git@$git_domain:$git_org/$repo.git"
   fi
-  echo $repo
-  clone_dir=$(echo $repo | sed "s/.*:\//:\//g" | sed "s/git@/:\/\//g" | sed "s/:\/\///g" | sed "s/:/\//g" | sed "s/\.git//g")
+  
+  if [[ "$repo" == *"@"*":"* ]]; 
+  # apply alias2host only on pattern git@<alias>:<username>/<repo>.git
+  then
+    alias=$(echo $repo | sed 's/.*@\(.*\):.*/\1/')    
+    host=$(alias2host $alias)
+    repo_real=$(echo $repo | sed 's/'"$alias"'/'"$host"'/g')
+  else
+    repo_real=$repo
+  fi
+      
+  clone_dir=$(echo $repo_real | sed "s/.*:\//:\//g" | sed "s/git@/:\/\//g" | sed "s/:\/\///g" | sed "s/:/\//g" | sed "s/\.git//g")
   clone_dir="$GOPATH/src/$clone_dir"
   git clone $repo $clone_dir
   cd $clone_dir
