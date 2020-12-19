@@ -3,3 +3,6 @@ client.ovpn
 
 # vscode
 .vscode
+
+# pipenv
+Pipfile.lock
