@@ -1,5 +1,5 @@
-# entire .profile should take about 0.9 seconds to load
-
+# entire .profile should take about 0.9 seconds to load (+ ASL on standard bash)
+# see xtra/mac/faster-bash-notes if terminal load is more than a second
 [[ "$0" =~ "dotfiles/profile" ]] && PROFILE_DIR=$(dirname $0) || PROFILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export PATH="/usr/local/bin:${PATH}"
@@ -35,7 +35,7 @@ fi
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 bind -f ${HERE}/.inputrc
 
-# NOTE: bash_complete takes 0.5 secs to load
+# NOTE: SLOWEST ITEM: bash_complete takes 0.5 secs to load
 brew_sources=( 
     "/etc/bash_completion" \
     "/opt/bash-git-prompt/share/gitprompt.sh" \
