@@ -1,4 +1,4 @@
-alias src="source ~/.bashrc > /dev/null"
+alias src="source ~/.bashrc"
 alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
 alias whatami='ps -p $$'
 alias syslog='tail -f /var/log/system.log'
