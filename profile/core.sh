@@ -70,6 +70,15 @@ close() {
   [ "$choice_set" != "" ] && kill -9 `echo $choice_set | sed -E -e "s/[[:blank:]]+/ /g" | cut -d" " -f2`
 }
 
+#direnv
+eval "$(direnv hook bash)"
+
+#TERRAFORM
+tf() {
+  [[ "$#" -eq 0 ]] && terraform
+  [[ "$#" -gt 0 ]] && aws-vault exec ${AWS_PROFILE} -- terraform "$@"
+}
+
 help() {
   typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
 }
