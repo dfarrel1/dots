@@ -9,6 +9,8 @@ export GOPATH=~
 export BASH_SILENCE_DEPRECATION_WARNING=1
 timer=${SRC_TIMER:-false}
 
+direnv allow $PROFILE_DIR
+
 # these are for everyone
 sources=( core navigation docker mac git vim )
 for i in "${sources[@]}"

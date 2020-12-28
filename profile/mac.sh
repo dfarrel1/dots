@@ -90,6 +90,39 @@ alias hstr='hstr'
 # Json tools (pipe unformatted here to test + prettify JSON)
 alias json='python -m json.tool'
 
+1pass() {
+    eval $(op signin dds)
+}
+
+awskeys() {
+    VAULT_NAME="dene"
+    ITEM_NAME="rogue-ci AWS key"
+    export AWS_REGION=us-gov-east-1
+    # Prereqs:
+    # 1) jq installed https://stedolan.github.io/jq/
+    # 2) 1Password client installed https://support.1password.com/command-line/
+    # 3) Signed in once before with op signin https://support.1password.com/command-line/#sign-in-or-out
+    if [ ! $OP_SESSION_dds ]; then
+        eval $(op signin dds);
+    else
+        # This is a void command to test whether your session is still valid,
+        op list users > /dev/null 2>&1 
+        test $? -eq 0 || eval $(op signin dds);
+    fi;
+
+    ITEM=`op get item "$ITEM_NAME" --vault=$VAULT_NAME`
+    export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="username") | .value'`
+    export AWS_SECRET_ACCESS_KEY=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="password") | .value'`
+}
+
+awsmfa() {
+    op get totp "AWS rogue-ci Login"
+}
+
+console() {
+    aws-vault login labyrinth-developers --mfa-token $(awsmfa)
+}
+
 help() {
   typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
 }

@@ -66,6 +66,7 @@ cask "sourcetree"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
 cask "aws-vault"
+cask "1password-cli"
 
 # java
 cask "adoptopenjdk/openjdk/adoptopenjdk8"
