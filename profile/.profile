@@ -7,9 +7,9 @@
 export PATH="/usr/local/bin:${PATH}"
 export GOPATH=~
 export BASH_SILENCE_DEPRECATION_WARNING=1
-timer=${SRC_TIMER:-false}
 
-direnv allow $PROFILE_DIR
+# for diagnostics 
+timer=${SRC_TIMER:-false}
 
 # these are for everyone
 sources=( core navigation docker mac git vim )
@@ -22,18 +22,6 @@ do
     fi
     echo $i && source "$PROFILE_DIR/$i.sh" > /dev/null
 done
-
-# just for me. 
-if [ "$NONPUBLIC_DOTS_BOOL" = true ] ; then
-    private_sources=( "${GOPATH}/src/github.com/dfarrel1/dots-private/" )    
-    for private_dir in "${private_sources[@]}"    
-        do
-            for i in "${private_dir}"/*.sh
-                do
-                    source "$i"
-                done
-        done
-fi
 
 # history-completion+
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -56,13 +44,14 @@ do
     [[ -f "$(brew --prefix)/$i" ]] && echo "$i" && source "$(brew --prefix)/$i"    
 done
 
-# rbenv is slow -- dropping out of profile
-# if [ ${timer} = true ]
-#     then
-#         echo -e "\n\nrbenv for ruby"
-#         time eval "$(rbenv init -)"
-# fi
-# eval "$(rbenv init -)"
+# rbenv - 0.1 secs
+if [ ${timer} = true ]
+    then
+        echo -e "\n\nrbenv for ruby"
+        time eval "$(rbenv init -)"
+fi
+eval "$(rbenv init -)"
+echo "rbenv"
 echo "Done: .profile loaded."
 
 # NOTES

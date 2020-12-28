@@ -9,6 +9,16 @@ alias speed='speedtest-cli'
 alias awake='caffeinate &'
 alias decaf='killall caffeinate'
 
+
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# aws-vault (set on a per repo basis with ./.envrc)
+export AWS_VAULT_KEYCHAIN_NAME=login
+export AWS_SDK_LOAD_CONFIG=1
+export CHAMBER_KMS_KEY_ALIAS='alias/aws/ssm'
+export CHAMBER_USE_PATHS=1
+
+
 # copy last command
 pb() {
     fc -lnr -1 | awk '{$1=$1};1' | tr -d '\n' | pbcopy 
@@ -71,7 +81,6 @@ chp() {
     unset IFS 
 }
 
-HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 #update vscode plugins list
 alias code-plugs="""
