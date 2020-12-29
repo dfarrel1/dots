@@ -103,7 +103,8 @@ alias json='python -m json.tool'
     eval $(op signin dds)
 }
 
-awskeys() {
+# this is redundant w/ aws-vault; will prob deprecate
+awskeys() {    
     VAULT_NAME="dene"
     ITEM_NAME="rogue-ci AWS key"
     export AWS_REGION=us-gov-east-1
@@ -124,8 +125,34 @@ awskeys() {
     export AWS_SECRET_ACCESS_KEY=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="password") | .value'`
 }
 
-awsmfa() {
-    op get totp "AWS rogue-ci Login"
+mfa() {
+    onepass_alias="dds"
+    if [ ! $OP_SESSION_${onepass_alias} ]; then
+        eval $(op signin $onepass_alias);
+    else
+        # This is a void command to test whether your session is still valid,
+        op list users > /dev/null 2>&1 
+        test $? -eq 0 || eval $(op signin $onepass_alias);
+    fi;
+    provider=${1-aws}
+    allowed_providers=("aws github")
+    ARRAY=( "aws:AWS rogue-ci Login"
+            "github:DDS Github"
+          )
+    if [[ ! " ${allowed_providers[@]} " =~ " ${provider} " ]]; then
+        echo "provider ${provider} not recognized. exiting mfa." 
+        return 1
+    fi
+    unset secret_name
+    for pairing in "${ARRAY[@]}" ; do
+        KEY="${pairing%%:*}"
+        VALUE="${pairing##*:}"
+        if [ $KEY = $provider ]; then
+            secret_name=$VALUE
+        fi
+    done     
+    echo "{provider: ${provider}, secret: \"${secret_name}\"} " && \
+    op get totp "${secret_name}" | tr -d '\n' | pbcopy && echo "Copied to clipboard."
 }
 
 console() {
