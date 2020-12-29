@@ -22,6 +22,7 @@ h, alias, "history"                                  , navigation.sh, <->
 h1, alias, "history 10"                               , navigation.sh, <-> 
 h2, alias, "history 20"                               , navigation.sh, <-> 
 h3, alias, "history 30"                               , navigation.sh, <-> 
+path, alias, 'echo $PATH &#124; tr -s ":" "\n"'              , navigation.sh, <-> 
 b, function, <what does b do ?>, navigation.sh, <->
 cdf, function, <what does cdf do ?>, navigation.sh, <->
 go_deep, function, <what does go_deep do ?>, navigation.sh, <->
@@ -31,4 +32,3 @@ grepe, function, <what does grepe do ?>, navigation.sh, <->
 mkd, function, <what does mkd do ?>, navigation.sh, <->
 newtab, function, <what does newtab do ?>, navigation.sh, <->
 revisit, function, <what does revisit do ?>, navigation.sh, <->
-server, function, <what does server do ?>, navigation.sh, <->

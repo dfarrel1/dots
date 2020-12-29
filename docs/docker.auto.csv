@@ -43,3 +43,4 @@ dock-run, function, <what does dock-run do ?>, docker.sh, <->
 dock-stop, function, <what does dock-stop do ?>, docker.sh, <->
 dock-vol, function, <what does dock-vol do ?>, docker.sh, <->
 dsh, function, <what does dsh do ?>, docker.sh, <->
+restartdocker, function, <what does restartdocker do ?>, docker.sh, <->

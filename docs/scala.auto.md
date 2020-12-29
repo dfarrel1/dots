@@ -5,6 +5,7 @@
 | RM_COLOR          |  function |  <what does RM_COLOR do ?>          |  scala.sh |  <->  |
 | RM_TRAILING_COLON |  function |  <what does RM_TRAILING_COLON do ?> |  scala.sh |  <->  |
 | clicks            |  function |  <what does clicks do ?>            |  scala.sh |  <->  |
+| dc_stest          |  function |  <what does dc_stest do ?>          |  scala.sh |  <->  |
 | get_test_name     |  function |  <what does get_test_name do ?>     |  scala.sh |  <->  |
 | get_tests         |  function |  <what does get_tests do ?>         |  scala.sh |  <->  |
 | stest             |  function |  <what does stest do ?>             |  scala.sh |  <->  |

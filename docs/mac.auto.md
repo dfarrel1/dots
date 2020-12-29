@@ -1,6 +1,6 @@
 | name                |  type     |  desc                                                  |  file   |  note |
 | ------------------- | --------- | ------------------------------------------------------ | ------- | ----- |
-| src                 |  alias    |  "source ~/.bashrc > /dev/null"                        |  mac.sh |  <->  |
+| src                 |  alias    |  "source ~/.bashrc"                                    |  mac.sh |  <->  |
 | snowsql             |  alias    |  '/Applications/SnowSQL.app/Contents/MacO...           |  mac.sh |  <->  |
 | whatami             |  alias    |  'ps -p $$'                                            |  mac.sh |  <->  |
 | syslog              |  alias    |  'tail -f /var/log/system.log'                         |  mac.sh |  <->  |
@@ -18,5 +18,10 @@
 | code-plugs          |  alias    |  """                                                   |  mac.sh |  <->  |
 | hstr                |  alias    |  'hstr'                                                |  mac.sh |  <->  |
 | json                |  alias    |  'python -m json.tool'                                 |  mac.sh |  <->  |
+| 1pass               |  function |  <what does 1pass do ?>                                |  mac.sh |  <->  |
+| awskeys             |  function |  <what does awskeys do ?>                              |  mac.sh |  <->  |
 | chp                 |  function |  <what does chp do ?>                                  |  mac.sh |  <->  |
+| console             |  function |  <what does console do ?>                              |  mac.sh |  <->  |
+| mfa                 |  function |  <what does mfa do ?>                                  |  mac.sh |  <->  |
+| pb                  |  function |  <what does pb do ?>                                   |  mac.sh |  <->  |
 | update_terminal_cwd |  function |  <what does update_terminal_cwd do ?>                  |  mac.sh |  <->  |
