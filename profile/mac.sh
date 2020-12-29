@@ -126,12 +126,23 @@ awskeys() {
 }
 
 mfa() {
-    provider=${1-aws}
+    # mfa <provider> [-p]
+    # w/o "-p" the code will be copied to clipboard
+    # w/ "-p" the code will be printed to stdout
+    [ $# -eq 0 ] && { echo "Usage: mfa <provider> [-p]"; return 1; }
+    provider=$1
+    
+    unset PRINT; OPTIND=2
+    while getopts p opt; do        
+        case $opt in
+            p) PRINT=true
+            ;;            
+        esac
+    done    
     onepass_alias="dds"
     if [ ! $OP_SESSION_${onepass_alias} ]; then
         eval $(op signin $onepass_alias);
     else
-        # This is a void command to test whether your session is still valid,
         op list users > /dev/null 2>&1 
         test $? -eq 0 || eval $(op signin $onepass_alias);
     fi;    
@@ -150,12 +161,17 @@ mfa() {
             secret_name=$VALUE
         fi
     done     
-    echo "{provider: ${provider}, secret: \"${secret_name}\"} " && \
-    op get totp "${secret_name}" | tr -d '\n' | pbcopy && echo "Copied to clipboard."
+    
+    if [ "$PRINT" = true ] ; then
+        op get totp "${secret_name}"
+    else
+        echo "{provider: ${provider}, secret: \"${secret_name}\"} " && \
+        op get totp "${secret_name}" | tr -d '\n' | pbcopy && echo "Copied to clipboard."
+    fi    
 }
 
 console() {
-    aws-vault login labyrinth-developers --mfa-token $(awsmfa)
+    aws-vault login labyrinth-developers --mfa-token $(mfa aws -p)
 }
 
 help() {
