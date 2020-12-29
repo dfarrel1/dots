@@ -126,6 +126,7 @@ awskeys() {
 }
 
 mfa() {
+    provider=${1-aws}
     onepass_alias="dds"
     if [ ! $OP_SESSION_${onepass_alias} ]; then
         eval $(op signin $onepass_alias);
@@ -133,12 +134,10 @@ mfa() {
         # This is a void command to test whether your session is still valid,
         op list users > /dev/null 2>&1 
         test $? -eq 0 || eval $(op signin $onepass_alias);
-    fi;
-    provider=${1-aws}
+    fi;    
     allowed_providers=("aws github")
     ARRAY=( "aws:AWS rogue-ci Login"
-            "github:DDS Github"
-          )
+            "github:DDS Github" )
     if [[ ! " ${allowed_providers[@]} " =~ " ${provider} " ]]; then
         echo "provider ${provider} not recognized. exiting mfa." 
         return 1
