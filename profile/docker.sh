@@ -76,6 +76,17 @@ alias kn="kubectl get nodes"
 alias kpv="kubectl get pv"
 alias kpvc="kubectl get pvc"
 
+restartdocker() {
+  # Stop all Docker containers without confirmation
+  # [ Assumes all running Docker containers are in a quiesced state ]
+  echo "stopping all containers" && docker ps -q | xargs -L1 docker stop
+  # Stop Docker for Mac gracefully
+  echo "stopping docker gracefully" && test -z "$(docker ps -q 2>/dev/null)" && osascript -e 'quit app "Docker"'
+  # Stop Docker brutaly
+  docker info > /dev/null 2>&1  && echo "brutally killing docker" && killall Docker
+  # Start Docker gracefully
+  echo "starting docker" && open --background -a Docker
+}
 
 help() {
   typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'
