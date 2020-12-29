@@ -130,9 +130,7 @@ mfa() {
     # w/o "-p" the code will be copied to clipboard
     # w/ "-p" the code will be printed to stdout
     [ $# -eq 0 ] && { echo "Usage: mfa <provider> [-p]"; return 1; }
-    provider=$1
-    
-    unset PRINT; OPTIND=2
+    provider=$1; OPTIND=2; unset PRINT; unset SECRET_NAME;
     while getopts p opt; do        
         case $opt in
             p) PRINT=true
@@ -146,27 +144,26 @@ mfa() {
         op list users > /dev/null 2>&1 
         test $? -eq 0 || eval $(op signin $onepass_alias);
     fi;    
-    allowed_providers=("aws github")
+    allowed_providers=("aws github gitlab")
     ARRAY=( "aws:AWS rogue-ci Login"
-            "github:DDS Github" )
+            "github:DDS Github" 
+            "gitlab:Gitlab Rogue Squadron" )
     if [[ ! " ${allowed_providers[@]} " =~ " ${provider} " ]]; then
-        echo "provider ${provider} not recognized. exiting mfa." 
-        return 1
+        echo "provider ${provider} not recognized. exiting mfa."; return 1
     fi
-    unset secret_name
+
     for pairing in "${ARRAY[@]}" ; do
-        KEY="${pairing%%:*}"
-        VALUE="${pairing##*:}"
+        KEY="${pairing%%:*}"; VALUE="${pairing##*:}"
         if [ $KEY = $provider ]; then
-            secret_name=$VALUE
+            SECRET_NAME=$VALUE
         fi
     done     
     
     if [ "$PRINT" = true ] ; then
-        op get totp "${secret_name}"
+        op get totp "${SECRET_NAME}"
     else
-        echo "{provider: ${provider}, secret: \"${secret_name}\"} " && \
-        op get totp "${secret_name}" | tr -d '\n' | pbcopy && echo "Copied to clipboard."
+        echo "{provider: ${provider}, secret: \"${SECRET_NAME}\"} " && \
+        op get totp "${SECRET_NAME}" | tr -d '\n' | pbcopy && echo "Copied to clipboard."
     fi    
 }
 
