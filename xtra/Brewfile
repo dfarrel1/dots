@@ -19,14 +19,15 @@ brew "watson" # time tracking
 brew "z"
 
 ### applications and big dependencies
-# brew "apache-spark", link: false # for local spark
+# brew "apache-spark", link: false # for local spark # (need for polynote)
 brew "rbenv"
 brew "gcc"
 brew "python"
+brew "jupyter" # issue: had to: brew link --overwrite jupyterlab
 brew "awscli"
 brew "glib"
 brew "graphviz"
-brew "kubectl"
+brew "kubectl" # issue: /usr/local/bin/kubectl already exists, can't link
 brew "helm"
 brew "jenv"
 brew "gradle"
@@ -54,6 +55,8 @@ brew "chamber"
 brew "direnv"
 brew "tfenv"
 brew "terraform-docs"
+# cask "anaconda" # (needed for polynote)
+
 
 # GUI type installs
 cask "intellij-idea"
@@ -103,7 +106,7 @@ cask "signal"
 #docker
 brew "docker"
 cask "docker"
-brew "docker-compose"
+brew "docker-compose" # issue /usr/local/bin/docker-compose already exists, can't link
 
 
 # Mac App Store
