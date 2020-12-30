@@ -168,7 +168,7 @@ mfa() {
 }
 
 console() {
-    aws-vault login labyrinth-developers --mfa-token $(mfa aws -p)
+    aws-vault login rogue-ci-admin --mfa-token $(mfa aws -p)
 }
 
 help() {
