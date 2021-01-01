@@ -99,28 +99,22 @@ alias hstr='hstr'
 # Json tools (pipe unformatted here to test + prettify JSON)
 alias json='python -m json.tool'
 
-1pass() {
-    eval $(op signin dds)
-}
+# 1pass() {
+#     eval $(op signin dds)
+# }
+
+alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh"
 
 # this is redundant w/ aws-vault; will prob deprecate
-awskeys() {    
-    VAULT_NAME="dene"
-    ITEM_NAME="rogue-ci AWS key"
-    export AWS_REGION=us-gov-east-1
+awskeys() {        
     # Prereqs:
-    # 1) jq installed https://stedolan.github.io/jq/
-    # 2) 1Password client installed https://support.1password.com/command-line/
-    # 3) Signed in once before with op signin https://support.1password.com/command-line/#sign-in-or-out
-    if [ ! $OP_SESSION_dds ]; then
-        eval $(op signin dds);
-    else
-        # This is a void command to test whether your session is still valid,
-        op list users > /dev/null 2>&1 
-        test $? -eq 0 || eval $(op signin dds);
-    fi;
-
-    ITEM=`op get item "$ITEM_NAME" --vault=$VAULT_NAME`
+    # 1) jq https://stedolan.github.io/jq/
+    # 2) 1Password cli https://support.1password.com/command-line/
+    # 3) alias 1p + op_session.sh
+    # 4) Signed in once before with op signin https://support.1password.com/command-line/#sign-in-or-out
+    VAULT_NAME="dene"
+    ITEM_NAME="'rogue-ci AWS key'"
+    ITEM=`1p get item "${ITEM_NAME}" --vault=$VAULT_NAME`
     export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="username") | .value'`
     export AWS_SECRET_ACCESS_KEY=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="password") | .value'`
 }
@@ -136,14 +130,7 @@ mfa() {
             p) PRINT=true
             ;;            
         esac
-    done    
-    onepass_alias="dds"
-    if [ ! $OP_SESSION_${onepass_alias} ]; then
-        eval $(op signin $onepass_alias);
-    else
-        op list users > /dev/null 2>&1 
-        test $? -eq 0 || eval $(op signin $onepass_alias);
-    fi;    
+    done        
     allowed_providers=("aws github gitlab")
     ARRAY=( "aws:AWS rogue-ci Login"
             "github:DDS Github" 
@@ -151,19 +138,17 @@ mfa() {
     if [[ ! " ${allowed_providers[@]} " =~ " ${provider} " ]]; then
         echo "provider ${provider} not recognized. exiting mfa."; return 1
     fi
-
     for pairing in "${ARRAY[@]}" ; do
         KEY="${pairing%%:*}"; VALUE="${pairing##*:}"
         if [ $KEY = $provider ]; then
             SECRET_NAME=$VALUE
         fi
-    done     
-    
+    done         
     if [ "$PRINT" = true ] ; then
-        op get totp "${SECRET_NAME}"
+        1p get totp "'"${SECRET_NAME}"'"
     else
-        echo "{provider: ${provider}, secret: \"${SECRET_NAME}\"} " && \
-        op get totp "${SECRET_NAME}" | tr -d '\n' | pbcopy && echo "Copied to clipboard."
+        echo "{provider: ${provider}, secret: \"${SECRET_NAME}\"} -- Retreiving MFA One-Time Passcode..." && \
+        1p get totp "'"${SECRET_NAME}"'" | tr -d '\n' | tee /dev/stderr | pbcopy && echo " -- Copied to clipboard."
     fi    
 }
 
