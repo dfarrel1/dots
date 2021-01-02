@@ -20,6 +20,7 @@ brew "z"
 brew "shellcheck"
 
 ### applications and big dependencies
+brew "bash" # issue: had to: brew link --overwrite bash
 # brew "apache-spark", link: false # for local spark # (need for polynote)
 brew "rbenv"
 brew "gcc"
