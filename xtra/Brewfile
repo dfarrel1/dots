@@ -17,6 +17,7 @@ brew "speedtest-cli"
 brew "hstr"
 brew "watson" # time tracking
 brew "z"
+brew "shellcheck"
 
 ### applications and big dependencies
 # brew "apache-spark", link: false # for local spark # (need for polynote)

@@ -19,4 +19,7 @@ FILENAME="dotfiles-`date +%d-%m-%Y-%T`.tgz"
 zip:
 	tar -zcvf ${FILENAME} --exclude .git --exclude .pytest* --exclude *.egg-info .
 
+lint:
+	shellcheck profile/*.sh
+
 .PHONY: docs
