@@ -4,7 +4,6 @@
 
 [[ "$0" =~ "dotfiles/profile" ]] && PROFILE_DIR=$(dirname $0) || PROFILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-export PATH="/usr/local/bin:${PATH}"
 export GOPATH=~
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
@@ -44,14 +43,15 @@ do
     [[ -f "$(brew --prefix)/$i" ]] && echo "$i" && source "$(brew --prefix)/$i"    
 done
 
-# rbenv - 0.1 secs
-if [ ${timer} = true ]
-    then
-        echo -e "\n\nrbenv for ruby"
-        time eval "$(rbenv init -)"
-fi
-eval "$(rbenv init -)"
-echo "rbenv"
+# # rbenv - 0.1 secs
+# # not using
+# if [ ${timer} = true ]
+#     then
+#         echo -e "\n\nrbenv for ruby"
+#         time eval "$(rbenv init -)"
+# fi
+# eval "$(rbenv init -)"
+# echo "rbenv"
 echo "Done: .profile loaded."
 
 # NOTES
