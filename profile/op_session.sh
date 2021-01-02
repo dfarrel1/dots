@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
-
 # starts (or restarts) a 1password cli session, sets 30 minute countdown variable
-
 # use: OP_CLOUD_ACCOUNT="[your-account-name]" source /path/to/op_session.sh command
 # e.g.: OP_CLOUD_ACCOUNT="familyname" source ~/op_session.sh get account
 
-
 check_session(){
     # attempt sign in if session is not active
+    # echo "(check_session - before) -- OP_SESSION_dds: ${OP_SESSION_dds}"
     if ! op get account &> /dev/null; then
         signin
         check_session
     fi
+    # echo "(check_session - after) -- OP_SESSION_dds: ${OP_SESSION_dds}"
 }
 
 main(){
@@ -31,6 +30,10 @@ main(){
             ;;
         update )
             op update;;
+        session )
+            check_session
+            eval "echo \$OP_SESSION_$OP_CLOUD_ACCOUNT"
+            ;;
         * ) # active session required for everything else
             check_session
             eval "op $*"
@@ -56,7 +59,7 @@ signin(){
         awk -F\" '{print $2}'
     )
     export OP_SESSION_"$OP_CLOUD_ACCOUNT"="$token"
+    # echo "(signin) -- OP_SESSION_dds: ${OP_SESSION_dds}"
 }
-
 
 main "$*"

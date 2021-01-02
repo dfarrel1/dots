@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# needs bash >= 4
 alias src="source ~/.bashrc"
 alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
 alias whatami='ps -p $$'
@@ -14,7 +15,7 @@ alias decaf='killall caffeinate'
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # aws-vault (set on a per repo basis with ./.envrc)
-[[ ! -d ~/.vim ]] && ln -fs "${HERE}/../.envrc/" "~/.envrc"
+[[ ! -f ~/.envrc ]] && touch ~/.envrc && ln -fs "${HERE}/.envrc" ~/.envrc
 
 # copy last command
 pb() {
@@ -25,7 +26,7 @@ pb() {
 export CLICOLOR=1
 # shell colors for a black background 
 # interactive generator https://geoff.greer.fm/lscolors/
-  export LSCOLORS=GxBxhxDxfxhxhxhxhxcxcx # (dirs in cyan)
+ export LSCOLORS=GxBxhxDxfxhxhxhxhxcxcx # (dirs in cyan)
 # export LSCOLORS=Exfxcxdxbxegedabagacad # (dirs in blue)
 
 # Always enable colored `grep` output`
@@ -88,7 +89,8 @@ ${HERE}/../xtra/IDEs/install-vscode-exts.sh \
 """
 
 # https://github.com/dvorka/hstr
-source ${HERE}/.hstrrc
+# managed by homebrew now
+# source ${HERE}/.hstrrc
 
 # to include in docs
 alias hstr='hstr'
@@ -96,61 +98,139 @@ alias hstr='hstr'
 # Json tools (pipe unformatted here to test + prettify JSON)
 alias json='python -m json.tool'
 
-# 1pass() {
-#     eval $(op signin dds)
-# }
-
 alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh"
 
 # this is redundant w/ aws-vault; will prob deprecate
 awskeys() {        
-    # Prereqs:
-    # 1) jq https://stedolan.github.io/jq/
-    # 2) 1Password cli https://support.1password.com/command-line/
-    # 3) alias 1p + op_session.sh
-    # 4) Signed in once before with op signin https://support.1password.com/command-line/#sign-in-or-out
     VAULT_NAME="dene"
     ITEM_NAME="'rogue-ci AWS key'"
+    OP_CLOUD_ACCOUNT='dds'
+    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    eval "export ${SESSION_NAME}=$(1p session)" 
     ITEM=`1p get item "${ITEM_NAME}" --vault=$VAULT_NAME`
     export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="username") | .value'`
     export AWS_SECRET_ACCESS_KEY=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="password") | .value'`
 }
 
-mfa() {
-    # mfa <provider> [-p]
-    # w/o "-p" the code will be copied to clipboard
-    # w/ "-p" the code will be printed to stdout
-    [ $# -eq 0 ] && { echo "Usage: mfa <provider> [-p]"; return 1; }
-    provider=$1; OPTIND=2; unset PRINT; unset SECRET_NAME;
-    while getopts p opt; do        
-        case $opt in
-            p) PRINT=true
-            ;;            
-        esac
-    done        
-    allowed_providers=("aws github gitlab")
-    ARRAY=( "aws:AWS rogue-ci Login"
-            "github:DDS Github" 
-            "gitlab:Gitlab Rogue Squadron" )
-    if [[ ! " ${allowed_providers[@]} " =~ " ${provider} " ]]; then
-        echo "provider ${provider} not recognized. exiting mfa."; return 1
-    fi
+awskeys_selfcontained() {
+    # independent of '1p'           
+    if [ ! $OP_SESSION_dds ]; then
+        eval $(op signin dds);
+    else
+        op list users > /dev/null 2>&1 
+        test $? -eq 0 || eval $(op signin dds);
+    fi;
+    VAULT_NAME="dene"
+    ITEM_NAME="rogue-ci AWS key"
+    ITEM=`op get item "$ITEM_NAME" --vault=$VAULT_NAME`    
+    export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="username") | .value'`
+    export AWS_SECRET_ACCESS_KEY=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="password") | .value'`
+ }
+
+
+bash3_dict_lookup() {
+    # takes an array of colon separated strings and looks up 
+    # right side (val) given left side (key)
+    [ $# -lt 2 ] && { echo "Usage: bash3_dict_lookup <A[@]> <KEY>"; return 1; }
+    local ARRAY=("$1")
+    local SEARCH_KEY="$2"    
+    local KEY_IS_IN_DICT=false
     for pairing in "${ARRAY[@]}" ; do
         KEY="${pairing%%:*}"; VALUE="${pairing##*:}"
-        if [ $KEY = $provider ]; then
-            SECRET_NAME=$VALUE
+        if [ $KEY = $SEARCH_KEY ]; then
+            KEY_IS_IN_DICT=true
+            FOUND_VALUE=$VALUE
         fi
-    done         
-    if [ "$PRINT" = true ] ; then
-        1p get totp "'"${SECRET_NAME}"'"
+    done
+    if $KEY_IS_IN_DICT ; then
+        echo "${FOUND_VALUE}"
     else
-        echo "{provider: ${provider}, secret: \"${SECRET_NAME}\"} -- Retreiving MFA One-Time Passcode..." && \
-        1p get totp "'"${SECRET_NAME}"'" | tr -d '\n' | tee /dev/stderr | pbcopy && echo " -- Copied to clipboard."
-    fi    
+        echo "KEY ${SEARCH_KEY} not found."
+        return 1
+    fi
+}
+
+mfa_bash3() {
+    # leverages op_session.sh script to get OTP; bash 3 compliant
+    [ $# -eq 0 ] && { echo "Usage: mfa_bash3 <provider>"; return 1; }
+    local PROVIDER=$1; unset SECRET_NAME;
+    local SECRETS_ARRAY=( \
+        "aws:AWS rogue-ci Login"
+        "github:DDS Github" 
+        "gitlab:Gitlab Rogue Squadron" )
+    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"        
+    local SECRET_NAME=$(bash3_dict_lookup "${SECRETS_ARRAY}" "${PROVIDER}") || eval ${ON_FAILURE}
+    OP_CLOUD_ACCOUNT='dds'
+    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    eval "export ${SESSION_NAME}=$(1p session)"      
+    1p get totp "'"${SECRET_NAME}"'" | tr -d '\n' | pbcopy && pbpaste && echo ''
+}
+
+# TODO -- choose pure 'op' or op_session.sh implementation
+mfa_bash3_selfcontained() {
+    # leverages 1password cli 'op' to get OTP; bash 3 compliant
+    [ $# -eq 0 ] && { echo "Usage: mfa_bash3 <provider>"; return 1; }
+    local PROVIDER=$1; unset SECRET_NAME;    
+    local SECRETS_ARRAY=( \
+        "aws:AWS rogue-ci Login"
+        "github:DDS Github" 
+        "gitlab:Gitlab Rogue Squadron" )
+    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"        
+    local SECRET_NAME=$(bash3_dict_lookup "${SECRETS_ARRAY}" "${PROVIDER}") || eval ${ON_FAILURE}       
+    ONEPASS_ALIAS="dds"
+    if [ ! $OP_SESSION_${ONEPASS_ALIAS} ]; then
+        eval $(op signin $ONEPASS_ALIAS);
+    else
+        op list users > /dev/null 2>&1 
+        test $? -eq 0 || eval $(op signin $ONEPASS_ALIAS);
+    fi;    
+    op get totp "${SECRET_NAME}" | tr -d '\n' | pbcopy && pbpaste && echo ''
+}
+
+mfa() {
+    # requires bash >= 4
+    # # leverages op_session.sh script to get OTP
+    [ $# -eq 0 ] && { echo "Usage: mfa <provider>"; return 1; }
+    local PROVIDER=$1; unset SECRET_NAME;        
+    declare -A SECRETS_ARRAY
+    local SECRETS_ARRAY=( \
+              ["aws"]="AWS rogue-ci Login" \
+              ["github"]="DDS Github" \
+              ["gitlab"]="Gitlab Rogue Squadron" )
+    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
+    { [ ${SECRETS_ARRAY[$PROVIDER]+exists} ] && local SECRET_NAME="${SECRETS_ARRAY[$PROVIDER]}"; } || eval ${ON_FAILURE}        
+    OP_CLOUD_ACCOUNT='dds'
+    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    eval "export ${SESSION_NAME}=$(1p session)"
+    1p get totp "'"${SECRET_NAME}"'" | tr -d '\n' | pbcopy && pbpaste && echo ''    
+    
+}
+
+# TODO -- choose pure 'op' or op_session.sh implementation
+mfa_selfcontained() {
+    # requires bash >= 4
+    # leverages 1password cli 'op' to get OTP
+    [ $# -eq 0 ] && { echo "Usage: mfa <provider>"; return 1; }
+    local PROVIDER=$1; unset SECRET_NAME;        
+    declare -A SECRETS_ARRAY
+    local SECRETS_ARRAY=( \
+              ["aws"]="AWS rogue-ci Login" \
+              ["github"]="DDS Github" \
+              ["gitlab"]="Gitlab Rogue Squadron" )
+    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
+    { [ ${SECRETS_ARRAY[$PROVIDER]+exists} ] && local SECRET_NAME="${SECRETS_ARRAY[$PROVIDER]}"; } || eval ${ON_FAILURE}        
+    ONEPASS_ALIAS="dds"
+    if [ ! $OP_SESSION_${ONEPASS_ALIAS} ]; then
+        eval $(op signin $ONEPASS_ALIAS);
+    else
+        op list users > /dev/null 2>&1 
+        test $? -eq 0 || eval $(op signin $ONEPASS_ALIAS);
+    fi;    
+    op get totp "${SECRET_NAME}" | tr -d '\n' | pbcopy && pbpaste && echo ''    
 }
 
 console() {
-    aws-vault login rogue-ci-admin --mfa-token $(mfa aws -p)
+    aws-vault login rogue-ci-admin --mfa-token $(mfa aws | tr -d '\n')
 }
 
 help() {
@@ -162,3 +242,4 @@ if [ "_$1" = "_" ]; then
 else
     "$@"
 fi
+
