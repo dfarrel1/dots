@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alias src="source ~/.bashrc"
 alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
 alias whatami='ps -p $$'

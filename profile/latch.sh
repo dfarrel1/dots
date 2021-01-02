@@ -1,8 +1,7 @@
+#!/usr/bin/env bash
 # A few convenience functions to make 
 # life easier as a developer at Latch
-
 export AWS_PROFILE=DataTeamRole
-
 # add application passwords to keychain, 'okta-user' and 'okta'
 # security add-generic-password -a ${USER} -s okta-user -w <okta-user>
 # security add-generic-password -a <okta-user> -s okta -w <okta-pass>

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 function stest {    
     eval "sbt \" testOnly $1 \" "
 }

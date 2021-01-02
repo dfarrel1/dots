@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alias cd='pushd . >> /dev/null;cd'
 alias back='popd >> /dev/null'
 alias ld='dirs -p | nl -v 0'

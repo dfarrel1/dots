@@ -1,4 +1,5 @@
-export PATH="/usr/local/opt/python@3.8/bin:$PATH"
+#!/usr/bin/env bash
+# export PATH="/usr/local/opt/python@3.8/bin:$PATH"
 alias note='jupyter notebook'
 alias python='/usr/local/bin/python3'
 alias pip='/usr/local/bin/pip3'
@@ -11,7 +12,7 @@ venv() {
   cd ~/envs
   export choice_set=`ls -ad *$1*`
   back
-  get_choice $@
+  get_choice "$@"
   [ "$choice_set" != "" ] && ([[ "$VIRTUAL_ENV" != *"/"* ]] || deactivate) && source "$HOME/envs/$choice_set/bin/activate"
 }
 

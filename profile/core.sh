@@ -1,5 +1,5 @@
+#!/usr/bin/env bash
 # Applications
-#
 # instructions to install cli for code: https://code.visualstudio.com/docs/setup/mac
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 alias open_with_code='open -a "Visual Studio Code"'

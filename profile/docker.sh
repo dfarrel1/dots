@@ -1,8 +1,8 @@
+#!/usr/bin/env bash
 # Docker cleanup
 alias clearcont='docker rm $(docker ps -a -q)'
 alias clearimages='docker rmi $(docker images -q)'
 alias cld='clearcont;clearimages;docker system prune'
-
 # Docker build / run
 alias dc='docker-compose'
 alias dcd='docker-compose down --remove-orphans'
@@ -14,7 +14,6 @@ alias burn='buildup;dcrun'
 alias drun='docker run -it'
 alias drunproxy='docker run -e http_proxy=$"$http_proxy" -it'
 alias dbuild='docker build --build-arg HTTP_PROXY=$http_proxy --build-arg HTTPS_PROXY=$http_proxy --build-arg http_proxy=$http_proxy --build-arg https_proxy=$http_proxy --build-arg proxy=$http_proxy'
-
 # Docker other
 alias dinfo='docker history'
 alias dhist='docker history --no-trunc'

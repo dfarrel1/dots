@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alias worldcom='mvn clean install'
 alias sbr='mvn spring-boot:run'
 alias cr='cargorun'
