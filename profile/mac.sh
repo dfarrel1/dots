@@ -131,13 +131,14 @@ awskeys_selfcontained() {
 bash3_dict_lookup() {
     # takes an array of colon separated strings and looks up 
     # right side (val) given left side (key)
-    [ $# -lt 2 ] && { echo "Usage: bash3_dict_lookup <A[@]> <KEY>"; return 1; }
-    local ARRAY=("$1")
-    local SEARCH_KEY="$2"    
-    local KEY_IS_IN_DICT=false
+    [ $# -lt 2 ] && { echo "Usage: bash3_dict_lookup <KEY> <A[@]>"; return 1; }
+    local SEARCH_KEY="$1"   # Save first argument in a variable
+    shift                   # Shift all arguments to the left (original $1 gets lost)
+    local ARRAY=("$@")      # Rebuild the array with rest of arguments    
+    local KEY_IS_IN_DICT=false    
     for pairing in "${ARRAY[@]}" ; do
         KEY="${pairing%%:*}"; VALUE="${pairing##*:}"
-        if [ $KEY = $SEARCH_KEY ]; then
+        if [ "$KEY" = "$SEARCH_KEY" ]; then
             KEY_IS_IN_DICT=true
             FOUND_VALUE=$VALUE
         fi
@@ -145,7 +146,7 @@ bash3_dict_lookup() {
     if $KEY_IS_IN_DICT ; then
         echo "${FOUND_VALUE}"
     else
-        echo "KEY ${SEARCH_KEY} not found."
+        echo "KEY "${SEARCH_KEY}" not found."
         return 1
     fi
 }
@@ -157,9 +158,13 @@ mfa_bash3() {
     local SECRETS_ARRAY=( \
         "aws:AWS rogue-ci Login"
         "github:DDS Github" 
-        "gitlab:Gitlab Rogue Squadron" )
-    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"        
-    local SECRET_NAME=$(bash3_dict_lookup "${SECRETS_ARRAY}" "${PROVIDER}") || eval ${ON_FAILURE}
+        "gitlab:Gitlab Rogue Squadron" 
+        "rogue-master:AWS rogue-master Login" )
+    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"  
+    local SECRET_NAME 
+    # local is a command itself and its exit-code will overwrite that of the assigned function   
+    SECRET_NAME=$(bash3_dict_lookup  "${PROVIDER}" "${SECRETS_ARRAY[@]}" )
+    [ $? = 0 ] || eval ${ON_FAILURE}
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"      
@@ -174,9 +179,13 @@ mfa_bash3_selfcontained() {
     local SECRETS_ARRAY=( \
         "aws:AWS rogue-ci Login"
         "github:DDS Github" 
-        "gitlab:Gitlab Rogue Squadron" )
-    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"        
-    local SECRET_NAME=$(bash3_dict_lookup "${SECRETS_ARRAY}" "${PROVIDER}") || eval ${ON_FAILURE}       
+        "gitlab:Gitlab Rogue Squadron" 
+        "rogue-master:AWS rogue-master Login" )
+    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"  
+    local SECRET_NAME 
+    # local is a command itself and its exit-code will overwrite that of the assigned function   
+    SECRET_NAME=$(bash3_dict_lookup  "${PROVIDER}" "${SECRETS_ARRAY[@]}" )
+    [ $? = 0 ] || eval ${ON_FAILURE}   
     ONEPASS_ALIAS="dds"
     if [ ! $OP_SESSION_${ONEPASS_ALIAS} ]; then
         eval $(op signin $ONEPASS_ALIAS);
@@ -196,7 +205,8 @@ mfa() {
     local SECRETS_ARRAY=( \
               ["aws"]="AWS rogue-ci Login" \
               ["github"]="DDS Github" \
-              ["gitlab"]="Gitlab Rogue Squadron" )
+              ["gitlab"]="Gitlab Rogue Squadron" \
+              ["rogue-master"]="AWS rogue-master Login" )
     local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
     { [ ${SECRETS_ARRAY[$PROVIDER]+exists} ] && local SECRET_NAME="${SECRETS_ARRAY[$PROVIDER]}"; } || eval ${ON_FAILURE}        
     OP_CLOUD_ACCOUNT='dds'
@@ -216,7 +226,8 @@ mfa_selfcontained() {
     local SECRETS_ARRAY=( \
               ["aws"]="AWS rogue-ci Login" \
               ["github"]="DDS Github" \
-              ["gitlab"]="Gitlab Rogue Squadron" )
+              ["gitlab"]="Gitlab Rogue Squadron" \
+              ["rogue-master"]="AWS rogue-master Login" )
     local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
     { [ ${SECRETS_ARRAY[$PROVIDER]+exists} ] && local SECRET_NAME="${SECRETS_ARRAY[$PROVIDER]}"; } || eval ${ON_FAILURE}        
     ONEPASS_ALIAS="dds"
