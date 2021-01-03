@@ -59,4 +59,4 @@ The following files are core dependencies:
 - [core.sh](./profile/core.sh)
 - [navigation.sh](./profile/navigation.sh)
 
-Everything else is (and should remain) self-contained and independent of one another with the exception of the those dependencies above. That means you can start your own dotfiles repo by stripping down to those three files if you want to avoid the overhead of inspecting so many files.
+Everything else is (and should remain) self-contained and independent of one another. That means you can start your own dotfiles repo by stripping down to those three files if you want to avoid the overhead of inspecting so many files.
