@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # export PATH="/usr/local/opt/python@3.8/bin:$PATH"
 alias note='jupyter notebook'
+# WARNING: Make sure this path agrees with python install from `brew info python`
 alias python='/usr/local/bin/python3'
 alias pip='/usr/local/bin/pip3'
 
