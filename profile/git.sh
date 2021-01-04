@@ -110,7 +110,17 @@ open_repo() {
 }
 
 alias2host() {
+  # e.g. gitlab-rogue -> dev.rogue.diux.io
   ssh -G $1 | awk '$1 == "hostname" { print $2 }'
+}
+
+host2alias() {
+  # TODO -- THIS IS WIP (still taking alias name)
+  # NOTE: deprecated the aliases anyways
+  # ~/.ssh/config is now using literal url paths
+  # e.g. dev.rogue.diux.io -> gitlab-rogue
+  match_str='debug1: /Users/.*/.ssh/config line 9: Applying options for'
+  ssh -Gv $1 2>&1 >/dev/null | grep "${match_str}" | sed 's/.*for //'
 }
 
 browse() {

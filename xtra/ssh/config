@@ -2,10 +2,19 @@ Host github.com
   HostName github.com
   IdentityFile ~/.ssh/id_rsa_dlf_dds
 
-Host github-dfarrel1
-  HostName github.com 
-  IdentityFile ~/.ssh/id_rsa_dfarrel1
-
-Host gitlab-rogue
+Host dev.rogue.diux.io 
   Hostname dev.rogue.diux.io
   IdentityFile ~/.ssh/id_rsa_dlf_dds
+
+Host github.com/dfarrel1
+  HostName github.com/dfarrel1 
+  IdentityFile ~/.ssh/id_rsa_dfarrel1
+
+# deprecated in favor of above
+#Host github-dfarrel1
+#  HostName github.com 
+#  IdentityFile ~/.ssh/id_rsa_dfarrel1
+   
+#Host gitlab-rogue
+#  Hostname dev.rogue.diux.io
+#  IdentityFile ~/.ssh/id_rsa_dlf_dds
