@@ -55,8 +55,8 @@ You can also delete the directory containing this repo.
 
 The following files are core dependencies:
 
-- [.profile](./profile/.profile)
-- [core.sh](./profile/core.sh)
-- [navigation.sh](./profile/navigation.sh)
+- [.profile](./.profile)
+- [core.sh](./core.sh)
+- [navigation.sh](./navigation.sh)
 
 Everything else is (and should remain) self-contained and independent of one another. That means you can start your own dotfiles repo by stripping down to those three files if you want to avoid the overhead of inspecting so many files.
