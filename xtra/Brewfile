@@ -61,7 +61,8 @@ brew "terraform-docs"
 
 
 # GUI type installs
-cask "intellij-idea"
+# cask "intellij-idea"
+cask "intellij-idea-ce"
 cask "sublime-text"
 cask "visual-studio-code"
 cask "google-chrome"
