@@ -7,7 +7,10 @@ alias c.='repo_info -s;open_with_code $git_local_path'
 alias a.='repo_info -s;atom $git_local_path'
 # after ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
 alias s.='repo_info -s;sublime $git_local_path'
-alias i.='repo_info -s;intellij $git_local_path'
+alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
+alias i.='repo_info -s;idea $git_local_path'
+# 'intellij' cli comes with the paid version of intellij
+# alias i.='repo_info -s;intellij $git_local_path'
 alias o.='open .'
 alias chrome='open -a "Google Chrome"'
 alias pn.='chrome http://127.0.0.1:8192/ && /Applications/polynote/polynote'
