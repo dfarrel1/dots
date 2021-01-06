@@ -33,19 +33,36 @@ function RM_COLOR {
   gsed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" 
   }
 function LINES2FILES { 
-  cut -d " " -f1 | cut -d ':' -f 1 | sort -u 
+  cut -d " " -f1 | sed 's/[^:]*$//'  | sort -u 
+  # 's![^:]*$!!' # removes everything after last ':' 
+  # | cut -d ':' -f 1 # removes everything after first ':'
   }
+unset FILE2LINK
 function FILE2LINK { 
-  sed -e 's/^/idea:\/\/open\?file='"${ESC_PWD}\/"'/' 
+  # FILE2LINK <opener> <file>
+  opener=${1}
+  shift  
+  sed -e 's/^/'"${opener}"''"${ESC_PWD}\/"'/' <<< $@  
   }
+export -f FILE2LINK
 function RM_TRAILING_COLON { 
   sed 's/:*$//g' 
   }
 
 clicks() {
+  unset opener
+  # clicks <search-string> <opener-string>
+  # opener=${2-'file:\\\/'} # works from vscode (maybe any IDE) but not terminal
+  opener=${2-'vscode:\\\/\\\/file\\\/'} # works from vscode && terminal 
+  # opener=${2-'idea:\\\/\\\/open\?file='} # works from terminal but not vscode (cannot handle line ref)
+  # NOTE: idea takes: "idea --line ### <full-file-path>"
+  echo "opener: ${opener}"
   git grep -n --color=always $1 | \
-  tee >( RM_COLOR | LINES2FILES | FILE2LINK |  RM_TRAILING_COLON | \
-  xargs -I {} sh -c 'printf "'${CYAN}'{}'${NC}' \n"' ) 
+    tee >( RM_COLOR \
+      | LINES2FILES \
+      | xargs -I {} bash -c 'FILE2LINK '"${opener}"' "$@"' _ {} \
+      | RM_TRAILING_COLON \
+      | xargs -I {} sh -c 'printf "'${CYAN}'{}'${NC}' \n"' )       
 }
 
 
