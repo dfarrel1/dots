@@ -54,8 +54,10 @@ clicks() {
   # clicks <search-string> <opener-string>
   # opener=${2-'file:\\\/'} # works from vscode (maybe any IDE) but not terminal
   opener=${2-'vscode:\\\/\\\/file\\\/'} # works from vscode && terminal 
-  # opener=${2-'idea:\\\/\\\/open\?file='} # works from terminal but not vscode (cannot handle line ref)
-  # NOTE: idea takes: "idea --line ### <full-file-path>"
+  # opener=${2-'idea:\\\/\\\/open\?file='} # works from terminal but not vscode...
+  # (cannot handle line ref -- need to rm line num from output) 
+  # NOTE: idea takes: "idea --line ###
+  # <full-file-path>"
   echo "opener: ${opener}"
   git grep -n --color=always $1 | \
     tee >( RM_COLOR \
