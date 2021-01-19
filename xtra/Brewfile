@@ -58,7 +58,7 @@ brew "direnv"
 brew "tfenv"
 brew "terraform-docs"
 # cask "anaconda" # (needed for polynote)
-
+brew "gitlab-runner"
 
 # GUI type installs
 # cask "intellij-idea"
