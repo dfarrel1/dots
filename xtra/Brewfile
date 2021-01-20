@@ -6,7 +6,9 @@ tap "AdoptOpenJDK/openjdk"
 tap "mongodb/brew"
 tap "hashicorp/tap"
 
+
 ### convenience and small apps
+brew "git-duet/tap/git-duet"
 brew "jq"
 brew "tldr"
 brew "htop"
