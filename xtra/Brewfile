@@ -8,6 +8,7 @@ tap "hashicorp/tap"
 
 
 ### convenience and small apps
+brew "anisble"
 brew "git-duet/tap/git-duet"
 brew "jq"
 brew "tldr"

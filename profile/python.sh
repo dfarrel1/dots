@@ -4,6 +4,7 @@ alias note='jupyter notebook'
 # WARNING: Make sure this path agrees with python install from `brew info python`
 alias python='/usr/local/bin/python3'
 alias pip='/usr/local/bin/pip3'
+# alias ansible='/Users/denefarrell/Library/Python/3.9/bin/ansible'
 
 pipup() {
   curl https://bootstrap.pypa.io/get-pip.py | python
