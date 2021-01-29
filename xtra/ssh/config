@@ -1,20 +1,15 @@
-Host github.com
+Host github-deptofdefense
   HostName github.com
-  IdentityFile ~/.ssh/id_rsa_dlf_dds
+  IdentityFile ~/.ssh/<key> # changeme
 
-Host dev.rogue.diux.io 
-  Hostname dev.rogue.diux.io
-  IdentityFile ~/.ssh/id_rsa_dlf_dds
+Host github-dlf-dds
+  HostName github.com
+  IdentityFile ~/.ssh/<key> # changeme
 
-Host github.com/dfarrel1
-  HostName github.com/dfarrel1 
-  IdentityFile ~/.ssh/id_rsa_dfarrel1
+Host <rogue-gitlab-url> # changeme
+  Hostname <rogue-gitlab-url> # changeme
+  IdentityFile ~/.ssh/<key> # changeme
 
-# deprecated in favor of above
-#Host github-dfarrel1
-#  HostName github.com 
-#  IdentityFile ~/.ssh/id_rsa_dfarrel1
-   
-#Host gitlab-rogue
-#  Hostname dev.rogue.diux.io
-#  IdentityFile ~/.ssh/id_rsa_dlf_dds
+Host github-dfarrel1
+  HostName github.com 
+  IdentityFile ~/.ssh/<key> # changeme

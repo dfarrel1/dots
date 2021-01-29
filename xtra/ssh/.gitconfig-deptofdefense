@@ -1,0 +1,5 @@
+[user]
+	name = dlf-dds
+	email = <email>
+[core]
+	sshCommand = ssh -i ~/.ssh/<key> -F /dev/null

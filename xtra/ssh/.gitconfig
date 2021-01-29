@@ -1,0 +1,13 @@
+[user]
+	name = Dene Farrell
+	email = 
+[core]
+	excludesfile = /Users/denefarrell/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[includeIf "gitdir:~/src/github.com/deptofdefense/"]
+        path = ~/src/github.com/deptofdefense/.gitconfig-deptofdefense
