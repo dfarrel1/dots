@@ -6,6 +6,7 @@ alias cld='clearcont;clearimages;docker system prune'
 # Docker build / run
 alias dc='docker-compose'
 alias dcd='docker-compose down --remove-orphans'
+alias dcd1='docker-compose rm -fsv'
 alias dcbuild='docker-compose build --no-cache'
 alias dcup='docker-compose up'
 alias buildup='dcbuild;dcup'
