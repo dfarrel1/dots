@@ -26,6 +26,7 @@ brew "shellcheck"
 brew "bash" # issue: had to: brew link --overwrite bash
 # brew "apache-spark", link: false # for local spark # (need for polynote)
 brew "rbenv"
+brew "golang"
 brew "gcc"
 brew "python"
 brew "jupyter" # issue: had to: brew link --overwrite jupyterlab
@@ -37,6 +38,7 @@ brew "helm"
 brew "jenv"
 brew "gradle"
 brew "mysql"
+brew "pyenv"
 brew "pipenv"
 brew "postgresql"
 brew "sbt"
