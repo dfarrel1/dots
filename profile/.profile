@@ -5,6 +5,9 @@
 [[ "$0" =~ "dotfiles/profile" ]] && PROFILE_DIR=$(dirname $0) || PROFILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export GOPATH=~
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # for diagnostics 
