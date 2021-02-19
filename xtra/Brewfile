@@ -39,6 +39,7 @@ brew "jenv"
 brew "gradle"
 brew "mysql"
 brew "pyenv"
+brew "pyenv-virtualenv"
 brew "pipenv"
 brew "postgresql"
 brew "sbt"
@@ -62,7 +63,7 @@ brew "chamber"
 brew "direnv"
 brew "tfenv"
 brew "terraform-docs"
-# cask "anaconda" # (needed for polynote)
+cask "anaconda" # (needed for polynote)
 brew "gitlab-runner"
 
 # GUI type installs

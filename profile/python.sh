@@ -11,6 +11,23 @@ eval "$(pyenv init -)"
 export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
 export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
 
+# # conda from "brew install --cask anaconda"
+# export PATH="/usr/local/anaconda3/bin:$PATH"
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/usr/local/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/usr/local/anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/usr/local/anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/usr/local/anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+
 pipup() {
   curl https://bootstrap.pypa.io/get-pip.py | python
 }
