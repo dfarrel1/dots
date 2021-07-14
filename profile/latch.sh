@@ -58,7 +58,7 @@ HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 quickdirs() {
     # get directory categories (files under quickdirs dir)
     if [ "$#" -lt 1 ]; then
-        dir_cats_arr=( $(ls ${HERE}/quickdirs/) )
+        dir_cats_arr=( $(ls ${HERE}/picklists/dirs) )
         [[ $# -eq 0 ]] && choice_set=`printf '%s\n' "${dir_cats_arr[@]}"` && get_choice
         IFS=@
         case "@${dir_cats_arr[*]}@" in
@@ -80,7 +80,7 @@ quickdirs() {
     do 
         eval "local ${col1}=${col2}"
         ARR+=("$col1")
-    done <"${HERE}/quickdirs/${dir_cat}"
+    done <"${HERE}/picklists/dirs/${dir_cat}"
 
     [[ $# -lt 2 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
     [[ $# -eq 2 ]] && choice_set=$2    
