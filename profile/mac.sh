@@ -147,7 +147,7 @@ mfa() {
 
 
 
-console() {
+awslogin() {
     choose_aws_secret
     VAULT_NAME="dene"        
     OP_CLOUD_ACCOUNT='dds'
@@ -156,10 +156,21 @@ console() {
     ITEM=`1p get item \"${choice_set}\" --vault=$VAULT_NAME`
     export AWS_VAULT_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_VAULT_PROFILE_NAME") | .v'`
     echo "aws-vault profile: $AWS_VAULT_PROFILE_NAME"
+    read -n 1 -p "Normal or Incognito? (N/i) " ans;
+
+    case $ans in
+        i|I)
+            export extra_chrome_opts=" --args --incognito ";;
+        *)
+            export extra_chrome_opts=" ";;
+    esac
+
     mfa dummy
-    aws-vault login ${AWS_VAULT_PROFILE_NAME}
-    # aws-vault login $AWS_VAULT_PROFILE_NAME --mfa-token $(mfa dummy | tr -d '\n')
+    aws-vault --debug login ${AWS_VAULT_PROFILE_NAME} --stdout \
+    | xargs -t /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome ${extra_chrome_opts} --new-window
     
+    # TODO - why does the following line fail to access $choice_set
+    # aws-vault login $AWS_VAULT_PROFILE_NAME --mfa-token $(mfa dummy | tr -d '\n')    
 }
 
 help() {
