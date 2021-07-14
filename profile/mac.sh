@@ -79,7 +79,6 @@ chp() {
     unset IFS 
 }
 
-
 #update vscode plugins list
 alias code-plugs="""
 echo '#!/bin/bash' > ${HERE}/../xtra/IDEs/install-vscode-exts.sh \
@@ -100,82 +99,67 @@ alias json='python -m json.tool'
 
 alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh"
 
-# this is redundant w/ aws-vault; will prob deprecate
-awskeys() {        
-    VAULT_NAME="dene"
-    ITEM_NAME="'rogue-ci AWS key'"
-    OP_CLOUD_ACCOUNT='dds'
-    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
-    eval "export ${SESSION_NAME}=$(1p session)" 
-    ITEM=`1p get item "${ITEM_NAME}" --vault=$VAULT_NAME`
-    export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="username") | .value'`
-    export AWS_SECRET_ACCESS_KEY=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="password") | .value'`
+choose_aws_secret() {
+    local ARR=("exit")     
+    while read -r col1
+    do         
+        ARR+=("$col1")
+    done <"${HERE}/picklists/dds-aws"
+    [[ $# -lt 2 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice    
+    local ON_FAILURE="echo \" \\\"${choice_set}\\\" not recognized. Exiting mfa.\";  return 1"
+    { local SECRET_NAME=$choice_set; } || eval ${ON_FAILURE} 
+    # choice globally stored as "$choice_set"
 }
 
-# TODO -- choose pure 'op' or op_session.sh implementation
-awskeys_selfcontained() {
-    # independent of '1p'           
-    if [ ! $OP_SESSION_dds ]; then
-        eval $(op signin dds);
-    else
-        op list users > /dev/null 2>&1 
-        test $? -eq 0 || eval $(op signin dds);
-    fi;
-    VAULT_NAME="dene"
-    ITEM_NAME="rogue-ci AWS key"
-    ITEM=`op get item "$ITEM_NAME" --vault=$VAULT_NAME`    
-    export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="username") | .value'`
-    export AWS_SECRET_ACCESS_KEY=`echo $ITEM | jq -Mcr '.details.fields[] | select(.name=="password") | .value'`
- }
+# this is redundant w/ aws-vault; will prob deprecate
+awskeys() {      
+    choose_aws_secret
+    VAULT_NAME="dene"        
+    OP_CLOUD_ACCOUNT='dds'
+    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    eval "export ${SESSION_NAME}=$(1p session)"     
+    ITEM=`1p get item \"${choice_set}\" --vault=$VAULT_NAME`
+    export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="ACCESS_KEY_ID") | .v'`
+    export AWS_ACCESS_KEY_SECRET=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="ACCESS_KEY_SECRET") | .v'`
+}
 
-mfa() {
-    # requires bash >= 4
-    # # leverages op_session.sh script to get OTP
-    [ $# -eq 0 ] && { echo "Usage: mfa <provider>"; return 1; }
-    local PROVIDER=$1; unset SECRET_NAME;        
-    declare -A SECRETS_ARRAY
-    # TODOD -- move VPN MFA to 1Pass
-    local SECRETS_ARRAY=( \
-              ["aws"]="AWS rogue-ci Login" \
-              ["github"]="DDS Github" \
-              ["gitlab"]="Gitlab Rogue Squadron" \
-              ["rogue-master"]="AWS rogue-master Login" )
-    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
-    { [ ${SECRETS_ARRAY[$PROVIDER]+exists} ] && local SECRET_NAME="${SECRETS_ARRAY[$PROVIDER]}"; } || eval ${ON_FAILURE}        
+mfa() {    
+    if [ $# -eq 0 ]
+        then
+            local ARR=("exit")     
+            while read -r col1
+            do         
+                ARR+=("$col1")
+            done <"${HERE}/picklists/dds-all-mfa"
+            [[ $# -lt 2 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
+            local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
+    else
+        echo "using choice_set passed as arg: $1"
+        echo "using choice_set already in env: $choice_set"
+    fi
+    { local SECRET_NAME=$choice_set; } || eval ${ON_FAILURE} 
+    echo ${SECRET_NAME}       
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"
-    1p get totp "'"${SECRET_NAME}"'" | tr -d '\n' | pbcopy && pbpaste && echo ''    
-    
+    1p get totp "'"${SECRET_NAME}"'" | tr -d '\n' | pbcopy && pbpaste && echo '' 
 }
 
-# TODO -- choose pure 'op' or op_session.sh implementation
-mfa_selfcontained() {
-    # requires bash >= 4
-    # leverages 1password cli 'op' to get OTP
-    [ $# -eq 0 ] && { echo "Usage: mfa <provider>"; return 1; }
-    local PROVIDER=$1; unset SECRET_NAME;        
-    declare -A SECRETS_ARRAY
-    # TODOD -- move VPN MFA to 1Pass
-    local SECRETS_ARRAY=( \
-              ["aws"]="AWS rogue-ci Login" \
-              ["github"]="DDS Github" \
-              ["gitlab"]="Gitlab Rogue Squadron" \
-              ["rogue-master"]="AWS rogue-master Login" )
-    local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
-    { [ ${SECRETS_ARRAY[$PROVIDER]+exists} ] && local SECRET_NAME="${SECRETS_ARRAY[$PROVIDER]}"; } || eval ${ON_FAILURE}        
-    ONEPASS_ALIAS="dds"
-    if [ ! $OP_SESSION_${ONEPASS_ALIAS} ]; then
-        eval $(op signin $ONEPASS_ALIAS);
-    else
-        op list users > /dev/null 2>&1 
-        test $? -eq 0 || eval $(op signin $ONEPASS_ALIAS);
-    fi;    
-    op get totp "${SECRET_NAME}" | tr -d '\n' | pbcopy && pbpaste && echo ''    
-}
+
 
 console() {
-    aws-vault login rogue-ci-admin --mfa-token $(mfa aws | tr -d '\n')
+    choose_aws_secret
+    VAULT_NAME="dene"        
+    OP_CLOUD_ACCOUNT='dds'
+    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    eval "export ${SESSION_NAME}=$(1p session)"     
+    ITEM=`1p get item \"${choice_set}\" --vault=$VAULT_NAME`
+    export AWS_VAULT_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_VAULT_PROFILE_NAME") | .v'`
+    echo "aws-vault profile: $AWS_VAULT_PROFILE_NAME"
+    mfa dummy
+    aws-vault login ${AWS_VAULT_PROFILE_NAME}
+    # aws-vault login $AWS_VAULT_PROFILE_NAME --mfa-token $(mfa dummy | tr -d '\n')
+    
 }
 
 help() {
