@@ -1,0 +1,69 @@
+{
+    "fields": [
+      {
+        "designation": "username",
+        "name": "username",
+        "type": "T",
+        "value": "un"
+      },
+      {
+        "designation": "password",
+        "name": "password",
+        "type": "P",
+        "value": "pw"
+      }
+    ],
+    "sections": [    
+      {
+        "fields": [
+          {
+            "k": "string",
+            "n": "ACCOUNT_INFO_ACCOUNT_ID",
+            "t": "ACCOUNT_ID",
+            "v": "ACCOUNT_ID"
+          },
+          {
+              "k": "string",
+              "n": "ACCOUNT_INFO_ACCOUNT_ALIAS",
+              "t": "ACCOUNT_ALIAS",
+              "v": "ACCOUNT_ALIAS"
+          },
+          {
+            "k": "string",
+            "n": "ACCOUNT_INFO_ACCESS_KEY_ID",
+            "t": "ACCESS_KEY_ID",
+            "v": "ACCESS_KEY_ID"
+          },
+          {
+            "k": "string",
+            "n": "ACCOUNT_INFO_ACCESS_KEY_SECRET",
+            "t": "ACCESS_KEY_SECRET",
+            "v": "ACCESS_KEY_SECRET"
+          },        
+          {
+              "k": "string",
+              "n": "ACCOUNT_INFO_AWS_PROFILE_NAME",
+              "t": "AWS_PROFILE_NAME",
+              "v": "AWS_PROFILE_NAME"
+          },
+          {
+              "k": "string",
+              "n": "ACCOUNT_INFO_ACCOUNT_TYPE",
+              "t": "ACCOUNT_TYPE",
+              "v": "ACCOUNT_TYPE"
+          },
+          {
+            "k": "string",
+            "n": "ACCOUNT_INFO_USER_NAME",
+            "t": "USER_NAME",
+            "v": "USER_NAME"
+        }
+        ],
+        "name": "ACCOUNT_INFO_SECTION",
+        "title": "ACCOUNT_INFO"
+      }
+    ],
+    "notesPlain": "",
+    "passwordHistory": []  
+  }
+  
