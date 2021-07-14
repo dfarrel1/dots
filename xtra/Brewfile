@@ -120,3 +120,6 @@ brew "docker-compose" # issue /usr/local/bin/docker-compose already exists, can'
 
 # Mac App Store
 mas "Bear", id: 1091189122
+
+# just for fun
+brew "asciiquarium"

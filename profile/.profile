@@ -57,6 +57,8 @@ done
 # echo "rbenv"
 echo "Done: .profile loaded."
 
+splasher
+
 # NOTES
 # bash-completion
 # TODO: maybe remove this since asdf installed a bash completion
