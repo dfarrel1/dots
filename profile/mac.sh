@@ -134,7 +134,7 @@ mfa() {
             [[ $# -lt 2 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
             local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
     else
-        echo "using choice_set passed as arg: $1"
+        echo "received passed arg: $1"
         echo "using choice_set already in env: $choice_set"
     fi
     { local SECRET_NAME=$choice_set; } || eval ${ON_FAILURE} 
