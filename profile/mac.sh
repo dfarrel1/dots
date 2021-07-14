@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # needs bash >= 4
 alias src="source ~/.bashrc"
-alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
+
 alias whatami='ps -p $$'
 alias syslog='tail -f /var/log/system.log'
 alias ipecho='curl ipecho.net/plain ; echo'

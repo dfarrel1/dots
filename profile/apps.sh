@@ -17,7 +17,7 @@ alias pn.='chrome http://127.0.0.1:8192/ && /Applications/polynote/polynote'
 # stree alias comes from SourceTree, need to activate command line tools
 alias chfox='open -a Charles;open -a Firefox'
 alias excel='open -a "Microsoft Excel"'
-
+alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
 alias ports='lsof -i | grep -E "(LISTEN|ESTABLISHED)"'
 alias epc='open_with_code $PROFILE_DIR' # [E]dit [P]rofile (with) [C]ode
 alias epa='atom $PROFILE_DIR'
