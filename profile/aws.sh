@@ -17,7 +17,7 @@ get_list_of_aws_secrets() {
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"     
-    1p list items --vault=$VAULT_NAME --tags aws --categories login | jq -Mcr '.[].overview.title'
+    1p list items --vault=$VAULT_NAME --tags aws --categories login | jq -Mcr '.[].overview.title' | sort
 }
 
 choose_aws_secret() {
