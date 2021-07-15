@@ -14,7 +14,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 timer=${SRC_TIMER:-false}
 
 # these are for everyone
-sources=( core navigation apps docker mac git vim python scala)
+sources=( core navigation apps docker git vim python misc aws )
 for i in "${sources[@]}"
 do
     if [ ${timer} = true ]
