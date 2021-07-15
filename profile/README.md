@@ -27,20 +27,12 @@ source ~/.bashrc
 brew bundle --f=${dots_dir}/xtra/MinimalBrewfile
 ```
 
-3. Create PWDs (for okta and vpn)
-
-```
-# okta - modify as needed
-security add-generic-password -a ${USER} -s okta-user -w <okta-user>
-security add-generic-password -a <okta-user> -s okta -w <okta-pass>
-```
-
-4. Add system python reqs
+5. Add system python reqs
 
 `pip install -r ${dots_dir}/xtra/python/global-reqs.txt`
 
 
-5. Open up a terminal and have fun!
+6. Open up a terminal and have fun!
 
 
 ## Uninstall

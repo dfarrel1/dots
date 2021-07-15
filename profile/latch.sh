@@ -2,6 +2,9 @@
 # A few convenience functions to make 
 # life easier as a developer at Latch
 export AWS_PROFILE=DataTeamRole
+
+### NECESSARY INSTALL STEPS for Okta and VPN
+
 # add application passwords to keychain, 'okta-user' and 'okta'
 # security add-generic-password -a ${USER} -s okta-user -w <okta-user>
 # security add-generic-password -a <okta-user> -s okta -w <okta-pass>
