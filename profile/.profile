@@ -56,7 +56,7 @@ done
 # eval "$(rbenv init -)"
 # echo "rbenv"
 echo "Done: .profile loaded."
-
+clear
 splasher
 
 # NOTES
