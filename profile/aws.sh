@@ -119,8 +119,8 @@ awslogin() {
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"     
     ITEM=`1p get item \"${choice_set}\" --vault=$VAULT_NAME`
-    export AWS_VAULT_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_VAULT_PROFILE_NAME") | .v'`
-    echo "aws-vault profile: $AWS_VAULT_PROFILE_NAME"
+    export AWS_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_PROFILE_NAME") | .v'`
+    echo "aws-vault profile: $AWS_PROFILE_NAME"
     read -n 1 -p "Normal or Incognito? (N/i) " ans;
 
     case $ans in
@@ -131,11 +131,12 @@ awslogin() {
     esac
     # dummy arg tells it to use the choice_set already provided in env
     mfa dummy
-    aws-vault --debug login ${AWS_VAULT_PROFILE_NAME} --stdout \
+    echo "AWS_PROFILE_NAME: ${AWS_PROFILE_NAME}"
+    aws-vault --debug login ${AWS_PROFILE_NAME} --stdout \
     | xargs -t /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome ${extra_chrome_opts} --new-window
     
     # TODO - why does the following line fail to access $choice_set
-    # aws-vault login $AWS_VAULT_PROFILE_NAME --mfa-token $(mfa dummy | tr -d '\n')    
+    # aws-vault login $AWS_PROFILE_NAME --mfa-token $(mfa dummy | tr -d '\n')    
 }
 
 help() {
