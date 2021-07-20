@@ -33,15 +33,24 @@ chp() {
 }
 
 
-load_ascii_art() {
-    for i in {1..16}
+load_ascii_art() {    
+    FILES="${HERE}/ascii_art/ASCII_EAGLE_*"
+    for f in $FILES
     do
-       EAGLE_NUM=$(printf "%02d" $i)
-       EAGLE="ASCII_EAGLE_${EAGLE_NUM}"
-       FILE="${HERE}/ascii_art/eagle_${EAGLE_NUM}"
-       eval "export ${EAGLE}=\`cat ${FILE}\`"
+      name="$(basename ${f})"
+      eval "export ${name}=\`cat ${f}\`"
     done
 }
+
+unset_ascii_art() {
+    FILES="${HERE}/ascii_art/ASCII_EAGLE_*"
+    for f in $FILES
+    do
+      name="$(basename ${f})"
+      eval "unset ${name}"
+    done
+}
+
 
 splasher() {
     # needs [bash >= 5.1] for SRANDOM
@@ -52,6 +61,7 @@ splasher() {
     white_back="\\x1B[47m"
     end=$'\e[0m'
     eval "printf \"${cyn}\n\n%s\n\n${end}\\x1B[49m\n\" \"\${$RAND_EAGLE}\""
+    unset_ascii_art
 }
 
 idler() {
