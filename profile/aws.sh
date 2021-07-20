@@ -12,12 +12,11 @@ pb() {
 
 alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh"
 
-get_list_of_aws_secrets() {
-    VAULT_NAME="dene"        
+get_list_of_aws_secrets() {       
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
-    eval "export ${SESSION_NAME}=$(1p session)"     
-    1p list items --vault=$VAULT_NAME --tags aws --categories login | jq -Mcr '.[].overview.title' | sort
+    eval "export ${SESSION_NAME}=$(1p session)"  
+    1p list items --tags aws --categories login | jq -Mcr '.[].overview.title' | sort    
 }
 
 choose_aws_secret() {
@@ -34,21 +33,19 @@ choose_aws_secret() {
 }
 
 get_aws_acct_info() {
-    choose_aws_secret
-    VAULT_NAME="dene"        
+    choose_aws_secret    
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"     
-    export TMP_GLOBAL_ACCOUNT_INFO=`1p get item \"${choice_set}\" --vault=$VAULT_NAME | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields'`    
+    export TMP_GLOBAL_ACCOUNT_INFO=`1p get item \"${choice_set}\" | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields'`    
 }
 
 awskeys() {      
-    choose_aws_secret
-    VAULT_NAME="dene"        
+    choose_aws_secret            
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"     
-    ITEM=`1p get item \"${choice_set}\" --vault=$VAULT_NAME`
+    ITEM=`1p get item \"${choice_set}\"`
     export AWS_ACCESS_KEY_ID=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="ACCESS_KEY_ID") | .v'`
     export AWS_ACCESS_KEY_SECRET=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="ACCESS_KEY_SECRET") | .v'`
 }
@@ -84,8 +81,7 @@ newawslogin() {
         --title "AWS-Template" \
         --generate-password \
         --tags "aws" \
-        --url https://signin.amazonaws-us-gov.com/console
-    
+        --url https://signin.amazonaws-us-gov.com/console    
 }
 
 newawsprofile() {
@@ -94,7 +90,6 @@ newawsprofile() {
     ACCOUNT_TYPE=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="ACCOUNT_TYPE") | .v'`
     AWS_PROFILE_NAME=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="AWS_PROFILE_NAME") | .v'`
     USER_NAME=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="USER_NAME") | .v'`
-
     SEARCH_STR="[profile ${AWS_PROFILE_NAME}]"
     if grep -Fxq "${SEARCH_STR}" ~/.aws/config
     then
@@ -109,16 +104,14 @@ newawsprofile() {
         mfa_serial=arn:aws-us-gov:iam::${ACCOUNT_ID}:mfa/${USER_NAME}
         """ | awk '{$1=$1};1' >> ~/.aws/config
     fi
-
 }
 
-awslogin() {
-    choose_aws_secret
-    VAULT_NAME="dene"        
+awslogin() {           
     OP_CLOUD_ACCOUNT='dds'
-    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
-    eval "export ${SESSION_NAME}=$(1p session)"     
-    ITEM=`1p get item \"${choice_set}\" --vault=$VAULT_NAME`
+    export SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    eval "export ${SESSION_NAME}=$(1p session)"    
+    choose_aws_secret            
+    ITEM=`1p get item \"${choice_set}\"`    
     export AWS_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_PROFILE_NAME") | .v'`
     echo "aws-vault profile: $AWS_PROFILE_NAME"
     read -n 1 -p "Normal or Incognito? (N/i) " ans;
