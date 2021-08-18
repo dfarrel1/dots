@@ -78,7 +78,7 @@ newawslogin() {
     eval "export ${SESSION_NAME}=$(1p session)"    
     1p create item login "$(op encode < ${HERE}/aws.template.json)" \
         --vault dene \
-        --title "AWS-Template" \
+        --title "Template [AWS]" \
         --generate-password \
         --tags "aws" \
         --url https://signin.amazonaws-us-gov.com/console    
