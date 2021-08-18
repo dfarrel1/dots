@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+easy_eyes(){
+  awk ' {print;} NR % 5 == 0 { print ""; }'
+}
+
 get_choice() {
   local count=`printf "$choice_set" | wc -l | awk '{print $1}'`
   [ ${#choice_set} -eq 0 ] || count=$((count+1))
@@ -8,8 +12,8 @@ get_choice() {
     echo "No match found" && export choice_set=""
   elif [ $count -eq 1 ]; then
     export choice_set="$choice_set"
-  else
-    printf "$choice_set\n" | nl
+  else    
+    printf "$choice_set\n" | easy_eyes | nl
     local s=0
     local p="p"
     while [ "$s" != "q" ] && ( ! [[ $s =~ $re ]] || ! [ $s -le $count -a $s -gt 0 ] ) && ! [ -z "$s" ]
