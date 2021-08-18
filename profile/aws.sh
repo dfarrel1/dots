@@ -19,14 +19,39 @@ get_list_of_aws_secrets() {
     1p list items --tags aws --categories login | jq -Mcr '.[].overview.title' | sort    
 }
 
+filter_array() {
+    # first arg is name of array var
+    # second arg is string to filter on
+    # TODO: force exit from "choose_aws_secret" on empty set
+    local -n INPUT_ARR=$1
+    local FILTER_VAL=$2
+    local OUTPUT_ARR=()
+    O_IFS=$IFS    
+    IFS=""
+    for i in ${INPUT_ARR[*]}
+    do
+        echo $i | grep ${FILTER_VAL}>/dev/null && OUTPUT_ARR+=( "$i" )
+    done
+    IFS=${O_IFS}
+    printf '%s\n' "${OUTPUT_ARR[@]}"
+    if [ ${#OUTPUT_ARR[@]} -eq 0 ]; then
+        echo "found no 1p login items that match \"${FILTER_VAL}\""
+        exit 1
+    fi
+}
+
 choose_aws_secret() {
     local ARR=("exit")         
     while read -r line; do                 
         ARR+=( "$line" )        
     done <<< $(get_list_of_aws_secrets)        
     # to point to a file:
-    # done <"${HERE}/picklists/dds-aws"           
-    [[ $# -lt 2 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice    
+    # done <"${HERE}/picklists/dds-aws" 
+
+    [[ $# -eq 1 ]] && choice_set=`filter_array ARR $1` && get_choice    
+
+    [[ $# -eq 0 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice    
+    
     local ON_FAILURE="echo \" \\\"${choice_set}\\\" not recognized. Exiting mfa.\";  return 1"
     { local SECRET_NAME=$choice_set; } || eval ${ON_FAILURE} 
     # choice globally stored as "$choice_set"
@@ -110,7 +135,7 @@ awslogin() {
     OP_CLOUD_ACCOUNT='dds'
     export SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"    
-    choose_aws_secret            
+    choose_aws_secret $1            
     ITEM=`1p get item \"${choice_set}\"`    
     export AWS_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_PROFILE_NAME") | .v'`
     echo "aws-vault profile: $AWS_PROFILE_NAME"
