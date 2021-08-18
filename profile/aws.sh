@@ -12,11 +12,12 @@ pb() {
 
 alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh"
 
-get_list_of_aws_secrets() {       
+get_list_of_tagged_secrets() {
+    # expects first (only) argument to be tag name
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"  
-    1p list items --tags aws --categories login | jq -Mcr '.[].overview.title' | sort    
+    1p list items --tags $1 --categories login | jq -Mcr '.[].overview.title' | sort    
 }
 
 filter_array() {
@@ -44,7 +45,7 @@ choose_aws_secret() {
     local ARR=("exit")         
     while read -r line; do                 
         ARR+=( "$line" )        
-    done <<< $(get_list_of_aws_secrets)        
+    done <<< $(get_list_of_tagged_secrets "aws")        
     
     if [[ $# -eq 1 ]]; then
         choice_set=`filter_array ARR $1` && get_choice \
@@ -83,15 +84,14 @@ mfa() {
             while read -r col1
             do         
                 ARR+=("$col1")
-            done <"${HERE}/picklists/dds-all-mfa"
+            done <<< $(get_list_of_tagged_secrets "mfa") 
             [[ $# -lt 2 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
             local ON_FAILURE="echo \"Provider \\\"${PROVIDER}\\\" not recognized. Exiting mfa.\";  return 1"
+            { local SECRET_NAME=$choice_set; } || eval ${ON_FAILURE}
     else
-        echo "received passed arg: $1"
-        echo "using choice_set already in env: $choice_set"
+        local SECRET_NAME=$1
     fi
-    { local SECRET_NAME=$choice_set; } || eval ${ON_FAILURE} 
-    echo ${SECRET_NAME}       
+     
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"
@@ -104,13 +104,14 @@ newawslogin() {
     eval "export ${SESSION_NAME}=$(1p session)"    
     1p create item login "$(op encode < ${HERE}/aws.template.json)" \
         --vault dene \
-        --title "Template [AWS]" \
+        --title 'Template--[AWS]' \
         --generate-password \
-        --tags "aws" \
-        --url https://signin.amazonaws-us-gov.com/console    
+        --tags "aws,mfa" \
+        --url "https://signin.amazonaws-us-gov.com/console"
 }
 
 newawsprofile() {
+    # create new aws profile from 1p secret
     get_aws_acct_info
     ACCOUNT_ID=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="ACCOUNT_ID") | .v'`
     ACCOUNT_TYPE=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="ACCOUNT_TYPE") | .v'`
@@ -136,6 +137,8 @@ awslogin() {
     OP_CLOUD_ACCOUNT='dds'
     export SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"
+    
+    # TODO: converge both methods to one (regardless of input argument presence)
     if [[ $# -eq 1 ]]; then 
         choose_aws_secret $1  || { echo "exiting awslogin." && return 1; }
     else
@@ -152,10 +155,9 @@ awslogin() {
         *)
             export extra_chrome_opts=" ";;
     esac
-    # dummy arg tells it to use the choice_set already provided in env
-    mfa dummy
-    echo "AWS_PROFILE_NAME: ${AWS_PROFILE_NAME}"
-    aws-vault --debug login ${AWS_PROFILE_NAME} --stdout \
+
+    otp_val=`mfa "$choice_set"`
+    aws-vault --debug login ${AWS_PROFILE_NAME} --mfa-token ${otp_val} --stdout \
     | xargs -t /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome ${extra_chrome_opts} --new-window
     
     # TODO - why does the following line fail to access $choice_set
