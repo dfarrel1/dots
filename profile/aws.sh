@@ -159,9 +159,7 @@ awslogin() {
     otp_val=`mfa "$choice_set"`
     aws-vault --debug login ${AWS_PROFILE_NAME} --mfa-token ${otp_val} --stdout \
     | xargs -t /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome ${extra_chrome_opts} --new-window
-    
-    # TODO - why does the following line fail to access $choice_set
-    # aws-vault login $AWS_PROFILE_NAME --mfa-token $(mfa dummy | tr -d '\n')    
+       
 }
 
 help() {
