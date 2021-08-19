@@ -5,12 +5,14 @@
 
 check_session(){
     # attempt sign in if session is not active
-    # echo "(check_session - before) -- OP_SESSION_dds: ${OP_SESSION_dds}"
     if ! op get account &> /dev/null; then
-        signin
-        check_session
-    fi
-    # echo "(check_session - after) -- OP_SESSION_dds: ${OP_SESSION_dds}"
+        # try loading global session file before logging in anew       
+        [[ -f ~/.op_session ]] && source ~/.op_session
+        if ! op get account &> /dev/null; then
+            signin
+            check_session
+        fi
+    fi    
 }
 
 main(){
@@ -23,7 +25,10 @@ main(){
         --version )
             op --version;;
         signin )
-            op signin;;
+            op signin
+            reset_timeout
+            update_session_file
+            ;;
         signout )
             op signout
             unset OP_EXPIRATION OP_SESSION_"$OP_CLOUD_ACCOUNT"
@@ -38,6 +43,7 @@ main(){
             check_session
             eval "op $*"
             reset_timeout
+            update_session_file
             ;;
     esac
 }
@@ -50,16 +56,22 @@ reset_timeout(){
     elif [ "$OS_TYPE" = Linux ]; then
         OP_EXPIRATION_TIME=$(date -d '+30 min' -u +%s)
     fi
-    export OP_EXPIRATION="$OP_EXPIRATION_TIME"
+    export OP_EXPIRATION="$OP_EXPIRATION_TIME"    
 }
 
 signin(){
-    token=$(op signin "$OP_CLOUD_ACCOUNT" | \
-        grep 'export' | \
-        awk -F\" '{print $2}'
-    )
+    token=$(op signin "$OP_CLOUD_ACCOUNT" --raw)    
     export OP_SESSION_"$OP_CLOUD_ACCOUNT"="$token"
-    # echo "(signin) -- OP_SESSION_dds: ${OP_SESSION_dds}"
+    reset_timeout
+    update_session_file
+}
+
+update_session_file(){
+    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    echo """
+    export $SESSION_NAME=${!SESSION_NAME}
+    export OP_EXPIRATION="$OP_EXPIRATION_TIME"
+    """ | awk '{$1=$1};1' | sed -r '/^\s*$/d' > ~/.op_session
 }
 
 main "$*"
