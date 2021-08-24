@@ -72,6 +72,7 @@ cask "intellij-idea-ce"
 cask "sublime-text"
 cask "visual-studio-code"
 cask "google-chrome"
+cask "google-chrome-canary"
 cask "rectangle" ## cask "spectacle" # switched to rectangle
 cask "snowflake-snowsql"
 cask "sourcetree"
