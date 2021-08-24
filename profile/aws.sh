@@ -145,20 +145,28 @@ awslogin() {
         choose_aws_secret
     fi
     ITEM=`1p get item \"${choice_set}\"`    
-    export AWS_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_PROFILE_NAME") | .v'`
+    export AWS_PROFILE_NAME=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="AWS_PROFILE_NAME") | .v'`  
     echo "aws-vault profile: $AWS_PROFILE_NAME"
-    read -n 1 -p "Normal or Incognito? (N/i) " ans;
+    read -n 1 -p "Normal(chrome)/Incognito(chrome)/Canary(Normal)/Safari(Normal)? (N/i/c/s) " ans;
 
     case $ans in
-        i|I)
-            export extra_chrome_opts=" --args --incognito ";;
+        i|I)            
+            export browser_items=( "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" )
+            browser_items+=( "--new-window" "--args" "--incognito" );;
+        c|C)            
+            export browser_items=( "/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary" )
+            browser_items+=( "--new-window" );;
+        s|S)
+            export extra_browser_opts=""        
+            export browser_items=( "open" "-a" "/Applications/Safari.app/Contents/MacOS/Safari" );;                        
         *)
-            export extra_chrome_opts=" ";;
+            export browser_items=( "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" )
+            browser_items+=( "--new-window" );;
     esac
 
     otp_val=`mfa "$choice_set"`
     aws-vault --debug login ${AWS_PROFILE_NAME} --mfa-token ${otp_val} --stdout \
-    | xargs -t /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome ${extra_chrome_opts} --new-window
+    | xargs -t "${browser_items[@]}"
        
 }
 
