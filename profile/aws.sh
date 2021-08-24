@@ -156,9 +156,9 @@ awslogin() {
         c|C)            
             export browser_items=( "/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary" )
             browser_items+=( "--new-window" );;
-        s|S)
-            export extra_browser_opts=""        
-            export browser_items=( "open" "-a" "/Applications/Safari.app/Contents/MacOS/Safari" );;                        
+        s|S)     
+            export browser_items=( "open" "-a" )
+            browser_items+=( "/Applications/Safari.app/Contents/MacOS/Safari" );;                        
         *)
             export browser_items=( "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" )
             browser_items+=( "--new-window" );;
