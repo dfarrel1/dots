@@ -6,3 +6,6 @@ client.ovpn
 
 # pipenv
 Pipfile.lock
+
+#newcomp state
+xtra/newcompstate*
