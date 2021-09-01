@@ -58,8 +58,22 @@ else
     op_items=$(op list items --vault $VAULT_NAME --tags 'newcomp' | jq -Mcr '.[].overview.title' | sort)
     for word in $op_items; do
         echo $word              
-        op get document --vault $VAULT_NAME "$word" --output ~/${word}
+        op get document --vault $VAULT_NAME "$word" --output ~/${word}        
     done
-    cat ~/.aws/config
-    # touch $AWS_STATE_FILE
+
+    O_IFS=$IFS    
+    IFS=$'\n'    
+    op_items=( $(op list items --vault $VAULT_NAME --tags 'aws' | op get item - --fields title) )
+    echo ${op_items[@]}
+
+    for ((i = 0; i < ${#op_items[@]}; i++)); do
+        word="${op_items[$i]}"
+        echo "word: $word"
+        export AWS_ACCESS_KEY_ID=`op get item "${word}" --fields ACCESS_KEY_ID`    
+        export AWS_SECRET_ACCESS_KEY=`op get item "${word}" --fields ACCESS_KEY_SECRET`  
+        export AWS_PROFILE_NAME=`op get item "${word}" --fields AWS_PROFILE_NAME`           
+        aws-vault add "$AWS_PROFILE_NAME" --env
+    done 
+    IFS=${O_IFS}
+    touch $AWS_STATE_FILE
 fi
