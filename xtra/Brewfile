@@ -124,3 +124,7 @@ mas "Bear", id: 1091189122
 
 # just for fun
 brew "asciiquarium"
+
+#ipfs
+brew "ipfs"
+cask "ipfs"
