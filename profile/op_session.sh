@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# requires gnu-sed
+# export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+# for 'sed -r'
+# (PATH modified in aws.sh)
+#
 # starts (or restarts) a 1password cli session, sets 30 minute countdown variable
 # use: OP_CLOUD_ACCOUNT="[your-account-name]" source /path/to/op_session.sh command
 # e.g.: OP_CLOUD_ACCOUNT="familyname" source ~/op_session.sh get account
