@@ -121,6 +121,8 @@ newawsprofile() {
     AWS_PROFILE_NAME=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="AWS_PROFILE_NAME") | .v'`
     USER_NAME=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="USER_NAME") | .v'`
     SEARCH_STR="[profile ${AWS_PROFILE_NAME}]"
+    export AWS_ACCESS_KEY_ID=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="ACCESS_KEY_ID") | .v'`
+    export AWS_SECRET_ACCESS_KEY=`echo $TMP_GLOBAL_ACCOUNT_INFO | jq -Mcr '.[] | select(.t=="ACCESS_KEY_SECRET") | .v'`
     if grep -Fxq "${SEARCH_STR}" ~/.aws/config
     then
         echo "Profile already exists."
@@ -134,6 +136,10 @@ newawsprofile() {
         mfa_serial=arn:aws-us-gov:iam::${ACCOUNT_ID}:mfa/${USER_NAME}
         """ | awk '{$1=$1};1' >> ~/.aws/config
     fi
+    aws-vault add $AWS_PROFILE_NAME --env
+    unset AWS_ACCESS_KEY_ID
+    unset AWS_SECRET_ACCESS_KEY
+
 }
 
 awslogin() {           
