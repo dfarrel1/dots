@@ -87,6 +87,10 @@ clone() {
   cd $clone_dir
 }
 
+clonedds() {
+  clone "${1/github.com/github-dlf-dds}"
+}
+
 origin() {
   git init
   repo_info -s || (echo "no repo found" && return 1)
