@@ -42,7 +42,24 @@ else
         echo $word              
         op get document --vault $VAULT_NAME "$word" --output ~/.ssh/${word}
     done
-
     cat ~/.ssh/config
     touch $SSH_STATE_FILE
+fi
+
+#aws stuff
+AWS_STATE_FILE=$SCRIPT_DIR/newcompstate_awscomplete
+if [[ -f "$AWS_STATE_FILE" ]]; then
+    echo "$AWS_STATE_FILE exists."
+else    
+    OP_CLOUD_ACCOUNT='dds'
+    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
+    eval "export ${SESSION_NAME}=$(op signin --account ${OP_CLOUD_ACCOUNT} --raw)"
+    VAULT_NAME="dene"    
+    op_items=$(op list items --vault $VAULT_NAME --tags 'newcomp' | jq -Mcr '.[].overview.title' | sort)
+    for word in $op_items; do
+        echo $word              
+        op get document --vault $VAULT_NAME "$word" --output ~/${word}
+    done
+    cat ~/.aws/config
+    # touch $AWS_STATE_FILE
 fi
