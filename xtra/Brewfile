@@ -80,6 +80,7 @@ cask "microsoft-excel"
 cask "microsoft-powerpoint"
 cask "aws-vault"
 cask "1password-cli"
+cask "drawio"
 
 # java
 cask "adoptopenjdk/openjdk/adoptopenjdk8"
