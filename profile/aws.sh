@@ -49,19 +49,22 @@ filter_array() {
 }
 
 choose_aws_secret() {
+    IFS=$'\n'
     local ARR=("exit")         
-    while read -r line; do                 
-        ARR+=( "$line" )        
-    done <<< $(get_list_of_tagged_secrets "aws")        
-    
+    ARR+=($(get_list_of_tagged_secrets "aws"))
+    # while read -r line; do
+    #     echo $line                
+    #     ARR+=( "$line" )        
+    # done <<< $(get_list_of_tagged_secrets "aws")
+     
     if [[ $# -eq 1 ]]; then
         choice_set=`filter_array ARR $1` && get_choice \
         || { echo "search for \"$1\" returned empty." && return 1; }
     else        
         [[ $# -eq 0 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
     fi
-    
-    local ON_FAILURE="echo \" \\\"${choice_set}\\\" not recognized. Exiting mfa.\";  return 1"   
+    unset IFS
+    local ON_FAILURE="echo \" \\\"${choice_set}\\\" not recognized. Exiting choose_aws_secret.\";  return 1"   
     { local SECRET_NAME=$choice_set; } || eval ${ON_FAILURE} 
     # choice globally stored as "$choice_set"
 }
