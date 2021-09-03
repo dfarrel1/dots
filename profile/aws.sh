@@ -17,10 +17,14 @@ alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh"
 
 get_list_of_tagged_secrets() {
     # expects first (only) argument to be tag name
+    # need to establish default IFS within function
+    O_IFS=$IFS    
+    unset IFS
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"  
-    1p list items --tags $1 --categories login | jq -Mcr '.[].overview.title' | sort    
+    1p list items --tags $1 --categories login | jq -Mcr '.[].overview.title' | sort
+    IFS=$0_IFS  
 }
 
 filter_array() {
