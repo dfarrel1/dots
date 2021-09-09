@@ -30,21 +30,28 @@ get_list_of_tagged_secrets() {
 filter_array() {
     # first arg is name of array var
     # second arg is string to filter on
-    # TODO: force exit from "choose_aws_secret" on empty set
-    local -n INPUT_ARR=$1
-    local FILTER_VAL=$2
-    local OUTPUT_ARR=()
-    O_IFS=$IFS    
-    IFS=""
-    for i in ${INPUT_ARR[*]}
-    do
-        echo $i | grep ${FILTER_VAL}>/dev/null && OUTPUT_ARR+=( "$i" )
-    done
-    IFS=${O_IFS}    
-    if [ ${#OUTPUT_ARR[@]} -eq 0 ]; then
-        exit 1
+    # TODO: force exit from "choose_aws_secret" on empty set 
+    if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
+        # this section should never get hit
+        echo "BASH_VERSION: ${BASH_VERSION}"
+        echo "array vars cannot be filtered on bash versions < 4"
+        return 1
     else
-        printf '%s\n' "${OUTPUT_ARR[@]}"
+        local -n INPUT_ARR=$1
+        local FILTER_VAL=$2
+        local OUTPUT_ARR=()
+        O_IFS=$IFS    
+        IFS=$'\n'
+        for i in ${INPUT_ARR[*]}
+        do
+            echo $i | grep ${FILTER_VAL}>/dev/null && OUTPUT_ARR+=( "$i" )
+        done
+        IFS=${O_IFS}    
+        if [ ${#OUTPUT_ARR[@]} -eq 0 ]; then
+            exit 1
+        else
+            printf '%s\n' "${OUTPUT_ARR[@]}"
+        fi
     fi
 }
 
@@ -52,14 +59,25 @@ choose_aws_secret() {
     IFS=$'\n'
     local ARR=("exit")         
     ARR+=($(get_list_of_tagged_secrets "aws"))
+    
+    # deprecated approach -- oddly stopped working out of the blue
+    # I'm thinking it was related to some weird bash version switching behavior
     # while read -r line; do
     #     echo $line                
     #     ARR+=( "$line" )        
     # done <<< $(get_list_of_tagged_secrets "aws")
      
     if [[ $# -eq 1 ]]; then
-        choice_set=`filter_array ARR $1` && get_choice \
-        || { echo "search for \"$1\" returned empty." && return 1; }
+        if [ ${BASH_VERSINFO[0]} -ge 4 ]; then
+            echo "using filter_array"
+            filter_array ARR $1
+            choice_set=`filter_array ARR $1` && get_choice \
+            || { echo "search for \"$1\" returned empty." && return 1; }
+        else
+            echo "cannot filter because using bash $BASH_VERSION"
+            echo "\"chsh -s /usr/local/bin/bash\" to update bash."
+            return 1
+        fi
     else        
         [[ $# -eq 0 ]] && choice_set=`printf '%s\n' "${ARR[@]}"` && get_choice
     fi
