@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # entire .profile should take about 0.9 seconds to load (+ ASL on standard bash)
 # see xtra/mac/faster-bash-notes if terminal load is more than a second
 # TODO: port over to zsh.
