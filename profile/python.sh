@@ -8,8 +8,8 @@ alias pip='/usr/local/bin/pip3'
 
 eval "$(pyenv init -)"
 # For pyenv on mac OS 11
-export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
-export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
+# export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
+# export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
 
 # # conda from "brew install --cask anaconda"
 # export PATH="/usr/local/anaconda3/bin:$PATH"
