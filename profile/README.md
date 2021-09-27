@@ -52,3 +52,7 @@ The following files are core dependencies:
 - [navigation.sh](./navigation.sh)
 
 Everything else is (and should remain) self-contained and independent of one another. That means you can start your own dotfiles repo by stripping down to those three files if you want to avoid the overhead of inspecting so many files.
+
+## Installation [Windows]
+
+Use [wsl](https://docs.microsoft.com/en-us/windows/wsl/install) *windows subsystem linux*. 
