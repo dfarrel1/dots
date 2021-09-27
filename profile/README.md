@@ -10,6 +10,8 @@ This directory is self-sufficient.
 
 ## Installation [Mac]
 
+[ windows: **[windows-install](.#installation-windows)** ]
+
 1. Decide on a parent directory to keep all of your repos (I use `~/src`) and install there.
 
 ```
@@ -56,3 +58,10 @@ Everything else is (and should remain) self-contained and independent of one ano
 ## Installation [Windows]
 
 Use [wsl](https://docs.microsoft.com/en-us/windows/wsl/install) *windows subsystem linux*. 
+
+Install [homebrew]
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+>> **GOTCHA**: In a WSL Bash terminal, running `pwd` will return something like `/home/<user>` if you're in your home directory. That same directory literally translates to `\\wsl$\Ubuntu\home\<user>` in the Windows native directory addressing system.
