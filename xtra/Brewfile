@@ -66,6 +66,8 @@ brew "terraform-docs"
 cask "anaconda" # (needed for polynote)
 brew "gitlab-runner"
 brew "pre-commit"
+brew "gpg"
+brew "circleci"
 
 # GUI type installs
 # cask "intellij-idea"
