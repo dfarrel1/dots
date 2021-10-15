@@ -5,6 +5,7 @@ tap "homebrew/core"
 tap "AdoptOpenJDK/openjdk"
 tap "mongodb/brew"
 tap "hashicorp/tap"
+tap "snyk/tap"
 
 
 ### convenience and small apps
@@ -68,6 +69,7 @@ brew "gitlab-runner"
 brew "pre-commit"
 brew "gpg"
 brew "circleci"
+brew "snyk"
 
 # GUI type installs
 # cask "intellij-idea"
