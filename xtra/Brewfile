@@ -6,10 +6,10 @@ tap "AdoptOpenJDK/openjdk"
 tap "mongodb/brew"
 tap "hashicorp/tap"
 tap "snyk/tap"
-
+tap "hashicorp/tap"
 
 ### convenience and small apps
-brew "anisble"
+brew "ansible"
 brew "git-duet/tap/git-duet"
 brew "jq"
 brew "tldr"
@@ -70,6 +70,7 @@ brew "pre-commit"
 brew "gpg"
 brew "circleci"
 brew "snyk"
+brew "hashicorp/tap/nomad"
 
 # GUI type installs
 # cask "intellij-idea"
