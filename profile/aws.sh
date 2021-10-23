@@ -166,8 +166,9 @@ newawsprofile() {
     unset AWS_SECRET_ACCESS_KEY
 
 }
-
-awslogin() {           
+#  moved to https://github.com/deptofdefense/awslogin
+# TODO -- REMOVEME
+awsloginbash() {           
     OP_CLOUD_ACCOUNT='dds'
     export SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"

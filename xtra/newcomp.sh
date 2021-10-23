@@ -77,3 +77,12 @@ else
     IFS=${O_IFS}
     touch $AWS_STATE_FILE
 fi
+
+# go helper repos
+# clone https://github.com/deptofdefense/awsutil
+# clone https://github.com/deptofdefense/awslogin
+echo '''
+clone https://github.com/deptofdefense/awsutil
+clone https://github.com/deptofdefense/awslogin
+and follow installation steps
+'''
