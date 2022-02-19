@@ -8,6 +8,7 @@ tap "hashicorp/tap"
 tap "snyk/tap"
 tap "hashicorp/tap"
 
+
 ### convenience and small apps
 brew "ansible"
 brew "git-duet/tap/git-duet"
@@ -32,6 +33,7 @@ brew "gcc"
 brew "python"
 brew "jupyter" # issue: had to: brew link --overwrite jupyterlab
 brew "awscli"
+brew "azure-cli"
 brew "glib"
 brew "graphviz"
 brew "kubectl" # issue: /usr/local/bin/kubectl already exists, can't link
@@ -71,6 +73,7 @@ brew "gpg"
 brew "circleci"
 brew "snyk"
 brew "hashicorp/tap/nomad"
+brew "minio/stable/minio"
 
 # GUI type installs
 # cask "intellij-idea"
