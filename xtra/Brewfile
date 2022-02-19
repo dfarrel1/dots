@@ -74,6 +74,7 @@ brew "circleci"
 brew "snyk"
 brew "hashicorp/tap/nomad"
 brew "minio/stable/minio"
+brew "podman"
 
 # GUI type installs
 # cask "intellij-idea"
