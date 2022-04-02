@@ -74,7 +74,9 @@ brew "circleci"
 brew "snyk"
 brew "hashicorp/tap/nomad"
 brew "minio/stable/minio"
+brew "minio/stable/mc"
 brew "podman"
+brew "rust"
 
 # GUI type installs
 # cask "intellij-idea"
@@ -91,6 +93,7 @@ cask "microsoft-powerpoint"
 cask "aws-vault"
 cask "1password-cli"
 cask "drawio"
+cask "aws-vpn-client"
 
 # java
 cask "adoptopenjdk/openjdk/adoptopenjdk8"
