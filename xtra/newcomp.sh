@@ -86,3 +86,14 @@ clone https://github.com/deptofdefense/awsutil
 clone https://github.com/deptofdefense/awslogin
 and follow installation steps
 '''
+
+# install garage
+cargo install garage
+GARAGE_STATE_FILE=$SCRIPT_DIR/newcompstate_garagecomplete
+if [[ -f "$GARAGE_STATE_FILE" ]]; then
+    echo "$GARAGE_STATE_FILE exists."
+else 
+    cargo install garage
+    cp $HOME/.cargo/bin/garage /usr/local/bin/garage
+    touch $GARAGE_STATE_FILE
+fi
