@@ -102,6 +102,9 @@ brew "java11"
 brew "java"
 brew "groovy"
 
+# artifactory (jfrog)
+brew "jfrog-cli"
+
 ### flutter stuff
 brew "asdf"
 cask "android-sdk"
