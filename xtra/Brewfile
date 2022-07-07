@@ -100,6 +100,7 @@ cask "adoptopenjdk/openjdk/adoptopenjdk8"
 cask "adoptopenjdk12"
 brew "java11"
 brew "java"
+brew "groovy"
 
 ### flutter stuff
 brew "asdf"
