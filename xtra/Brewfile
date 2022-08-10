@@ -146,3 +146,6 @@ brew "asciiquarium"
 #ipfs
 brew "ipfs"
 cask "ipfs"
+## TODO -- ensure personal auth for license
+# Need to install adobe acrobat DC pro for pdf editing
+cask adobe-acrobat-pro
