@@ -70,6 +70,7 @@ cask "anaconda" # (needed for polynote)
 brew "gitlab-runner"
 brew "pre-commit"
 brew "gpg"
+cask "gpg-suite"
 brew "circleci"
 brew "snyk"
 brew "hashicorp/tap/nomad"
@@ -148,4 +149,4 @@ brew "ipfs"
 cask "ipfs"
 ## TODO -- ensure personal auth for license
 # Need to install adobe acrobat DC pro for pdf editing
-cask adobe-acrobat-pro
+cask "adobe-acrobat-pro"
