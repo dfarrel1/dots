@@ -16,7 +16,24 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 timer=${SRC_TIMER:-false}
 
 # these are for everyone
-sources=( core navigation apps docker git vim python aws misc fun )
+sources=( core navigation docker git vim python aws misc fun )
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+if [ ${unameOut} = "Linux" ]
+then
+    sources+=("apps_linux")
+fi
+if [ ${unameOut} = "Mac" ]
+then
+    sources+=("apps_mac")
+fi
 for i in "${sources[@]}"
 do
     if [ ${timer} = true ]

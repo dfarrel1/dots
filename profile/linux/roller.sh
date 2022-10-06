@@ -33,6 +33,10 @@ tar xzf smartgit-linux-21_2_4.tar.gz -C ~/src/
 # start smartgit from cli
 # ~/src/smartgit/bin/smartgit.sh
 
+#chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+
 # disable middle button on trackpad
 sudo add-apt-repository universe
 sudo apt install gnome-tweak-tool -y

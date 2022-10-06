@@ -131,7 +131,7 @@ browse() {
   repo_info -s || (echo "no repo found" && return 1)
   current_path="$(alias2host $git_domain)/$git_org/$git_repo"
   [ ! -z $git_tree ] && [ $git_tree != "" ] && current_path="$current_path/$git_tree/$git_branch" && [ ! -z $1 ] && current_path="$current_path/$1"
-  open -a "Google Chrome" "http://$current_path"
+  chrome "http://$current_path"
 }
 
 st() {
