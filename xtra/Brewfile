@@ -150,3 +150,7 @@ cask "ipfs"
 ## TODO -- ensure personal auth for license
 # Need to install adobe acrobat DC pro for pdf editing
 cask "adobe-acrobat-pro"
+
+
+#cloud tools
+cask "google-cloud-sdk"
