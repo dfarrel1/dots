@@ -22,4 +22,6 @@ alias ports='lsof -i | grep -E "(LISTEN|ESTABLISHED)"'
 alias epc='open_with_code $PROFILE_DIR' # [E]dit [P]rofile (with) [C]ode
 alias epa='atom $PROFILE_DIR'
 alias ep='epc'
-alias stree='open -a "SourceTree 2"'
+# alias stree='open -a "SourceTree 2"'
+# getting stree from built in cli 
+# /usr/local/bin/stree

@@ -26,11 +26,12 @@ case "${unameOut}" in
     MINGW*)     machine=MinGw;;
     *)          machine="UNKNOWN:${unameOut}"
 esac
-if [ ${unameOut} = "Linux" ]
+echo "found a ${machine}"
+if [ ${machine} = "Linux" ]
 then
     sources+=("apps_linux")
 fi
-if [ ${unameOut} = "Mac" ]
+if [ ${machine} = "Mac" ]
 then
     sources+=("apps_mac")
 fi
@@ -75,7 +76,7 @@ done
 # eval "$(rbenv init -)"
 # echo "rbenv"
 echo "Done: .profile loaded."
-clear
+# clear
 splasher
 
 # NOTES

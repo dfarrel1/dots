@@ -36,6 +36,7 @@ brew bundle --f=${dots_dir}/xtra/MinimalBrewfile
 
 6. Open up a terminal and have fun!
 
+>**[New computer script](../xtra/newcomp.sh)**
 
 ## Uninstall
 

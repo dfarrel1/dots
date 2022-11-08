@@ -97,3 +97,8 @@ else
     cp $HOME/.cargo/bin/garage /usr/local/bin/garage
     touch $GARAGE_STATE_FILE
 fi
+
+# make sure you have stree cli tools
+# With the Source Tree app open go to:
+# Installing the SourceTree Command Line Tools
+# ![](imgs/stree-cli-setting.png)
