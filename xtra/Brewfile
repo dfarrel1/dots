@@ -95,6 +95,11 @@ cask "aws-vault"
 cask "1password-cli"
 cask "drawio"
 cask "aws-vpn-client"
+cask "postman"
+cask "element"
+# https://github.com/8go/matrix-commander
+cask "signal"
+brew "signal-cli"
 
 # java
 cask "adoptopenjdk/openjdk/adoptopenjdk8"
@@ -123,7 +128,6 @@ cask "slack"
 cask "tableau"
 cask "1password"
 cask "dbvisualizer"
-cask "signal"
 
 # problem casks
 # cask "java" # Xcode Developer Tools missing # didn't retest
