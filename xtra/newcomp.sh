@@ -8,6 +8,9 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 #brew stuff
+#install homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#install from Brewfile
 BREW_STATE_FILE=$SCRIPT_DIR/newcompstate_brewcomplete
 if [[ -f "$BREW_STATE_FILE" ]]; then
     echo "$BREW_STATE_FILE exists."
