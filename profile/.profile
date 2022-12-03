@@ -51,11 +51,13 @@ bind -f ${HERE}/.inputrc
 
 # NOTE: SLOWEST ITEM: bash_complete takes 0.5 secs to load
 brew_sources=( 
-    "/etc/bash_completion" \
+    "/etc/profile.d/bash_completion.sh" \
     "/opt/bash-git-prompt/share/gitprompt.sh" \
     "/opt/asdf/asdf.sh" \
     "/opt/z/etc/profile.d/z.sh"
     )
+echo "loading brew sources"
+eval $(/opt/homebrew/bin/brew shellenv)
 for i in "${brew_sources[@]}"
 do
     if [ ${timer} = true ]
