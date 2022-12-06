@@ -92,7 +92,10 @@ cask "sourcetree"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
 cask "aws-vault"
-cask "1password-cli"
+# TODO upgrade to OP CLI Version 2
+# CLI Version 1 must be manually downloaded from here:
+# https://app-updates.agilebits.com/product_history/CLI
+# cask "1password-cli"
 cask "drawio"
 cask "aws-vpn-client"
 cask "postman"

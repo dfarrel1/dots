@@ -8,18 +8,23 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 #brew stuff
-#install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
 #install from Brewfile
 BREW_STATE_FILE=$SCRIPT_DIR/newcompstate_brewcomplete
 if [[ -f "$BREW_STATE_FILE" ]]; then
     echo "$BREW_STATE_FILE exists."
 else
+    #install homebrew
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # configure mac machine with Brewfile
     brew bundle install --file=${SCRIPT_DIR}/Brewfile
     touch $BREW_STATE_FILE
 fi
 
-#OP stuff
+# OP stuff
+# TODO upgrade to OP CLI Version 2
+# CLI Version 1 must be manually downloaded from here:
+# https://app-updates.agilebits.com/product_history/CLI
 OP_STATE_FILE=$SCRIPT_DIR/newcompstate_opcomplete
 if [[ -f "$OP_STATE_FILE" ]]; then
     echo "$OP_STATE_FILE exists."
@@ -81,14 +86,23 @@ else
     touch $AWS_STATE_FILE
 fi
 
-# go helper repos
-# clone https://github.com/deptofdefense/awsutil
-# clone https://github.com/deptofdefense/awslogin
-echo '''
-clone https://github.com/deptofdefense/awsutil
-clone https://github.com/deptofdefense/awslogin
-and follow installation steps
-'''
+# install cli helpers
+cargo install garage
+CLI_HELPER_STATE_FILE=$SCRIPT_DIR/newcompstate_cli_helpercomplete
+if [[ -f "$CLI_HELPER_STATE_FILE" ]]; then
+    echo "$CLI_HELPER_STATE_FILE exists."
+else 
+    # go helper repos
+    # clone https://github.com/deptofdefense/awsutil
+    # clone https://github.com/deptofdefense/awslogin
+    echo '''
+    clone https://github.com/deptofdefense/awsutil
+    clone https://github.com/deptofdefense/awslogin
+    and follow installation steps
+    '''
+    touch $CLI_HELPER_STATE_FILE
+fi
+
 
 # install garage
 cargo install garage
@@ -100,6 +114,7 @@ else
     cp $HOME/.cargo/bin/garage /usr/local/bin/garage
     touch $GARAGE_STATE_FILE
 fi
+
 
 # make sure you have stree cli tools
 # With the Source Tree app open go to:
