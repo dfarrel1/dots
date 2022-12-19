@@ -40,7 +40,9 @@ fi
 SSH_STATE_FILE=$SCRIPT_DIR/newcompstate_sshcomplete
 if [[ -f "$SSH_STATE_FILE" ]]; then
     echo "$SSH_STATE_FILE exists."
-else    
+else
+
+    echo "adding ssh keys from 1pass to machine files"
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(op signin --account ${OP_CLOUD_ACCOUNT} --raw)"
@@ -51,6 +53,13 @@ else
         op get document --vault $VAULT_NAME "$word" --output ~/.ssh/${word}
     done
     cat ~/.ssh/config
+
+    echo "adding ssh keys from machine files to machine ssh agent"
+    for possiblekey in ${HOME}/.ssh/id_*; do
+        if grep -q PRIVATE "$possiblekey"; then
+            ssh-add "$possiblekey"
+        fi
+    done
     touch $SSH_STATE_FILE
 fi
 
@@ -58,7 +67,8 @@ fi
 AWS_STATE_FILE=$SCRIPT_DIR/newcompstate_awscomplete
 if [[ -f "$AWS_STATE_FILE" ]]; then
     echo "$AWS_STATE_FILE exists."
-else    
+else
+    echo "adding all \'newfile\' tagged files to the home dir"    
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(op signin --account ${OP_CLOUD_ACCOUNT} --raw)"
@@ -120,3 +130,6 @@ fi
 # With the Source Tree app open go to:
 # Installing the SourceTree Command Line Tools
 # ![](imgs/stree-cli-setting.png)
+
+# make sure to enable gpg signing by creating a
+# new gpg key, adding it to github and configuring stree to use it
