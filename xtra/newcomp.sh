@@ -97,7 +97,6 @@ else
 fi
 
 # install cli helpers
-cargo install garage
 CLI_HELPER_STATE_FILE=$SCRIPT_DIR/newcompstate_cli_helpercomplete
 if [[ -f "$CLI_HELPER_STATE_FILE" ]]; then
     echo "$CLI_HELPER_STATE_FILE exists."
@@ -115,7 +114,6 @@ fi
 
 
 # install garage
-cargo install garage
 GARAGE_STATE_FILE=$SCRIPT_DIR/newcompstate_garagecomplete
 if [[ -f "$GARAGE_STATE_FILE" ]]; then
     echo "$GARAGE_STATE_FILE exists."
@@ -125,6 +123,20 @@ else
     touch $GARAGE_STATE_FILE
 fi
 
+# aws env
+HOME_ENV_STATE_FILE=$SCRIPT_DIR/newcompstate_homeenvcomplete
+if [[ -f "$HOME_ENV_STATE_FILE" ]]; then
+    echo "$HOME_ENV_STATE_FILE exists."
+else
+    # read in home dir .env file on terminal start
+    echo '''
+    if [ -f .env ]
+    then
+        export $(cat .env | xargs)
+    fi
+    ''' | sed -e 's/^[[:space:]]*//' >> ~/.bashrc
+    touch $HOME_ENV_STATE_FILE
+fi
 
 # make sure you have stree cli tools
 # With the Source Tree app open go to:
