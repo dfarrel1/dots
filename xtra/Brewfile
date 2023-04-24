@@ -162,3 +162,7 @@ cask "adobe-acrobat-pro"
 
 #cloud tools
 cask "google-cloud-sdk"
+
+#more stuff
+brew hashicorp/tap/hashicorp-vagrant
+# install virtualbox

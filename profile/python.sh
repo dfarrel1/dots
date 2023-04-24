@@ -1,9 +1,25 @@
 #!/usr/bin/env bash
+# UPDATE: (homebrew) In #9117, we switched to a new prefix of /opt/homebrew for installations on Apple Silicon. 
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+CPU_TYPE=$(${HERE}/mac_cpu_type.sh)
+case "$CPU_TYPE" in
+    x86_64)
+      BIN_PATH="/usr/local/bin"
+      ;;
+    arm64)
+      BIN_PATH="/opt/homebrew/bin"
+      ;;
+    *)
+      BIN_PATH="/usr/local/bin"
+      ;;
+esac
+
 # export PATH="/usr/local/opt/python@3.8/bin:$PATH"
 alias note='jupyter notebook'
 # WARNING: Make sure this path agrees with python install from `brew info python`
-alias python='/usr/local/bin/python3'
-alias pip='/usr/local/bin/pip3'
+echo "BIN_PATH: $BIN_PATH"
+alias python="${BIN_PATH}/python3"
+alias pip="${BIN_PATH}/pip3"
 # alias ansible='/Users/denefarrell/Library/Python/3.9/bin/ansible'
 
 export PYENV_ROOT="$HOME/.pyenv"

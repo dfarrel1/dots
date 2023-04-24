@@ -12,8 +12,18 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# "just" makefile reader
+export PATH=$PATH:/Users/dene/.cargo/bin
+
+# TeX tools for mactex
+export PATH=$PATH:/Library/TeX/texbin/
+
 # for diagnostics 
 timer=${SRC_TIMER:-false}
+
+# for verbosity
+verbosity=${SRC_VERBOSE:-false}
+echo "SRC_VERBOSE: $verbosity"
 
 # these are for everyone
 sources=( core navigation docker git vim python aws misc fun )
@@ -42,7 +52,10 @@ do
             echo -e "\n \n$i"
             time (echo $i && source "$PROFILE_DIR/$i.sh" > /dev/null)
     fi
-    echo $i && source "$PROFILE_DIR/$i.sh" > /dev/null
+    # echo $i && source "$PROFILE_DIR/$i.sh" > /dev/null
+    echo $i && \
+    [[ ${verbosity} = $i ]] && (source "$PROFILE_DIR/$i.sh") || source "$PROFILE_DIR/$i.sh" > /dev/null
+
 done
 
 # history-completion+
@@ -77,6 +90,10 @@ done
 # fi
 # eval "$(rbenv init -)"
 # echo "rbenv"
+
+# fix copy-past behavior
+printf '\e[?2004l'
+
 echo "Done: .profile loaded."
 # clear
 splasher

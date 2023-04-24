@@ -138,6 +138,21 @@ else
     touch $HOME_ENV_STATE_FILE
 fi
 
+# rust auxillary stuff
+RUST_AUX_STATE_FILE=$SCRIPT_DIR/newcompstate_rustauxcomplete
+if [[ -f "$RUST_AUX_STATE_FILE" ]]; then
+    echo "$RUST_AUX_STATE_FILE exists."
+else
+    install rust-analyzer
+    install rustfmt
+    
+    # brew install gdb
+    # gdb: The x86_64 architecture is required for this software. 
+    touch $RUST_AUX_STATE_FILE
+fi
+
+
+
 # make sure you have stree cli tools
 # With the Source Tree app open go to:
 # Installing the SourceTree Command Line Tools

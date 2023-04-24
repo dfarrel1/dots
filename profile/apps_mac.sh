@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
+# UPDATE: (homebrew) In #9117, we switched to a new prefix of /opt/homebrew for installations on Apple Silicon. 
 # Applications
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+MAC_TYPE=$(${HERE}/mac_cpu_type.sh)
+
 # instructions to install cli for code: https://code.visualstudio.com/docs/setup/mac
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 alias open_with_code='open -a "Visual Studio Code"'
 alias c.='repo_info -s;open_with_code $git_local_path'
 alias a.='repo_info -s;atom $git_local_path'
-# after ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
+# Intel Mac: after ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
+# M1 Mac: after ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /opt/homebrew/bin/sublime
 alias s.='repo_info -s;sublime $git_local_path'
 alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
 alias i.='repo_info -s;idea $git_local_path'
