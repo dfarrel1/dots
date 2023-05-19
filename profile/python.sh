@@ -18,8 +18,12 @@ esac
 alias note='jupyter notebook'
 # WARNING: Make sure this path agrees with python install from `brew info python`
 echo "BIN_PATH: $BIN_PATH"
-alias python="${BIN_PATH}/python3"
-alias pip="${BIN_PATH}/pip3"
+# TODO generalize away from 3.9
+# NOTE: had to force specification to python3.9 for kanga stuff
+alias python="${BIN_PATH}/python3.9"
+alias python3="${BIN_PATH}/python3.9"
+alias pip="${BIN_PATH}/pip3.9"
+alias pip3="${BIN_PATH}/pip3.9"
 # alias ansible='/Users/denefarrell/Library/Python/3.9/bin/ansible'
 
 export PYENV_ROOT="$HOME/.pyenv"
