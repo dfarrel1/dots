@@ -7,6 +7,10 @@ alias vcr='worldcom;jcr'
 export JAVA_HOME=$(/usr/libexec/java_home -v 11)
 # /Library/Java/JavaVirtualMachines/jdk-11.0.5.jdk/Contents/Home/
 
+alias adb='~/Library/Android/sdk/platform-tools/adb'
+alias avd='~/Library/Android/sdk/tools/emulator -avd'
+alias avdlist='~/Library/Android/sdk/tools/emulator -list-avds'
+
 # WARNING: loading jenv will clear JAVA_HOME
 # eval "$(jenv init -)"
 
