@@ -82,6 +82,7 @@ brew "rust"
 
 # GUI type installs
 # cask "intellij-idea"
+cask "arduino-ide"
 cask "intellij-idea-ce"
 cask "sublime-text"
 cask "visual-studio-code"
