@@ -79,6 +79,7 @@ brew "minio/stable/minio"
 brew "minio/stable/mc"
 brew "podman"
 brew "rust"
+brew "ta-lib"
 
 # GUI type installs
 # cask "intellij-idea"
