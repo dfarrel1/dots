@@ -24,6 +24,9 @@ alias python="${BIN_PATH}/python3.9"
 alias python3="${BIN_PATH}/python3.9"
 alias pip="${BIN_PATH}/pip3.9"
 alias pip3="${BIN_PATH}/pip3.9"
+alias vpython='$VIRTUAL_ENV/bin/python'
+alias vpip='$VIRTUAL_ENV/bin/pip'
+alias vpip3='$VIRTUAL_ENV/bin/pip3'
 # alias ansible='/Users/denefarrell/Library/Python/3.9/bin/ansible'
 
 export PYENV_ROOT="$HOME/.pyenv"
