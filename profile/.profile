@@ -7,13 +7,15 @@
 [[ "$0" =~ "dotfiles/profile" ]] && PROFILE_DIR=$(dirname $0) || PROFILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export GOPATH=~
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+# moved GOROOT definition to apps_<type>
+
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # "just" makefile reader
 export PATH=$PATH:/Users/dene/.cargo/bin
+
+# Setup environment for Rust toolchain
+source $HOME/.cargo/env
 
 # TeX tools for mactex
 export PATH=$PATH:/Library/TeX/texbin/
@@ -47,15 +49,16 @@ then
 fi
 for i in "${sources[@]}"
 do
-    if [ ${timer} = true ]
-        then
-            echo -e "\n \n$i"
-            time (echo $i && source "$PROFILE_DIR/$i.sh" > /dev/null)
+    if [ "${timer}" = true ]; then
+        echo -e "\n \nTiming $i"
+        time source "$PROFILE_DIR/$i.sh" > /dev/null
+    elif [ "${verbosity}" = "$i" ]; then
+        echo "Sourcing $i with verbosity"
+        source "$PROFILE_DIR/$i.sh"
+    else
+        echo "Sourcing $i without verbosity"
+        source "$PROFILE_DIR/$i.sh" > /dev/null
     fi
-    # echo $i && source "$PROFILE_DIR/$i.sh" > /dev/null
-    echo $i && \
-    [[ ${verbosity} = $i ]] && (source "$PROFILE_DIR/$i.sh") || source "$PROFILE_DIR/$i.sh" > /dev/null
-
 done
 
 # history-completion+
@@ -91,7 +94,7 @@ done
 # eval "$(rbenv init -)"
 # echo "rbenv"
 
-# fix copy-past behavior
+# fix copy-paste behavior
 printf '\e[?2004l'
 
 echo "Done: .profile loaded."

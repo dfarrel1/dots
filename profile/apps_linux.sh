@@ -2,6 +2,13 @@
 # Applications
 # instructions to install cli for code: https://code.visualstudio.com/docs/setup/mac
 
+
+# if using a mac arm M1 then export GOROOT="$(brew --prefix golang)/libexec"
+# otherwise export GOROOT=/usr/local/opt/go/libexec
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
 alias c.='repo_info -s;code $git_local_path'
 alias a.='repo_info -s;atom $git_local_path'
 # after ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime

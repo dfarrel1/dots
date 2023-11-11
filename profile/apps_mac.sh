@@ -4,6 +4,21 @@
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 MAC_TYPE=$(${HERE}/mac_cpu_type.sh)
 
+if [ ${MAC_TYPE} = "x86_64" ]
+then
+    echo -e "found an: intel mac."
+elif [ ${MAC_TYPE} = "arm64" ]
+then
+    echo -e "found an: m1 mac."
+    export GOROOT="$(brew --prefix golang)/libexec"    
+    # if using a mac arm M1 then export GOROOT="$(brew --prefix golang)/libexec"
+    # otherwise export GOROOT=/usr/local/opt/go/libexec    
+    export PATH=$PATH:$GOPATH/bin
+    export PATH=$PATH:$GOROOT/bin
+else
+    echo -e "found an: unknown type mac."
+fi
+   
 # instructions to install cli for code: https://code.visualstudio.com/docs/setup/mac
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 alias open_with_code='open -a "Visual Studio Code"'
