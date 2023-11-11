@@ -112,6 +112,15 @@ else
     touch $CLI_HELPER_STATE_FILE
 fi
 
+# install rustup
+RUSTUP_STATE_FILE=$SCRIPT_DIR/newcompstate_rustupomplete
+if [[ -f "$RUSTUP_STATE_FILE" ]]; then
+    echo "$RUSTUP_STATE_FILE exists."
+else 
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    touch $RUSTUP_STATE_FILE
+fi
+
 
 # install garage
 GARAGE_STATE_FILE=$SCRIPT_DIR/newcompstate_garagecomplete

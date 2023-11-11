@@ -78,8 +78,16 @@ brew "hashicorp/tap/nomad"
 brew "minio/stable/minio"
 brew "minio/stable/mc"
 brew "podman"
-brew "rust"
+# brew "rust"
+# manually install rustup, don't use brew for rust
+# then install mature for rust to python
+# cargo install maturin
 brew "ta-lib"
+
+# packets
+brew "tcpdump"
+brew "wireshark"
+brew "tcpreplay"
 
 # GUI type installs
 # cask "intellij-idea"
