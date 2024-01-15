@@ -1,13 +1,15 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-versions"
-tap "homebrew/core"
+## these are "no longer necessary"
+## TODO remove these two
+# tap "homebrew/cask"
+# tap "homebrew/core"
 tap "AdoptOpenJDK/openjdk"
 tap "mongodb/brew"
 tap "hashicorp/tap"
 tap "snyk/tap"
 tap "hashicorp/tap"
-
+tap "cloudfoundry/tap"
 
 ### convenience and small apps
 brew "ansible"
@@ -35,6 +37,8 @@ brew "python"
 brew "jupyter" # issue: had to: brew link --overwrite jupyterlab
 brew "awscli"
 brew "azure-cli"
+brew "cf-cli@8"
+
 brew "glib"
 brew "graphviz"
 brew "kubectl" # issue: /usr/local/bin/kubectl already exists, can't link
@@ -74,6 +78,7 @@ brew "gpg"
 cask "gpg-suite"
 brew "circleci"
 brew "snyk"
+brew "scorecard"
 brew "hashicorp/tap/nomad"
 brew "minio/stable/minio"
 brew "minio/stable/mc"
@@ -175,5 +180,6 @@ cask "adobe-acrobat-pro"
 cask "google-cloud-sdk"
 
 #more stuff
-brew hashicorp/tap/hashicorp-vagrant
+# hashicorp/tap/hashicorp-vagrant
+brew "hashicorp-vagrant"
 # install virtualbox
