@@ -83,6 +83,8 @@ brew "hashicorp/tap/nomad"
 brew "minio/stable/minio"
 brew "minio/stable/mc"
 brew "podman"
+brew "pkl"
+brew "qemu"
 # brew "rust"
 # manually install rustup, don't use brew for rust
 # then install mature for rust to python
@@ -108,6 +110,8 @@ cask "sourcetree"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
 cask "aws-vault"
+cask "wezterm"
+
 # TODO upgrade to OP CLI Version 2
 # CLI Version 1 must be manually downloaded from here:
 # https://app-updates.agilebits.com/product_history/CLI
