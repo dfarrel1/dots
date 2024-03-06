@@ -10,6 +10,9 @@ tap "hashicorp/tap"
 tap "snyk/tap"
 tap "hashicorp/tap"
 tap "cloudfoundry/tap"
+tap "git-duet/tap"
+tap "scalacenter/bloop"
+tap "minio/stable"
 
 ### convenience and small apps
 brew "ansible"
@@ -34,7 +37,7 @@ brew "rbenv"
 brew "golang"
 brew "gcc"
 brew "python"
-brew "jupyter" # issue: had to: brew link --overwrite jupyterlab
+brew "jupyterlab" # (when still installing "jupyter") issue: had to: brew link --overwrite jupyterlab
 brew "awscli"
 brew "azure-cli"
 brew "cf-cli@8"
@@ -49,7 +52,7 @@ brew "mysql"
 brew "pyenv"
 brew "pyenv-virtualenv"
 brew "pipenv"
-brew "postgresql"
+brew "postgresql@14"
 brew "sbt"
 brew "scala@2.13"
 brew "chrome-cli"
@@ -58,7 +61,7 @@ brew "wget"
 brew "vim"
 brew "openvpn"
 brew "gnu-sed"
-brew "mongodb-community@4.2"
+brew "mongodb-community@6.0"
 # ARM ISSUES START
 brew "aws-iam-authenticator"
 brew "scalacenter/bloop/bloop" # fast scala builds
@@ -87,7 +90,7 @@ brew "pkl"
 brew "qemu"
 # brew "rust"
 # manually install rustup, don't use brew for rust
-# then install mature for rust to python
+# then install maturin for rust to python
 # cargo install maturin
 brew "ta-lib"
 
@@ -126,7 +129,13 @@ brew "signal-cli"
 
 # java
 cask "adoptopenjdk/openjdk/adoptopenjdk8"
+# issue (failed!): Error: Cask 'adoptopenjdk8' definition is invalid: 
+# 'appcast' stanza failed with: Calling the `appcast` stanza is disabled! 
+# Use the `livecheck` stanza instead.
 cask "adoptopenjdk12"
+# issue (failed!): Error: Cask 'adoptopenjdk12' definition is invalid: 
+# 'appcast' stanza failed with: Calling the `appcast` stanza is disabled! 
+# Use the `livecheck` stanza instead.
 brew "java11"
 brew "java"
 brew "groovy"
@@ -163,6 +172,8 @@ cask "vmware-horizon-client"
 #docker
 brew "docker"
 cask "docker"
+# issue with bash_completion:
+# mv  /opt/homebrew/etc/bash_completion.d/docker /opt/homebrew/etc/bash_completion.d/docker.bkup
 brew "docker-compose" # issue /usr/local/bin/docker-compose already exists, can't link
 
 
@@ -185,5 +196,5 @@ cask "google-cloud-sdk"
 
 #more stuff
 # hashicorp/tap/hashicorp-vagrant
-brew "hashicorp-vagrant"
+brew "vagrant"
 # install virtualbox

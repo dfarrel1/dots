@@ -12,6 +12,10 @@ This directory is self-sufficient.
 
 [ windows: **[windows-install](.#installation-windows)** ]
 
+**prerequisites**
+[homebrew](https://brew.sh)
+[rosetta2](https://support.apple.com/en-us/102527) : `sudo softwareupdate --install-rosetta`
+
 1. Decide on a parent directory to keep all of your repos (I use `~/src`) and install there.
 
 ```
@@ -26,13 +30,16 @@ source ~/.bashrc
 
 ```
 # hstr
-brew bundle --f=${dots_dir}/xtra/MinimalBrewfile
+brew bundle --f ${dots_dir}/xtra/MinimalBrewfile
 ```
 
 5. Add system python reqs
 
 `pip install -r ${dots_dir}/xtra/python/global-reqs.txt`
 
+6. Additional \(out of band\) installations
+
+**[rust](https://www.rust-lang.org/tools/install)**
 
 6. Open up a terminal and have fun!
 
