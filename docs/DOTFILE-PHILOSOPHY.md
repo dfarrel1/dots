@@ -4,11 +4,17 @@
 
 **rules of thumb** (that can be broken)
 
-### Avoid automation
+### Value Flow
+Aim to reduce friction where it is degrading flow and degrading the quality of thought. If a step is not automatic but it does not improve flow to change it, then maybe leave it as clunky. If a step is challenging to automate or smoothen but it significantly affects the flow of thought, then maybe wrestle with it despite the difficulty to wrangle it.
+
+### Avoid cluttering the home directory
+Lean on on [XDG](../profile/XDG.md).
+
+### When in doubt, avoid automation
 While this may sound heretical, we actually recommend not jumping to automate and configure too quickly. All automation has a cost (maintenance, initial setup and tweaking time, etc) so be wary of automating too quickly.
 
 ### Rule of 3
-You can employs a rule of 3 to determine when to automate. If you feel the same annoyance or friction 3 times in recent memory, then the time has come to automate.
+You can employ a rule of 3 to determine when to automate. If you feel the same annoyance or friction 3 times in recent memory, then the time has come to automate.
 
 ### Use Time Boxed Spikes
 Once something hits the magic 3 annoyance count, give yourself a short (5-10 minutes) boxed window of time to take a stab at a first solution. When you are in context feeling the friction you often are in the best place to solve something that might otherwise never be handled.

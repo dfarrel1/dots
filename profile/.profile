@@ -9,6 +9,11 @@
 export GOPATH=~
 # moved GOROOT definition to apps_<type>
 
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_RUNTIME_DIR="$HOME/.runtime"
+
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # "just" makefile reader
