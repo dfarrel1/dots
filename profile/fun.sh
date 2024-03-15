@@ -34,7 +34,7 @@ chp() {
 
 
 load_ascii_art() {    
-    FILES="${HERE}/ascii_art/ASCII_EAGLE_*"
+    FILES="${HERE}/ascii_art/ASCII_DRAGON_*"
     for f in $FILES
     do
       name="$(basename ${f})"
@@ -43,7 +43,7 @@ load_ascii_art() {
 }
 
 unset_ascii_art() {
-    FILES="${HERE}/ascii_art/ASCII_EAGLE_*"
+    FILES="${HERE}/ascii_art/ASCII_DRAGON_*"
     for f in $FILES
     do
       name="$(basename ${f})"
@@ -55,8 +55,8 @@ unset_ascii_art() {
 splasher() {
     # needs [bash >= 5.1] for SRANDOM
     load_ascii_art    
-    EAGLE_NUM=$(printf "%02d" $((1 + SRANDOM % 12)))
-    RAND_EAGLE="ASCII_EAGLE_${EAGLE_NUM}"
+    EAGLE_NUM=$(printf "%02d" $((1 + SRANDOM % 11)))
+    RAND_EAGLE="ASCII_DRAGON_${EAGLE_NUM}"
     cyn="\e[1;36m"
     white_back="\\x1B[47m"
     end=$'\e[0m'
