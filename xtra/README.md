@@ -35,3 +35,7 @@ mv .zshrc .zshrc.bkup
 chsh -s $(which bash)
 ps -p $$
 ```
+
+### Unmanaged Add-ons
+
+[raindrop](https://raindrop.io/download)
