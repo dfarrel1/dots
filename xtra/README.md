@@ -45,3 +45,10 @@ defaults write com.apple.Finder AppleShowAllFiles true
 ```
 killall Finder
 ```
+
+### Unmanaged Add-ons
+
+[balena-etcher](https://etcher.balena.io/#download-etcher)  
+[raindrop](https://raindrop.io/download)
+
+
