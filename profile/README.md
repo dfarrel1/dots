@@ -26,22 +26,21 @@ echo "source ~/.bashrc" >> ~/.bash_profile
 source ~/.bashrc
 ```
 
-2. Add ons.
+2. New Computer Script (Assumes 1Password exists)
 
 ```
-# hstr
-brew bundle --f ${dots_dir}/xtra/MinimalBrewfile
+./xtra/newcomp.sh
 ```
 
-5. Add system python reqs
+3. Add system python reqs
 
 `pip install -r ${dots_dir}/xtra/python/global-reqs.txt`
 
-6. Additional \(out of band\) installations
+4. Additional \(out of band\) installations
 
 **[rust](https://www.rust-lang.org/tools/install)**
 
-6. Open up a terminal and have fun!
+5. Open up a terminal and have fun!
 
 >**[New computer script](../xtra/newcomp.sh)**
 

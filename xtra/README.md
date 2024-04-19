@@ -24,7 +24,8 @@ global system python reqs
 ### Brewfile
 
 - before brew you need `xcode-select --install`
-- then `brew bundle --file=Brewfile`
+- `./newcomp.sh`
+- `brew bundle --file=Brewfile`
 
 ### Notes
 
@@ -36,6 +37,11 @@ chsh -s $(which bash)
 ps -p $$
 ```
 
-### Unmanaged Add-ons
+** show .files **
+```
+defaults write com.apple.Finder AppleShowAllFiles true
+```
 
-[raindrop](https://raindrop.io/download)
+```
+killall Finder
+```

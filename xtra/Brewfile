@@ -52,6 +52,9 @@ brew "mysql"
 brew "pyenv"
 brew "pyenv-virtualenv"
 brew "pipenv"
+brew "pipx"
+# pipx install poetry
+# poetry completions bash >> ~/.bash_completion
 brew "postgresql@14"
 brew "sbt"
 brew "scala@2.13"

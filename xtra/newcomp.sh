@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # reminders:
-# set vscode settings: dots/IDES/vscode-settings.md
-# set cursor speed to max in terminal, keyboard settings
+# 1. set vscode settings: dots/IDES/vscode-settings.md
+# 2. set cursor speed to max in terminal, keyboard settings
+# 3. for any ssh keys not managed in 1pass: ssh-add ~/.ssh/*
 
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"

@@ -16,6 +16,9 @@ export XDG_RUNTIME_DIR="$HOME/.runtime"
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# local bin
+export PATH=$PATH:/Users/dene/.local/bin
+
 # "just" makefile reader
 export PATH=$PATH:/Users/dene/.cargo/bin
 
