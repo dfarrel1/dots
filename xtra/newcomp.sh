@@ -162,6 +162,14 @@ else
 fi
 
 
+# hotspot tether script
+TETHER_STATE_FILE=$SCRIPT_DIR/newcompstate_tethercomplete
+if [[ -f "$TETHER_STATE_FILE" ]]; then
+    echo "$TETHER_STATE_FILE exists."
+else
+    ${SCRIPT_DIR}/../tether/update-crontab.sh
+    touch $TETHER_STATE_FILE
+fi
 
 # make sure you have stree cli tools
 # With the Source Tree app open go to:
