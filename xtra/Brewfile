@@ -91,6 +91,7 @@ brew "minio/stable/mc"
 brew "podman"
 brew "pkl"
 brew "qemu"
+brew "zstd"
 # brew "rust"
 # manually install rustup, don't use brew for rust
 # then install maturin for rust to python
