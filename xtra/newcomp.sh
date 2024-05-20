@@ -167,7 +167,7 @@ TETHER_STATE_FILE=$SCRIPT_DIR/newcompstate_tethercomplete
 if [[ -f "$TETHER_STATE_FILE" ]]; then
     echo "$TETHER_STATE_FILE exists."
 else
-    ${SCRIPT_DIR}/../tether/update-crontab.sh
+    ${SCRIPT_DIR}/tether/update-crontab.sh
     touch $TETHER_STATE_FILE
 fi
 
