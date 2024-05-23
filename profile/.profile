@@ -81,7 +81,9 @@ brew_sources=(
     "/opt/z/etc/profile.d/z.sh"
     )
 echo "loading brew sources"
-eval $(/opt/homebrew/bin/brew shellenv)
+
+eval $(brew --prefix)/bin/brew shellenv
+
 for i in "${brew_sources[@]}"
 do
     if [ ${timer} = true ]
