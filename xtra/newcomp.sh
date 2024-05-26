@@ -164,12 +164,18 @@ fi
 
 
 # hotspot tether script
-TETHER_STATE_FILE=$SCRIPT_DIR/newcompstate_tethercomplete
-if [[ -f "$TETHER_STATE_FILE" ]]; then
-    echo "$TETHER_STATE_FILE exists."
-else
-    ${SCRIPT_DIR}/tether/update-crontab.sh
-    touch $TETHER_STATE_FILE
+# check with user if they want to tether to a hotspot
+# if they do, then run the script
+echo "Do you want to tether to a hotspot? (y/n)"
+read tether
+if [ "$tether" = "y" ]; then
+    TETHER_STATE_FILE=$SCRIPT_DIR/newcompstate_tethercomplete
+    if [[ -f "$TETHER_STATE_FILE" ]]; then
+        echo "$TETHER_STATE_FILE exists."
+    else
+        ${SCRIPT_DIR}/tether/update-crontab.sh
+        touch $TETHER_STATE_FILE
+    fi
 fi
 
 # make sure you have stree cli tools
