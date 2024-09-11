@@ -13,6 +13,8 @@ tap "cloudfoundry/tap"
 tap "git-duet/tap"
 tap "scalacenter/bloop"
 tap "minio/stable"
+tap "1password/tap"
+
 
 ### convenience and small apps
 brew "ansible"
@@ -119,10 +121,11 @@ cask "microsoft-powerpoint"
 cask "aws-vault"
 cask "wezterm"
 
-# TODO upgrade to OP CLI Version 2
+# NOTE upgraded to OP CLI Version 2
 # CLI Version 1 must be manually downloaded from here:
 # https://app-updates.agilebits.com/product_history/CLI
-# cask "1password-cli"
+
+cask "1password/tap/1password-cli"
 cask "drawio"
 cask "aws-vpn-client"
 cask "postman"
@@ -132,14 +135,15 @@ cask "signal"
 brew "signal-cli"
 
 # java
-cask "adoptopenjdk/openjdk/adoptopenjdk8"
+# cask "adoptopenjdk/openjdk/adoptopenjdk8"
 # issue (failed!): Error: Cask 'adoptopenjdk8' definition is invalid: 
 # 'appcast' stanza failed with: Calling the `appcast` stanza is disabled! 
 # Use the `livecheck` stanza instead.
-cask "adoptopenjdk12"
+# cask "adoptopenjdk12"
 # issue (failed!): Error: Cask 'adoptopenjdk12' definition is invalid: 
 # 'appcast' stanza failed with: Calling the `appcast` stanza is disabled! 
 # Use the `livecheck` stanza instead.
+cask "temurin"
 brew "java11"
 brew "java"
 brew "groovy"

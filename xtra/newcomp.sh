@@ -23,35 +23,47 @@ else
 fi
 
 # OP stuff
-# TODO upgrade to OP CLI Version 2
+# upgraded to OP CLI to Version 2
+# There were breaking changes going from Version 1 to Version 2
 # CLI Version 1 must be manually downloaded from here:
 # https://app-updates.agilebits.com/product_history/CLI
 OP_STATE_FILE=$SCRIPT_DIR/newcompstate_opcomplete
 if [[ -f "$OP_STATE_FILE" ]]; then
     echo "$OP_STATE_FILE exists."
 else
-    op_site="https://defense-digital-service.1password.com"
-    op_user="dene@dds.mil"
-    OP_CLOUD_ACCOUNT='dds'
-    op signin ${op_site} ${op_user} --shorthand ${OP_CLOUD_ACCOUNT}
+    echo "signing in to 1pass for the first time (step requires \"op\" aka 1pass CLI tool to be installed)"
+    # if op.env exists, source it
+    if [ -f "$SCRIPT_DIR/op.env" ]; then
+        source $SCRIPT_DIR/op.env
+    fi
+    OP_SITE="${OP_ACCOUNT_NAME:-missing-op-site}"
+    # first signing will require the user to enter their email and secret key
+    op signin --account ${OP_SITE} &&\
     touch $OP_STATE_FILE
 fi
 
+
 #ssh stuff
-SSH_STATE_FILE=$SCRIPT_DIR/newcompstate_sshcomplete
+SSH_STATE_FILE="${SCRIPT_DIR}/newcompstate_sshcomplete"
 if [[ -f "$SSH_STATE_FILE" ]]; then
     echo "$SSH_STATE_FILE exists."
 else
-
+    if [ -f "$SCRIPT_DIR/op.env" ]; then
+        source $SCRIPT_DIR/op.env
+    fi
     echo "adding ssh keys from 1pass to machine files"
-    OP_CLOUD_ACCOUNT='dds'
-    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
-    eval "export ${SESSION_NAME}=$(op signin --account ${OP_CLOUD_ACCOUNT} --raw)"
-    VAULT_NAME="DDS-DENE-ssh"    
-    op_items=$(op list items --vault $VAULT_NAME | jq -Mcr '.[].overview.title' | sort)
+
+    OP_SITE="${OP_ACCOUNT_NAME:-missing-op-site}"
+    op signin --account ${OP_SITE}
+
+    # NOTE: this is a personalized vault name in 1pass
+    VAULT_NAME="${OP_SSH_VAULT_NAME:-work-ssh}"  
+    echo $(op item list --vault $VAULT_NAME --format 'json')  
+    op_items=$(op document list --vault $VAULT_NAME --format 'json' | jq -Mcr '.[].title' | sort)
+    echo "op_items: $op_items"
     for word in $op_items; do
         echo $word              
-        op get document --vault $VAULT_NAME "$word" --output ~/.ssh/${word}
+        op document get --vault $VAULT_NAME "$word" --out-file ~/.ssh/${word}
     done
     cat ~/.ssh/config
 
@@ -69,28 +81,30 @@ AWS_STATE_FILE=$SCRIPT_DIR/newcompstate_awscomplete
 if [[ -f "$AWS_STATE_FILE" ]]; then
     echo "$AWS_STATE_FILE exists."
 else
-    echo "adding all \'newfile\' tagged files to the home dir"    
-    OP_CLOUD_ACCOUNT='dds'
-    SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
-    eval "export ${SESSION_NAME}=$(op signin --account ${OP_CLOUD_ACCOUNT} --raw)"
-    VAULT_NAME="dene"    
-    op_items=$(op list items --vault $VAULT_NAME --tags 'newcomp' | jq -Mcr '.[].overview.title' | sort)
+    # echo "adding all \'newfile\' tagged files to the home dir"
+    if [ -f "$SCRIPT_DIR/op.env" ]; then
+        source $SCRIPT_DIR/op.env
+    fi
+    OP_SITE="${OP_ACCOUNT_NAME:-missing-op-site}"        
+    VAULT_NAME=${OP_AWS_VAULT_NAME:-"work-aws"}    
+    echo "adding all documents in the vault ${VAULT_NAME} to the home dir"
+    op_items=$(op document list --vault $VAULT_NAME --format 'json' | jq -Mcr '.[].title' | sort)
     for word in $op_items; do
         echo $word              
-        op get document --vault $VAULT_NAME "$word" --output ~/${word}        
+        op document get --vault $VAULT_NAME "$word" --out-file ~/${word}        
     done
 
     O_IFS=$IFS    
     IFS=$'\n'    
-    op_items=( $(op list items --vault $VAULT_NAME --tags 'aws' | op get item - --fields title) )
+    op_items=( $(op item list --vault $VAULT_NAME --tags 'aws' | op item get - --fields title) )
     echo ${op_items[@]}
 
     for ((i = 0; i < ${#op_items[@]}; i++)); do
         word="${op_items[$i]}"
         echo "word: $word"
-        export AWS_ACCESS_KEY_ID=`op get item "${word}" --fields ACCESS_KEY_ID`    
-        export AWS_SECRET_ACCESS_KEY=`op get item "${word}" --fields ACCESS_KEY_SECRET`  
-        export AWS_PROFILE_NAME=`op get item "${word}" --fields AWS_PROFILE_NAME`           
+        export AWS_ACCESS_KEY_ID=`op item get "${word}" --fields ACCESS_KEY_ID`    
+        export AWS_SECRET_ACCESS_KEY=`op item get "${word}" --fields ACCESS_KEY_SECRET`  
+        export AWS_PROFILE_NAME=`op item get "${word}" --fields AWS_PROFILE_NAME`           
         aws-vault add "$AWS_PROFILE_NAME" --env
     done 
     IFS=${O_IFS}
@@ -148,27 +162,20 @@ else
     touch $HOME_ENV_STATE_FILE
 fi
 
-# rust auxillary stuff
-RUST_AUX_STATE_FILE=$SCRIPT_DIR/newcompstate_rustauxcomplete
-if [[ -f "$RUST_AUX_STATE_FILE" ]]; then
-    echo "$RUST_AUX_STATE_FILE exists."
-else
-    install rust-analyzer
-    install rustfmt
-    
-    # brew install gdb
-    # gdb: The x86_64 architecture is required for this software. 
-    touch $RUST_AUX_STATE_FILE
-fi
-
 
 # hotspot tether script
-TETHER_STATE_FILE=$SCRIPT_DIR/newcompstate_tethercomplete
-if [[ -f "$TETHER_STATE_FILE" ]]; then
-    echo "$TETHER_STATE_FILE exists."
-else
-    ${SCRIPT_DIR}/tether/update-crontab.sh
-    touch $TETHER_STATE_FILE
+# check with user if they want to tether to a hotspot
+# if they do, then run the script
+echo "Do you want to tether to a hotspot? (y/n)"
+read tether
+if [ "$tether" = "y" ]; then
+    TETHER_STATE_FILE=$SCRIPT_DIR/newcompstate_tethercomplete
+    if [[ -f "$TETHER_STATE_FILE" ]]; then
+        echo "$TETHER_STATE_FILE exists."
+    else
+        ${SCRIPT_DIR}/tether/update-crontab.sh
+        touch $TETHER_STATE_FILE
+    fi
 fi
 
 # make sure you have stree cli tools

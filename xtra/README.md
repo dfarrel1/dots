@@ -9,6 +9,10 @@
   - SourceTree
 - Managing Mac OS brew installs
 
+## newcomp.sh
+
+>NOTE: the newcomp.sh script adds an auto-tether behavior. 
+
 ### IDEs
 
 IDE settings

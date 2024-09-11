@@ -9,3 +9,6 @@ Pipfile.lock
 
 #newcomp state
 xtra/newcompstate*
+
+*/*.env
+*.env

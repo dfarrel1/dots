@@ -4,10 +4,10 @@ HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 CPU_TYPE=$(${HERE}/mac_cpu_type.sh)
 case "$CPU_TYPE" in
     x86_64)
-      BIN_PATH="/usr/local/bin"
+      BIN_PATH="$(brew --prefix)/bin"
       ;;
     arm64)
-      BIN_PATH="/opt/homebrew/bin"
+      BIN_PATH="$(brew --prefix)/bin"
       ;;
     *)
       BIN_PATH="/usr/local/bin"
