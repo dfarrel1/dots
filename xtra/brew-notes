@@ -1,0 +1,2 @@
+# perms problems? try:
+sudo chown -R $(whoami) $(brew --prefix)/*

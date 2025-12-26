@@ -1,0 +1,3 @@
+Host <some-github-url> # changeme
+  HostName github.com
+  IdentityFile ~/.ssh/<key> # changeme

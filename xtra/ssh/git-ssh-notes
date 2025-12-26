@@ -1,0 +1,16 @@
+####~/.ssh/config###
+
+# ALIAS specific SSH config
+Host <alias-name>
+  HostName github.com 
+  IdentityFile ~/.ssh/<ssh-private-key>
+
+# chmod 600 ~/.ssh/config
+
+###CONFIG GIT REPO###
+
+#alias usage
+git remote add <whatever> git@<alias-name>:<user>/<repo>.git
+
+### SOURCE TREE AUTHENTICATION FAILURE FIX ###
+Sourcetree > Preferences > Git > Use System Git

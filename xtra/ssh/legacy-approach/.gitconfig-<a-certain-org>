@@ -1,0 +1,5 @@
+[user]
+	name = <gh-user-name>
+	email = <email>
+[core]
+	sshCommand = ssh -i ~/.ssh/<key> -F /dev/null

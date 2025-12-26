@@ -1,0 +1,22 @@
+{
+	"always_show_minimap_viewport": true,
+	"bold_folder_labels": true,
+	"color_scheme": "Packages/One Dark Material - Theme/schemes/OneDark.tmTheme",
+	"draw_minimap_border": true,
+	"fade_fold_buttons": false,
+	"font_size": 16,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"line_padding_bottom": 2,
+	"line_padding_top": 2,
+	"preview_on_click": false,
+	"rulers":
+	[
+		80
+	],
+	"save_on_focus_lost": true,
+	"theme": "One Dark.sublime-theme"
+}

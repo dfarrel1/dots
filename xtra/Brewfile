@@ -1,0 +1,150 @@
+tap "homebrew/bundle"
+tap "mongodb/brew"
+tap "hashicorp/tap"
+tap "snyk/tap"
+tap "cloudfoundry/tap"
+tap "git-duet/tap"
+tap "scalacenter/bloop"
+tap "minio/stable"
+tap "1password/tap"
+
+### convenience and small apps
+brew "ansible"
+brew "jq"
+brew "tldr"
+brew "htop"
+brew "git"
+brew "git-lfs"
+brew "bash-completion@2"
+brew "bash-git-prompt"
+brew "speedtest-cli"
+brew "hstr"
+brew "z"
+brew "shellcheck"
+cask "wezterm"
+
+### applications and big dependencies
+brew "bash" 
+brew "rbenv"
+brew "golang"
+brew "gcc"
+# Note: Homebrew python. Ensure this doesn't conflict with pyenv in your PATH.
+brew "python" 
+brew "awscli"
+brew "azure-cli"
+brew "cf-cli@8"
+
+brew "glib"
+brew "graphviz"
+# brew "kubectl" # Uncomment if you don't use Docker Desktop's kubectl
+brew "helm"
+brew "jenv"
+brew "gradle"
+brew "mysql"
+brew "pyenv"
+brew "pyenv-virtualenv"
+brew "pipenv"
+brew "pipx"
+brew "postgresql@14"
+brew "sbt"
+brew "scala@2.13"
+brew "chrome-cli"
+brew "npm"
+brew "wget"
+brew "vim"
+brew "openvpn"
+brew "gnu-sed"
+brew "mongodb-community@6.0"
+brew "aws-iam-authenticator"
+brew "scalacenter/bloop/bloop"
+brew "ruby"
+brew "ruby-build"
+
+# Infrastructure
+brew "chamber"
+brew "direnv"
+brew "tfenv"
+brew "terraform-docs"
+brew "gitlab-runner"
+brew "pre-commit"
+brew "gnupg" # Renamed from 'gpg'
+brew "pinentry-mac" # Good fallback
+cask "gpg-suite-no-mail" # GPG Suite without the paid mail plugin
+brew "circleci"
+brew "snyk"
+brew "scorecard"
+brew "hashicorp/tap/nomad"
+brew "minio/stable/minio"
+brew "minio/stable/mc"
+brew "podman"
+brew "pkl"
+brew "qemu"
+brew "zstd"
+brew "gh"
+brew "ta-lib"
+
+# packets
+brew "tcpdump"
+brew "wireshark"
+brew "tcpreplay"
+
+# GUI Apps
+cask "arduino-ide"
+cask "intellij-idea-ce"
+cask "sublime-text"
+cask "visual-studio-code"
+cask "google-chrome"
+cask "google-chrome@canary"
+cask "rectangle"
+cask "snowflake-snowsql"
+cask "sourcetree"
+cask "microsoft-excel"
+cask "microsoft-powerpoint"
+cask "aws-vault"
+cask "drawio"
+cask "aws-vpn-client"
+cask "postman"
+cask "element"
+cask "signal"
+brew "signal-cli"
+
+# 1Password (CLI and GUI)
+cask "1password"
+cask "1password/tap/1password-cli" # The official source for the CLI
+
+# Java (Modern Replacements)
+cask "temurin" # Replaces AdoptOpenJDK
+brew "groovy"
+brew "jfrog-cli"
+
+### flutter stuff
+brew "asdf"
+cask "android-sdk"
+cask "android-studio"
+
+# personal apps
+cask "telegram"
+cask "whatsapp"
+cask "spotify"
+
+# work apps
+cask "slack"
+cask "tableau"
+cask "dbvisualizer"
+cask "vmware-horizon-client"
+
+# docker
+cask "docker" # Docker Desktop includes the CLI tools now
+brew "docker-compose"
+
+# Mac App Store
+mas "Bear", id: 1091189122
+
+# fun & ipfs
+brew "asciiquarium"
+brew "ipfs"
+cask "ipfs"
+
+# cloud tools
+cask "google-cloud-sdk"
+brew "vagrant"

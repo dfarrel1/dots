@@ -1,0 +1,48 @@
+# openvpn # just as precaution
+client.ovpn
+
+# vscode
+.vscode
+
+# pipenv
+Pipfile.lock
+
+#newcomp state
+xtra/newcompstate*
+xtra/private/newcompstate*
+
+# private profile
+profile/private
+profile/private/*
+profile/private/**
+
+# private xtra
+xtra/private
+xtra/private/*
+xtra/private/**
+
+*/*.env
+*.env
+
+# Secrets Staging Area
+.secrets_staging/
+.secrets_temp/
+*.tar.gz
+
+xtra/private/push_secrets_to_1pass.sh
+xtra/private/restore_secrets_from_1pass.sh
+xtra/private/README_PRIVATE.md
+xtra/private/
+
+xtra/bootstrap.conf
+xtra/restore_script.sha256
+
+.restore_temp/
+
+.DS_Store
+*.log
+.idea/
+.vscode/
+.state/
+.secrets_staging/
+secrets_bundle.tar.gz

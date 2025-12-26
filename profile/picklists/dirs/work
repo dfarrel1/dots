@@ -1,0 +1,5 @@
+cdp="${GOPATH}/src/bitbucket.org/latchMaster/cdp/"
+airflow="${GOPATH}/src/github.com/Latch/cdp-airflow-dags/" 
+docker="${GOPATH}/src/github.com/Latch/docker-images/"
+dots="${GOPATH}/src/github.com/dfarrel1/dots/"
+repos="${GOPATH}/src/github.com/dfarrel1/repo-cross-talk/"

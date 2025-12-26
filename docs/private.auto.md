@@ -1,0 +1,4 @@
+| name      |  type     |  desc                                                  |  file       |  note |
+| --------- | --------- | ------------------------------------------------------ | ----------- | ----- |
+| fresh_env |  alias    |  "pew workon `pew ls &#124; tr ' ' '\n' &#124; grep... |  private.sh |  <->  |
+| freshen   |  function |  <what does freshen do ?>                              |  private.sh |  <->  |

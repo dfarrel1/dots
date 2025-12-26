@@ -1,0 +1,32 @@
+[speed-up-terminal-load-time](https://apple.stackexchange.com/questions/41743/how-do-i-speed-up-new-terminal-tab-loading-time)
+
+The problem is caused by a (potentially) expensive ASL system log lookup. To see this in action, run sudo fs_usage | grep 'asl.*login' in a Terminal window, then open a new Terminal window.
+
+To solve the problem, configure Terminal to launch a non-standard shell:
+
+Create a symlink to your preferred shell. E.g.: sudo ln -s /bin/bash /usr/local/bin/bash
+Open Terminal Preferences and select the "General" tab.
+Select "Shells open with: Command" and enter the symlink you created in step 1. E.g. "/usr/local/bin/bash".
+Note 1: You may also need to add bash and -bash to the process list at "Terminal Preferences > Profiles > Shell > Ask before closing".
+
+Note 2: /usr/local/bin is writable in OS X 10.11 (El Capitan) Rootless mode.
+
+To verify the fix:
+
+Open a new Terminal window.
+"Last Login:" should not be displayed at the top
+Open the inspector (Command + I) and select the Info tab.
+The command should read login -pfq username /usr/bin/bash or login -pfql username ...
+Important: If the login command does not include the -q parameter, then you have not fixed the problem.
+
+You can also use sudo fs_usage | grep 'asl.*login' to verify that /var/log/asl is not accessed when opening a new Terminal window.
+
+Details:
+
+There are a number of bugs at play here.
+
+The actual cause of the slowness is /usr/bin/login, which by default will display the date of your last login. To get this last login date, it searches the ASL (Apple System Log) database at /var/log/asl/. These log files can be very heavily fragmented and it's this file fragmentation that causes the delay when opening a new window or tab. (Bug 1)
+The only way to suppress the ASL search for last login is to pass the -q parameter to /usr/bin/login. The .hushlogin file will also suppress the "Last Login" display, but it does not suppress the expensive ASL search. (Bug 2)
+Terminal always uses /usr/bin/login to launch each new window/shell. There is no option to launch a shell directly nor is there a way to directly control the parameters passed to /usr/bin/login (Bug 3).
+As it turns out, Terminal will pass the -q parameter to /usr/bin/login when it is configured to use a non-standard shell. (Bug 4)
+The -q parameter is what we need to avoid the problem, hence the symlink to /usr/local/bin/bash.
