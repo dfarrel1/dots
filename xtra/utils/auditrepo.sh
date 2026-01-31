@@ -5,7 +5,7 @@
 # FEATURES:
 # 1. SELF-AWARE: Obfuscated patterns to prevent flagging itself.
 # 2. GIT-NATIVE: Uses 'git grep' to respect .gitignore.
-# 3. SMART EXCLUSIONS: Ignores specific files and false positives.
+# 3. CONSISTENT EXCLUSIONS: Applies ignores to BOTH files and history.
 # ------------------------------------------------------------------
 
 set -e
@@ -16,7 +16,6 @@ SCRIPT_NAME=$(basename "$0")
 CONFIG_FILE="$(dirname "$0")/../private/audit_config.txt"
 
 # 1. Define Secret Patterns (Obfuscated)
-# We split these strings so this script doesn't flag itself when scanned.
 H1="-----BEGIN"
 H2=" .* PRIVATE KEY-----"
 KEY_HEADERS="${H1}${H2}"
@@ -25,7 +24,6 @@ P1="ssh-(rsa|ed25519|dss)"
 P2=" AAAA"
 PUB_KEYS="${P1}${P2}"
 
-# Cloud Keys regex
 C1="op://"
 C2="ghp_"
 C3="AKIA"
@@ -60,7 +58,7 @@ fi
 ALLOW_REGEX="(github\.com/$GH_USER|src/github\.com/$GH_USER|op://.*<.*>)"
 
 # 5. NOISY FILE PATHSPECS
-# We exclude lockfiles, images, and THIS SCRIPT explicitly.
+# These match the syntax for git grep AND git log pathspecs
 IGNORE_SPECS=(
     ":!*.lock"
     ":!*.json"
@@ -68,6 +66,7 @@ IGNORE_SPECS=(
     ":!*.jpg"
     ":!node_modules"
     ":!$SCRIPT_NAME"
+    ":!xtra/utils/auditrepo.sh"
 )
 
 # Colors
@@ -123,7 +122,8 @@ FOUND_HISTORY=0
 
 # A. Scan for Terms in History
 for str in "${SEARCH_TERMS[@]}"; do
-    RESULT=$(git log -S"$str" --source --all --oneline | grep -vE "$ALLOW_REGEX" || true)
+    # Pass IGNORE_SPECS to git log to skip lockfiles in history too
+    RESULT=$(git log -S"$str" --source --all --oneline -- . "${IGNORE_SPECS[@]}" | grep -vE "$ALLOW_REGEX" || true)
     
     if [ -n "$RESULT" ]; then
         echo -e "${RED}   [HISTORY HIT] '$str' found in commits:${NC}"
@@ -134,17 +134,24 @@ for str in "${SEARCH_TERMS[@]}"; do
 done
 
 # B. Scan for Secrets in History
-if git log --all -G "$SECRET_REGEX" --oneline > /dev/null; then
-     HITS=$(git log --all -G "$SECRET_REGEX" --oneline | head -n 5)
-     echo -e "${RED}   [HISTORY HIT] Secret patterns found in history.${NC}"
-     echo "   Recent hits:"
-     echo "$HITS" | sed 's/^/      /'
-     FOUND_HISTORY=1
+# Pass IGNORE_SPECS here as well
+if git log --all -G "$SECRET_REGEX" --oneline -- . "${IGNORE_SPECS[@]}" > /dev/null; then
+     HITS=$(git log --all -G "$SECRET_REGEX" --oneline -- . "${IGNORE_SPECS[@]}" | head -n 5)
+     
+     # Double check if HITS is actually empty (false positive on binary or weird grep)
+     if [ -n "$HITS" ]; then
+         echo -e "${RED}   [HISTORY HIT] Secret patterns found in history.${NC}"
+         echo "   Recent hits:"
+         echo "$HITS" | sed 's/^/      /'
+         FOUND_HISTORY=1
+     fi
 fi
 
 echo "----------------------------------------------------------------"
 if [ $FOUND_HISTORY -eq 1 ] || [ $FOUND_CURRENT -eq 1 ]; then
     echo -e "${RED}🚩 AUDIT FAILED${NC}"
+    exit 1
 else
     echo -e "${GREEN}🎉 AUDIT PASSED${NC}"
+    exit 0
 fi

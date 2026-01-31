@@ -1,18 +1,18 @@
 #!/bin/bash
 # ------------------------------------------------------------------
 # [PUBLIC] NEW COMPUTER BOOTSTRAP (Cross-Platform & Idempotent)
-# 
+#
 # 1. Detects OS (Linux/Mac) and installs base tools (git, jq, op).
 # 2. Authenticates to 1Password (Service Account or User).
 # 3. Downloads & Runs the Private Restore Script (Identity/Plumbing).
 # 4. Installs Apps (Brewfile on Mac, Aptfile on Linux).
-# 5. Configures Dev Tools (Rust, Garage, AWS).
+# 5. Configures Dev Tools (Rust, Garage, Claude Code, AWS).
 # ------------------------------------------------------------------
 
 set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-TEMP_SCRIPT_PATH="/tmp/restore_secrets_from_1p.sh"
+TEMP_SCRIPT_PATH="$(mktemp "/tmp/restore_secrets_from_1p.XXXXXX.sh")"
 STATE_DIR="$SCRIPT_DIR/.state"
 mkdir -p "$STATE_DIR"
 
@@ -85,14 +85,26 @@ echo "----------------------------------------------------------------"
 # Check if we are already logged in via Desktop/Env
 if ! op account get >/dev/null 2>&1; then
     echo "   (Press ENTER to use Desktop/User login, or paste a Service Token)"
+    echo "   WARNING: Service tokens are highly sensitive. Only paste tokens from a trusted source"
+    echo "            and be aware that they may be visible in process environment listings."
     read -s -p "   Service Token (Optional): " MANUAL_TOKEN
-    echo "" 
-    
+    echo ""
+
     if [ -n "$MANUAL_TOKEN" ]; then
-        export OP_SERVICE_ACCOUNT_TOKEN="$MANUAL_TOKEN"
+        if [[ "$MANUAL_TOKEN" =~ ^op_service_account_ ]]; then
+            export OP_SERVICE_ACCOUNT_TOKEN="$MANUAL_TOKEN"
+            eval "$(op signin)"
+        else
+            echo "   ❌ Token format does not look like a 1Password service account token."
+            echo "      Ignoring pasted value and attempting Desktop login instead..."
+            unset MANUAL_TOKEN
+            echo "   Attempting Desktop login..."
+            eval "$(op signin)"
+        fi
+        unset MANUAL_TOKEN
     else
         echo "   No token provided. Attempting Desktop login..."
-        eval $(op signin)
+        eval "$(op signin)"
     fi
 fi
 
@@ -123,36 +135,44 @@ echo "📦 PHASE 4: APPLICATIONS"
 echo "----------------------------------------------------------------"
 
 if [[ "$OS_TYPE" == "Darwin" ]]; then
+    # macOS: Brewfile
     if [[ -f "$STATE_DIR/brew_complete" ]]; then
-        echo "   ✅ Skipped (Already done)."
+        echo "   ✅ Brew packages: Skipped (Already done)."
     else
-        echo "   -> Running Brewfile..."
-        brew bundle install --file="${SCRIPT_DIR}/Brewfile"
-        touch "$STATE_DIR/brew_complete"
+        BREWFILE="${SCRIPT_DIR}/Brewfile"
+        if [[ -f "$BREWFILE" ]]; then
+            echo "   -> Running Brewfile..."
+            brew bundle install --file="$BREWFILE"
+            touch "$STATE_DIR/brew_complete"
+        else
+            echo "   ⚠️  No Brewfile found at $BREWFILE"
+        fi
     fi
 
 elif [[ "$OS_TYPE" == "Linux" ]]; then
-    APTFILE="${SCRIPT_DIR}/Aptfile"
-    
+    # Linux: Aptfile
     if [[ -f "$STATE_DIR/apt_complete" ]]; then
-        echo "   ✅ Skipped (Already done)."
-    elif [[ -f "$APTFILE" ]]; then
-        echo "   -> Reading Aptfile..."
-        
-        # Filter comments (#) and blank lines, convert to single line string
-        PACKAGES=$(grep -vE "^\s*#" "$APTFILE" | tr '\n' ' ')
-        
-        if [[ -n "$PACKAGES" ]]; then
-            echo "   -> Installing packages..."
-            sudo apt-get update -qq
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y $PACKAGES
-            touch "$STATE_DIR/apt_complete"
-        else
-            echo "   ⚠️  Aptfile is empty."
-        fi
+        echo "   ✅ Apt packages: Skipped (Already done)."
     else
-        echo "   ⚠️  No Aptfile found at $APTFILE. Installing minimal defaults..."
-        sudo apt-get install -y zsh tmux htop ripgrep fd-find
+        APTFILE="${SCRIPT_DIR}/Aptfile"
+        if [[ -f "$APTFILE" ]]; then
+            echo "   -> Reading Aptfile..."
+            # Filter comments (#) and blank lines into an array
+            readarray -t PACKAGES < <(grep -vE "^\s*#" "$APTFILE" | sed '/^\s*$/d')
+
+            if ((${#PACKAGES[@]} > 0)); then
+                echo "   -> Installing packages..."
+                sudo apt-get update -qq
+                sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${PACKAGES[@]}"
+                touch "$STATE_DIR/apt_complete"
+            else
+                echo "   ⚠️  Aptfile is empty."
+            fi
+        else
+            echo "   ⚠️  No Aptfile found at $APTFILE. Installing minimal defaults..."
+            sudo apt-get install -y zsh tmux htop ripgrep fd-find
+            touch "$STATE_DIR/apt_complete"
+        fi
     fi
 fi
 
@@ -184,9 +204,18 @@ else
             cargo install garage
             touch "$STATE_DIR/garage_complete"
         else
-            echo "   ⚠️  Cargo not found. Skipping Garage."
+            echo "   ⚠️  Could not find cargo after Rust installation."
         fi
     fi
+fi
+
+# Claude Code CLI
+if [[ -f "$STATE_DIR/claude_complete" ]]; then
+    echo "   ✅ Claude Code: Skipped."
+else
+    echo "   -> Installing Claude Code CLI..."
+    curl -fsSL https://claude.ai/install.sh | bash
+    touch "$STATE_DIR/claude_complete"
 fi
 
 # Environment Config (Restored)
@@ -195,8 +224,14 @@ SHELL_RC="$HOME/.bashrc"
 [ "$OS_TYPE" == "Darwin" ] && SHELL_RC="$HOME/.zshrc"
 
 if [ -f "$SHELL_RC" ]; then
-    if ! grep -q "export \$(cat .env | xargs)" "$SHELL_RC"; then
-        echo 'if [ -f .env ]; then export $(cat .env | xargs); fi' >> "$SHELL_RC"
+    if ! grep -q "set -a.*\.env.*set +a" "$SHELL_RC"; then
+        cat >> "$SHELL_RC" <<'EOF'
+if [ -f .env ]; then
+  set -a
+  . .env
+  set +a
+fi
+EOF
         echo "   -> Added .env loader to $SHELL_RC"
     else
         echo "   ✅ .env loader already present in $SHELL_RC"

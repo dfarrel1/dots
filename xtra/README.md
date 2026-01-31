@@ -13,6 +13,10 @@ To avoid checking secrets or sensitive logic into public version control, this r
 
 When `newcomp.sh` runs, it authenticates with 1Password, downloads the configuration plumbing, establishes the correct system settings (Keychain vs Libsecret), and performs a **Gap Analysis** to tell you which private keys are missing.
 
+## ⚠️ Important Notice
+
+**WARNING:** The [newcomp.sh](newcomp.sh) script and surrounding bootstrap logic have been recently reengineered for improved security and functionality patterns. However, **this updated version has not yet been tested on a new computer setup**. While the architecture is sound, you may encounter unexpected issues during initial bootstrap. Please proceed with caution and be prepared to troubleshoot or fall back to manual configuration if needed.
+
 ## 🚀 Quick Start (New Machine)
 
 1.  **Prerequisites**:
