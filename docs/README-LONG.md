@@ -11,13 +11,13 @@ Each linked summary view, however, does contain all aliases and functions for it
 
 ## Summary Views
 
-### **[core.sh](./profile/core.sh)**  -- **[summary](./docs/core.auto.md)**
+### **[core.sh](../profile/core.sh)**  -- **[summary](./core.auto.md)**
 
 **highlights**
 - applications aliases
 - functions used in navigation functions (e.g. `get_choice()`)
-  
-### **[docker.sh](./profile/docker.sh)**  -- **[summary](./docs/docker.auto.md)**
+
+### **[docker.sh](../profile/docker.sh)**  -- **[summary](./docker.auto.md)**
 
 **highlights**
 - docker stuff:
@@ -27,26 +27,26 @@ Each linked summary view, however, does contain all aliases and functions for it
     - logs
     - cleanup
 
-### **[git.sh](./profile/git.sh)**  -- **[summary](./docs/git.auto.md)**
+### **[git.sh](../profile/git.sh)**  -- **[summary](./git.auto.md)**
 
 **highlights**
 
 By using a fully qualified directory in the local volume, we can tether web browsing and file browsing.
-  
-### **[java.sh](./profile/java.sh)**  -- **[summary](./docs/java.auto.md)**
+
+### **[java.sh](../profile/java.sh)**  -- **[summary](./java.auto.md)**
 
 **highlights**
 
 Kafka, MVN, etc.
 
-### **[navigation.sh](./profile/navigation.sh)**  -- **[summary](./docs/navigation.auto.md)**
+### **[navigation.sh](../profile/navigation.sh)**  -- **[summary](./navigation.auto.md)**
 
 **highlights**
 
 FS navigation leveraging grep
 
 
-### **[python.sh](./profile/python.sh)**  -- **[summary](./docs/python.auto.md)**
+### **[python.sh](../profile/python.sh)**  -- **[summary](./python.auto.md)**
 
 **highlights**
 
@@ -56,7 +56,7 @@ FS navigation leveraging grep
 
 A comprehensive list of all aliases and functions.
 
-\>\>**[everything](./docs/ALLTABLES.md)**<<
+\>\>**[everything](./ALLTABLES.md)**<<
  
 
 ### Note about documentation

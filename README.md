@@ -20,7 +20,18 @@ Aliases and Functions for a happy bash experience.
 
 ---
 
-**[New Wave](./NEWWAVE.md)** — Modern CLI tools (zoxide, fzf, atuin, bat, eza, delta, fd, ripgrep)
+**[New Wave](./NEWWAVE.md)** — Modern CLI tools
+
+| Tool | What it is |
+|------|-----------|
+| **zoxide** | Smart `cd` that learns your most-used directories |
+| **fzf** | Universal fuzzy finder — enhances history, file search, and everything else |
+| **atuin** | SQLite-backed shell history with context (directory, exit code, duration) |
+| **bat** | `cat` with syntax highlighting and git integration |
+| **eza** | `ls` with color, git status per file, and tree view |
+| **delta** | Syntax-highlighted, side-by-side git diffs |
+| **fd** | Fast, `.gitignore`-aware `find` replacement |
+| **ripgrep** | Fastest recursive grep, respects `.gitignore` |
 
 ---
 
