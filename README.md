@@ -4,11 +4,11 @@ Aliases and Functions for a happy bash experience.
 
 ---  
 
-**[Profile](./profile)**
+**[Profile](./profile)** — The shell scripts that power everything
 
 ---
 
-**[Installation](./profile/README.md#installation-mac)**
+**[Installation](./profile/README.md#installation-mac)** — Get set up on a new Mac
 
 ---
 
@@ -20,33 +20,20 @@ Aliases and Functions for a happy bash experience.
 
 ---
 
-**[New Wave](./NEWWAVE.md)** — Modern CLI tools
-
-| Tool | What it is |
-|------|-----------|
-| **zoxide** | Smart `cd` that learns your most-used directories |
-| **fzf** | Universal fuzzy finder — enhances history, file search, and everything else |
-| **atuin** | SQLite-backed shell history with context (directory, exit code, duration) |
-| **bat** | `cat` with syntax highlighting and git integration |
-| **eza** | `ls` with color, git status per file, and tree view |
-| **delta** | Syntax-highlighted, side-by-side git diffs |
-| **fd** | Fast, `.gitignore`-aware `find` replacement |
-| **ripgrep** | Fastest recursive grep, respects `.gitignore` |
+**[New Wave](./NEWWAVE.md)** — Modern CLI tool integrations (zoxide, fzf, atuin, bat, eza, delta, fd, ripgrep)
 
 ---
 
-**[Documentation](./docs/README-LONG.md#long-from-documentation)**
+**[Documentation](./docs/README-LONG.md#long-from-documentation)** — Per-script summaries and the full reference table
 
 ---
 
-**[Dotfile Design Pattern](./profile/README.md#dotfile-design-pattern)**
+**[Dotfile Design Pattern](./profile/README.md#dotfile-design-pattern)** — How the profile scripts are structured and loaded
 
 ---
 
-**[Dotfile Usage Philosophy](./docs/DOTFILE-PHILOSOPHY.md#Dotfile-Usage-Philosophy)**
+**[Dotfile Usage Philosophy](./docs/DOTFILE-PHILOSOPHY.md#Dotfile-Usage-Philosophy)** — Why these dotfiles are the way they are
 
 ---
 
-**[Xtra](./xtra#xtra)**
-
-The extended purpose of this repo is to allow for easy migration of most essential developer tools and environments from one MacOS machine to another. **[xtra](./xtra)** is scoped beyond the bash profile to include things like IDE configs.
+**[Xtra](./xtra)** — Workstation bootstrap, IDE configs, and cross-machine migration
