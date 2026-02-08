@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # needs bash >= 4
-alias src="source ~/.bashrc"
-alias whatami='ps -p $$'
-alias syslog='tail -f /var/log/system.log'
-alias ipecho='curl ipecho.net/plain ; echo'
-alias myip="ipconfig getifaddr en1"
-alias whereami='pwd ; ipecho'
-alias speed='speedtest-cli'
-alias awake='caffeinate &'
-alias decaf='killall caffeinate'
+alias src="source ~/.bashrc" # @desc Re-source bashrc
+alias whatami='ps -p $$' # @desc Show current shell process
+alias syslog='tail -f /var/log/system.log' # @desc Follow system log
+alias ipecho='curl ipecho.net/plain ; echo' # @desc Show external IP address
+alias myip="ipconfig getifaddr en1" # @desc Show local IP (en1)
+alias whereami='pwd ; ipecho' # @desc Show pwd + external IP
+alias speed='speedtest-cli' # @desc Run internet speed test
+alias awake='caffeinate &' # @desc Prevent sleep (caffeinate)
+alias decaf='killall caffeinate' # @desc Stop caffeinate
 
 
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -27,10 +27,11 @@ alias egrep='egrep --color=auto'
 
 # Homebrew PATH
 export PATH="/usr/local/sbin:$PATH"
-alias fix_brew_perms='sudo chown -R $(whoami) $(brew --prefix)/*'
-alias fix_all_perms='sudo chown -R "$USER":admin /usr/local && sudo chown -R "$USER":admin /Library/Caches/Homebrew'
+alias fix_brew_perms='sudo chown -R $(whoami) $(brew --prefix)/*' # @desc Fix homebrew permissions
+alias fix_all_perms='sudo chown -R "$USER":admin /usr/local && sudo chown -R "$USER":admin /Library/Caches/Homebrew' # @desc Fix homebrew + cache permissions
 
-#for bash error in vscode terminal
+# @desc Update terminal working directory for VS Code compatibility
+# @usage update_terminal_cwd
 update_terminal_cwd() {
     # Identify the directory using a "file:" scheme URL,
     # including the host name to disambiguate local vs.
@@ -45,7 +46,7 @@ update_terminal_cwd() {
 
 
 
-#update vscode plugins list
+# @desc Export VS Code extensions list to install script
 alias code-plugs="""
 echo '#!/bin/bash' > ${HERE}/../xtra/IDEs/install-vscode-exts.sh \
 && code --list-extensions | xargs -L 1 echo code --install-extension >> \
@@ -58,10 +59,10 @@ ${HERE}/../xtra/IDEs/install-vscode-exts.sh \
 # source ${HERE}/.hstrrc
 
 # to include in docs
-alias hstr='hstr'
+alias hstr='hstr' # @desc History search tool
 
 # Json tools (pipe unformatted here to test + prettify JSON)
-alias json='python -m json.tool'
+alias json='python -m json.tool' # @desc Pretty-print JSON via Python
 
 help() {
   typeset -f | awk '!/^main|help[ (]/ && /^[^ {}]+ *\(\)/ { gsub(/[()]/, "", $1); print $1}'

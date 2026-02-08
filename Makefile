@@ -11,7 +11,7 @@ install:
 	pipenv install
 
 docs:
-	pipenv run ./doc_maker/flower.sh
+	./doc_maker/generate.sh
 	
 everything: install docs
 

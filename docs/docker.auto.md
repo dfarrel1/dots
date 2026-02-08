@@ -1,47 +1,49 @@
-| name          |  type     |  desc                                        |  file      |  note |
-| ------------- | --------- | -------------------------------------------- | ---------- | ----- |
-| clearcont     |  alias    |  'docker rm $(docker ps -a -q)'              |  docker.sh |  <->  |
-| clearimages   |  alias    |  'docker rmi $(docker images -q)'            |  docker.sh |  <->  |
-| cld           |  alias    |  'clearcont;clearimages;docker system pru... |  docker.sh |  <->  |
-| dc            |  alias    |  'docker-compose'                            |  docker.sh |  <->  |
-| dcbuild       |  alias    |  'docker-compose build --no-cache'           |  docker.sh |  <->  |
-| dcup          |  alias    |  'docker-compose up'                         |  docker.sh |  <->  |
-| buildup       |  alias    |  'dcbuild;dcup'                              |  docker.sh |  <->  |
-| dcrun         |  alias    |  'docker-compose run --rm'                   |  docker.sh |  <->  |
-| burn          |  alias    |  'buildup;dcrun'                             |  docker.sh |  <->  |
-| drun          |  alias    |  'docker run -it'                            |  docker.sh |  <->  |
-| drunproxy     |  alias    |  'docker run -e http_proxy=$"$http_proxy"... |  docker.sh |  <->  |
-| dbuild        |  alias    |  'docker build --build-arg HTTP_PROXY=$ht... |  docker.sh |  <->  |
-| dinfo         |  alias    |  'docker history'                            |  docker.sh |  <->  |
-| dhist         |  alias    |  'docker history --no-trunc'                 |  docker.sh |  <->  |
-| k             |  alias    |  "kubectl"                                   |  docker.sh |  <->  |
-| ka            |  alias    |  "kubectl apply -f"                          |  docker.sh |  <->  |
-| kpa           |  alias    |  "kubectl patch -f"                          |  docker.sh |  <->  |
-| ked           |  alias    |  "kubectl edit"                              |  docker.sh |  <->  |
-| ksc           |  alias    |  "kubectl scale"                             |  docker.sh |  <->  |
-| kex           |  alias    |  "kubectl exec -i -t"                        |  docker.sh |  <->  |
-| kg            |  alias    |  "kubectl get"                               |  docker.sh |  <->  |
-| kga           |  alias    |  "kubectl get all"                           |  docker.sh |  <->  |
-| kgall         |  alias    |  "kubectl get all --all-namespaces"          |  docker.sh |  <->  |
-| kinfo         |  alias    |  "kubectl cluster-info"                      |  docker.sh |  <->  |
-| kdesc         |  alias    |  "kubectl describe"                          |  docker.sh |  <->  |
-| ktp           |  alias    |  "kubectl top"                               |  docker.sh |  <->  |
-| klo           |  alias    |  "kubectl logs -f"                           |  docker.sh |  <->  |
-| kn            |  alias    |  "kubectl get nodes"                         |  docker.sh |  <->  |
-| kpv           |  alias    |  "kubectl get pv"                            |  docker.sh |  <->  |
-| kpvc          |  alias    |  "kubectl get pvc"                           |  docker.sh |  <->  |
-| dbash         |  function |  <what does dbash do ?>                      |  docker.sh |  <->  |
-| dlogs         |  function |  <what does dlogs do ?>                      |  docker.sh |  <->  |
-| dock-do       |  function |  <what does dock-do do ?>                    |  docker.sh |  <->  |
-| dock-exec     |  function |  <what does dock-exec do ?>                  |  docker.sh |  <->  |
-| dock-ip       |  function |  <what does dock-ip do ?>                    |  docker.sh |  <->  |
-| dock-log      |  function |  <what does dock-log do ?>                   |  docker.sh |  <->  |
-| dock-port     |  function |  <what does dock-port do ?>                  |  docker.sh |  <->  |
-| dock-rm       |  function |  <what does dock-rm do ?>                    |  docker.sh |  <->  |
-| dock-rmc      |  function |  <what does dock-rmc do ?>                   |  docker.sh |  <->  |
-| dock-rmi      |  function |  <what does dock-rmi do ?>                   |  docker.sh |  <->  |
-| dock-run      |  function |  <what does dock-run do ?>                   |  docker.sh |  <->  |
-| dock-stop     |  function |  <what does dock-stop do ?>                  |  docker.sh |  <->  |
-| dock-vol      |  function |  <what does dock-vol do ?>                   |  docker.sh |  <->  |
-| dsh           |  function |  <what does dsh do ?>                        |  docker.sh |  <->  |
-| restartdocker |  function |  <what does restartdocker do ?>              |  docker.sh |  <->  |
+| Name | Type | Description |
+|------|------|-------------|
+| `clearcont` | alias | `'docker rm $(docker ps -a -q)'` |
+| `clearimages` | alias | `'docker rmi $(docker images -q)'` |
+| `cld` | alias | Full Docker cleanup (containers + images + prune) |
+| `dc` | alias | docker-compose shorthand |
+| `dcd` | alias | docker-compose down with orphan removal |
+| `dcd1` | alias | docker-compose remove single service |
+| `dcbuild` | alias | `'docker-compose build --no-cache'` |
+| `dcup` | alias | `'docker-compose up'` |
+| `buildup` | alias | `'dcbuild;dcup'` |
+| `dcrun` | alias | `'docker-compose run --rm'` |
+| `burn` | alias | Build, start, and run |
+| `drun` | alias | `'docker run -it'` |
+| `drunproxy` | alias | docker run with proxy env vars |
+| `dbuild` | alias | docker build with proxy args |
+| `dinfo` | alias | docker history |
+| `dhist` | alias | docker history (no truncation) |
+| `k` | alias | `"kubectl"` |
+| `ka` | alias | `"kubectl apply -f"` |
+| `kpa` | alias | `"kubectl patch -f"` |
+| `ked` | alias | `"kubectl edit"` |
+| `ksc` | alias | `"kubectl scale"` |
+| `kex` | alias | `"kubectl exec -i -t"` |
+| `kg` | alias | `"kubectl get"` |
+| `kga` | alias | `"kubectl get all"` |
+| `kgall` | alias | `"kubectl get all --all-namespaces"` |
+| `kinfo` | alias | `"kubectl cluster-info"` |
+| `kdesc` | alias | `"kubectl describe"` |
+| `ktp` | alias | `"kubectl top"` |
+| `klo` | alias | `"kubectl logs -f"` |
+| `kn` | alias | `"kubectl get nodes"` |
+| `kpv` | alias | `"kubectl get pv"` |
+| `kpvc` | alias | `"kubectl get pvc"` |
+| `dbash` | function | Interactive bash shell into a running container (fuzzy select) — `dbash [filter]` |
+| `dsh` | function | Interactive sh shell into a running container (fuzzy select) — `dsh [filter]` |
+| `dlogs` | function | View logs of a container (fuzzy select) — `dlogs [filter]` |
+| `dock-run` | function | Run a container interactively with privileged mode — `dock-run <image> [args...]` |
+| `dock-exec` | function | Exec into a container with bash — `dock-exec <container>` |
+| `dock-log` | function | Follow all logs of a container — `dock-log <container>` |
+| `dock-port` | function | Show port mappings for a container — `dock-port <container>` |
+| `dock-vol` | function | Show volumes for a container — `dock-vol <container>` |
+| `dock-ip` | function | Show IP address of a container — `dock-ip <container>` |
+| `dock-rmc` | function | Remove exited containers — `dock-rmc` |
+| `dock-rmi` | function | Remove dangling images — `dock-rmi` |
+| `dock-stop` | function | Stop all running containers — `dock-stop` |
+| `dock-rm` | function | Remove all containers — `dock-rm` |
+| `dock-do` | function | Run a docker command on all containers — `dock-do <start|stop|pause|unpause>` |
+| `restartdocker` | function | Full Docker restart cycle (stop containers, quit app, relaunch) — `restartdocker` |

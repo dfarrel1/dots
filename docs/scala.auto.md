@@ -1,11 +1,11 @@
-| name              |  type     |  desc                               |  file     |  note |
-| ----------------- | --------- | ----------------------------------- | --------- | ----- |
-| FILE2LINK         |  function |  <what does FILE2LINK do ?>         |  scala.sh |  <->  |
-| LINES2FILES       |  function |  <what does LINES2FILES do ?>       |  scala.sh |  <->  |
-| RM_COLOR          |  function |  <what does RM_COLOR do ?>          |  scala.sh |  <->  |
-| RM_TRAILING_COLON |  function |  <what does RM_TRAILING_COLON do ?> |  scala.sh |  <->  |
-| clicks            |  function |  <what does clicks do ?>            |  scala.sh |  <->  |
-| dc_stest          |  function |  <what does dc_stest do ?>          |  scala.sh |  <->  |
-| get_test_name     |  function |  <what does get_test_name do ?>     |  scala.sh |  <->  |
-| get_tests         |  function |  <what does get_tests do ?>         |  scala.sh |  <->  |
-| stest             |  function |  <what does stest do ?>             |  scala.sh |  <->  |
+| Name | Type | Description |
+|------|------|-------------|
+| `stest` | function | — |
+| `dc_stest` | function | — |
+| `get_test_name` | function | — |
+| `get_tests` | function | — |
+| `RM_COLOR` | function | — |
+| `LINES2FILES` | function | — |
+| `FILE2LINK` | function | — |
+| `RM_TRAILING_COLON` | function | — |
+| `clicks` | function | — |

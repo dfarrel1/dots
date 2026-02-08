@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+# @desc Insert a blank line every 5 lines of output for readability
+# @usage command | easy_eyes
 easy_eyes(){
   awk ' {print;} NR % 5 == 0 { print ""; }'
 }
 
+# @desc Interactive fuzzy selector: presents a numbered list, accepts filter text or number
+# @usage choice_set="item1\nitem2\nitem3"; get_choice
 get_choice() {
   local count=`printf "$choice_set" | wc -l | awk '{print $1}'`
   [ ${#choice_set} -eq 0 ] || count=$((count+1))
@@ -32,6 +36,8 @@ get_choice() {
   fi
 }
 
+# @desc Remove an entry from ~/.ssh/known_hosts by search term
+# @usage ckh <search_term>
 ckh() {
   if [ $# -eq 0 ]
   then
@@ -43,11 +49,15 @@ ckh() {
   sed -i '' "/$search/d" ~/.ssh/known_hosts
 }
 
+# @desc Source a .env file, exporting all variables
+# @usage source_env <file>
 source_env() {
   set -a && source $1 && set +a
   #source <(sed -E -n 's/[^#]+/export &/ p' "$1")
 }
 
+# @desc Kill a process by searching open ports
+# @usage close <search_term>
 close() {
   export choice_set=`ports | grep -i ".*$1.*"`
   get_choice
@@ -58,6 +68,8 @@ close() {
 eval "$(direnv hook bash)"
 
 #TERRAFORM
+# @desc Run terraform through aws-vault for the current AWS profile
+# @usage tf <terraform_args>
 tf() {
   [[ "$#" -eq 0 ]] && terraform
   [[ "$#" -gt 0 ]] && aws-vault exec ${AWS_PROFILE} -- terraform "$@"

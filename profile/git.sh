@@ -1,22 +1,26 @@
 #!/usr/bin/env bash
-alias bro='browse'
+alias bro='browse' # @desc Alias for browse
 alias forcepush='git push origin `git rev-parse --abbrev-ref HEAD` --force'
-alias or='open_repo'
-alias tt='newtab open_repo'
-alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
-alias gg='git grep --line-number'
+alias or='open_repo' # @desc Alias for open_repo
+alias tt='newtab open_repo' # @desc Open repo in new tab
+alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit' # @desc Pretty git log graph
+alias gg='git grep --line-number' # @desc Git grep with line numbers
 alias gs='git status'
 alias amend='git commit --amend --no-edit && git push origin `git rev-parse --abbrev-ref HEAD` --force'
 alias amendall='git add . && git commit --amend --no-edit && git push origin `git rev-parse --abbrev-ref HEAD` --force'
 alias gitclean='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
+# @desc Git add all, commit with message, and push
+# @usage gadd <commit-message>
 gadd() {
  git add . && git commit -m "$1" && git push
 }
 
-alias gclu='git_clean_untracked_safely'
-alias gclb='git_clean_local_branches'
+alias gclu='git_clean_untracked_safely' # @desc Alias for git_clean_untracked_safely
+alias gclb='git_clean_local_branches' # @desc Alias for git_clean_local_branches
 
+# @desc Sparse checkout a single directory from a git repo
+# @usage gslice <git-repo> <git-dir> <output-path>
 gslice() {
   # Usage: gslice <git-repo> <git-dir> <output-path>"
   mkdir $3 \
@@ -40,6 +44,8 @@ GIT_PROMPT_THEME=Custom # looks for ~/.git-prompt-colors.sh
 [[ ! -f ~/.git-prompt-colors.sh ]] && cp "${HERE}/.git-prompt-colors.sh" ~/.git-prompt-colors.sh
 
 
+# @desc Parse current path into git domain/org/repo/tree/branch components
+# @usage repo_info [-s]
 repo_info() {
   dir=`pwd`
   [[ $dir != *"$GOPATH/src/"* ]] && export git_local_path="." && return 1
@@ -64,6 +70,8 @@ repo_info() {
   fi
 }
 
+# @desc Clone a repo into the GOPATH directory tree with SSH alias resolution
+# @usage clone <repo-url|repo-name>
 clone() {
   repo=$1
   if [[ $repo != *"/"* ]] ; then
@@ -87,10 +95,14 @@ clone() {
   cd $clone_dir
 }
 
+# @desc Clone via the dlf-dds GitHub SSH host
+# @usage clonedds <repo-url>
 clonedds() {
   clone "${1/github.com/github-dlf-dds}"
 }
 
+# @desc Initialize a git repo and set remote origin based on current path
+# @usage origin [push]
 origin() {
   git init
   repo_info -s || (echo "no repo found" && return 1)
@@ -104,6 +116,8 @@ origin() {
   fi
 }
 
+# @desc Navigate to a repo directory under GOPATH
+# @usage open_repo <repo-name>
 open_repo() {
   repo_info -s
   cd "$GOPATH/src/$git_domain/$git_org/$1" 2>/dev/null
@@ -113,11 +127,15 @@ open_repo() {
   fi
 }
 
+# @desc Resolve an SSH alias to its actual hostname
+# @usage alias2host <ssh-alias>
 alias2host() {
   # e.g. gitlab-rogue -> dev.rogue.diux.io
   ssh -G $1 | awk '$1 == "hostname" { print $2 }'
 }
 
+# @desc (WIP) Resolve a hostname to its SSH alias
+# @usage host2alias <hostname>
 host2alias() {
   # TODO -- THIS IS WIP (still taking alias name)
   # NOTE: deprecated the aliases anyways
@@ -127,6 +145,8 @@ host2alias() {
   ssh -Gv $1 2>&1 >/dev/null | grep "${match_str}" | sed 's/.*for //'
 }
 
+# @desc Open the current repo in Chrome on the hosting site
+# @usage browse [path]
 browse() {
   repo_info -s || (echo "no repo found" && return 1)
   current_path="$(alias2host $git_domain)/$git_org/$git_repo"
@@ -134,16 +154,22 @@ browse() {
   chrome "http://$current_path"
 }
 
+# @desc Open the current repo in SourceTree
+# @usage st
 st() {
   repo_info -s || (echo "no repo found" && return 1)
   open -a "SourceTree 2" "$GOPATH/src/$git_path"
 }
 
+# @desc cd to the root of the current git repo
+# @usage base
 base() {
   repo_info -s || (echo "no repo found" && return 1)
   cd "$GOPATH/src/$git_path"
 }
 
+# @desc Interactively remove untracked files with confirmation
+# @usage git_clean_untracked_safely
 function git_clean_untracked_safely {
   TO_REMOVE=`git clean -f -d -n`;
   if [[ "$TO_REMOVE" != "" ]] && [[ `echo $TO_REMOVE | wc -l | bc` != "0" ]]; then
@@ -166,6 +192,8 @@ function git_clean_untracked_safely {
   fi;
 }
 
+# @desc Remove local branches that are merged/gone from remote
+# @usage git_clean_local_branches [-f]
 function git_clean_local_branches {
   OPTION="-d";
   if [[ "$1" == "-f" ]]; then
@@ -199,6 +227,8 @@ function git_clean_local_branches {
   fi
 }
 
+# @desc Map a new GitHub Organization to a specific SSH identity
+# @usage newghpattern <https://github.com/my-org/>
 # Utility to map a new GitHub Organization to a specific SSH Identity
 # Usage: newghpattern https://github.com/my-org/
 newghpattern() {

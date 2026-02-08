@@ -8,13 +8,16 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 # aws-vault (set on a per repo basis with ./.envrc)
 [[ ! -f ~/.envrc ]] && touch ~/.envrc && ln -fs "${HERE}/.envrc" ~/.envrc
 
-# copy last command
+# @desc Copy the last shell command to clipboard (pasteboard)
+# @usage pb
 pb() {
     fc -lnr -1 | awk '{$1=$1};1' | tr -d '\n' | pbcopy 
 }
 
-alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh"
+alias 1p="OP_CLOUD_ACCOUNT='dds' source ${HERE}/op_session.sh" # @desc Start 1Password CLI session
 
+# @desc List 1Password items by tag name
+# @usage get_list_of_tagged_secrets <tag>
 get_list_of_tagged_secrets() {
     # expects first (only) argument to be tag name
     # need to establish default IFS within function
@@ -27,6 +30,8 @@ get_list_of_tagged_secrets() {
     IFS=$0_IFS  
 }
 
+# @desc Filter a bash array by substring match (requires bash >= 4)
+# @usage filter_array <array-var-name> <filter-string>
 filter_array() {
     # first arg is name of array var
     # second arg is string to filter on
@@ -55,6 +60,8 @@ filter_array() {
     fi
 }
 
+# @desc Interactive picker for AWS secrets from 1Password
+# @usage choose_aws_secret [filter-string]
 choose_aws_secret() {
     IFS=$'\n'
     local ARR=("exit")         
@@ -87,6 +94,8 @@ choose_aws_secret() {
     # choice globally stored as "$choice_set"
 }
 
+# @desc Fetch AWS account info from a 1Password secret
+# @usage get_aws_acct_info
 get_aws_acct_info() {
     choose_aws_secret    
     OP_CLOUD_ACCOUNT='dds'
@@ -95,7 +104,9 @@ get_aws_acct_info() {
     export TMP_GLOBAL_ACCOUNT_INFO=`1p get item \"${choice_set}\" | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields'`    
 }
 
-awskeys() {      
+# @desc Export AWS access keys from 1Password to environment
+# @usage awskeys
+awskeys() {
     choose_aws_secret            
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
@@ -105,7 +116,9 @@ awskeys() {
     export AWS_ACCESS_KEY_SECRET=`echo $ITEM | jq -Mcr '.details.sections[] | select(.title=="ACCOUNT_INFO").fields[] | select(.t=="ACCESS_KEY_SECRET") | .v'`
 }
 
-mfa() {    
+# @desc Get TOTP MFA code from 1Password and copy to clipboard
+# @usage mfa [secret-name]
+mfa() {
     if [ $# -eq 0 ]
         then
             local ARR=("exit")     
@@ -126,6 +139,8 @@ mfa() {
     1p get totp "'"${SECRET_NAME}"'" | tr -d '\n' | pbcopy && pbpaste && echo '' 
 }
 
+# @desc Create a new AWS login item template in 1Password
+# @usage newawslogin
 newawslogin() {
     OP_CLOUD_ACCOUNT='dds'
     SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
@@ -138,6 +153,8 @@ newawslogin() {
         --url "https://signin.amazonaws-us-gov.com/console"
 }
 
+# @desc Create a new aws-vault profile from a 1Password secret
+# @usage newawsprofile
 newawsprofile() {
     # create new aws profile from 1p secret
     get_aws_acct_info
@@ -168,7 +185,9 @@ newawsprofile() {
 }
 #  moved to https://github.com/deptofdefense/awslogin
 # TODO -- REMOVEME
-awsloginbash() {           
+# @desc (Deprecated) AWS console login via aws-vault with MFA + browser choice
+# @usage awsloginbash [filter-string]
+awsloginbash() {
     OP_CLOUD_ACCOUNT='dds'
     export SESSION_NAME="OP_SESSION_$OP_CLOUD_ACCOUNT"
     eval "export ${SESSION_NAME}=$(1p session)"

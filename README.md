@@ -12,6 +12,18 @@ Aliases and Functions for a happy bash experience.
 
 ---
 
+**[Highlights](./HIGHLIGHTS.md)** — The most useful commands at a glance
+
+---
+
+**[Navigation Guide](./NAV.md)** — How to move around like you mean it
+
+---
+
+**[New Wave](./NEWWAVE.md)** — Modern CLI tools (zoxide, fzf, atuin, bat, eza, delta, fd, ripgrep)
+
+---
+
 **[Documentation](./docs/README-LONG.md#long-from-documentation)**
 
 ---

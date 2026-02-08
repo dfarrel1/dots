@@ -9,7 +9,7 @@ To avoid checking secrets or sensitive logic into public version control, this r
 1.  **Public Layer (`newcomp.sh`)**: A lightweight, cross-platform orchestrator. It detects your OS (Mac vs. Linux), installs base dependencies (`brew` or `apt`), and acts as a secure bridge.
 2.  **Private Layer (Stored in 1Password)**:
     * **Logic:** Private scripts to restore configuration.
-    * **Data:** A "Configuration Bundle" containing your Git aliases, SSH config, and GPG agent settings.
+    * **Data:** A "Configuration Bundle" containing portable plumbing (SSH config, Git aliases & identity mappings, shell configs, GPG preferences). **No private keys or keyrings** — those stay per-machine.
 
 When `newcomp.sh` runs, it authenticates with 1Password, downloads the configuration plumbing, establishes the correct system settings (Keychain vs Libsecret), and performs a **Gap Analysis** to tell you which private keys are missing.
 
@@ -32,8 +32,10 @@ When `newcomp.sh` runs, it authenticates with 1Password, downloads the configura
 
     * **Phase 1:** OS Detection & Dependency Install (Homebrew or Apt).
     * **Phase 2:** 1Password Authentication.
-    * **Phase 3:** Restores **Configuration Plumbing** (SSH Config, Git Aliases, GPG Agent).
+    * **Phase 3:** Restores **Configuration Plumbing** (SSH Config, Git Aliases & Identity Mappings, Shell Configs, GPG Preferences).
     * **Phase 4 (Audit):** Scans your config and tells you which SSH Keys to manually download from the Vault.
+
+    > **Per-Machine items** (GPG agent config, keyrings, private keys, git credential helpers) are generated or configured locally by the restore script — they are not in the bundle.
 
 ## 🐙 Git Multi-Identity Workflow
 
@@ -72,8 +74,8 @@ Your Global Git Config and the `~/.gitconfig.d/` folder are included in the **Co
 
 ### Updating the Config Bundle (`push`)
 * **Script:** `xtra/private/push_secrets_to_1pass.sh` (Ignored by Git)
-* **Usage:** Run this manually when you add new Git organizations, change SSH hosts, or modify global settings.
-* **Function:** It bundles your **Configuration Only** (no private keys) and uploads it to 1Password.
+* **Usage:** Run this manually when you add new Git organizations, change SSH hosts, update GPG preferences, or modify global settings.
+* **Function:** It bundles your **portable configuration only** (SSH config, Git configs, shell configs, GPG preferences — no private keys or keyrings) and uploads it to 1Password.
 
 ### Updating the Restore Logic (`restore`)
 * **Script:** `xtra/private/restore_secrets_from_1p.sh` (Ignored by Git)

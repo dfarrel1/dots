@@ -1,2 +1,2 @@
-| name |  type |  desc |  file |  note |
-| ---- | ----- | ----- | ----- | ----- |
+| Name | Type | Description |
+|------|------|-------------|

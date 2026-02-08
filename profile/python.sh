@@ -15,7 +15,7 @@ case "$CPU_TYPE" in
 esac
 
 # export PATH="/usr/local/opt/python@3.8/bin:$PATH"
-alias note='jupyter notebook'
+alias note='jupyter notebook' # @desc Launch Jupyter notebook
 # WARNING: Make sure this path agrees with python install from `brew info python`
 echo "BIN_PATH: $BIN_PATH"
 # TODO generalize away from 3.9
@@ -55,10 +55,14 @@ eval "$(pyenv init -)"
 # unset __conda_setup
 # # <<< conda initialize <<<
 
+# @desc Reinstall/upgrade pip from the official bootstrap script
+# @usage pipup
 pipup() {
   curl https://bootstrap.pypa.io/get-pip.py | python
 }
 
+# @desc Activate a virtualenv by fuzzy name search from ~/envs
+# @usage venv <partial-name>
 venv() {
   cd ~/envs
   export choice_set=`ls -ad *$1*`
@@ -67,6 +71,8 @@ venv() {
   [ "$choice_set" != "" ] && ([[ "$VIRTUAL_ENV" != *"/"* ]] || deactivate) && source "$HOME/envs/$choice_set/bin/activate"
 }
 
+# @desc Create a new virtualenv in ~/envs and activate it
+# @usage new_venv [virtualenv-options] <name>
 new_venv() {
   local name="${@: -1}"
   local params=$@
@@ -90,7 +96,8 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
     print("serving at port", PORT)
     httpd.serve_forever()
 '''
-# Start an HTTP server from a directory, optionally specifying the port
+# @desc Start a Python HTTP server and open browser
+# @usage server [port]
 function server() {
 	local port="${1:-8000}";
 	sleep 1 && open "http://localhost:${port}/" &

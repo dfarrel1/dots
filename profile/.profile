@@ -34,10 +34,9 @@ timer=${SRC_TIMER:-false}
 
 # for verbosity
 verbosity=${SRC_VERBOSE:-false}
-echo "SRC_VERBOSE: $verbosity"
 
 # these are for everyone
-sources=( core navigation docker git vim python aws misc fun )
+sources=( core navigation docker git vim python aws misc fun newwave )
 
 # these are for just me
 if [ -d "$PROFILE_DIR/private" ]; then
@@ -47,16 +46,16 @@ if [ -d "$PROFILE_DIR/private" ]; then
     shopt -u nullglob
     
     if [ ${#private_files[@]} -eq 0 ]; then
-        echo "No private profile files found, skipping"
+        [ "$verbosity" != false ] && echo "No private profile files found, skipping"
     else
-        echo "adding private profile files"
+        [ "$verbosity" != false ] && echo "adding private profile files"
         for file in "${private_files[@]}"; do
             filename=$(basename "$file" .sh)
             sources+=( "private/$filename" )            
         done
     fi
 else
-    echo "No private directory found, skipping"
+    [ "$verbosity" != false ] && echo "No private directory found, skipping"
 fi
 
 unameOut="$(uname -s)"
@@ -67,7 +66,7 @@ case "${unameOut}" in
     MINGW*)     machine=MinGw;;
     *)          machine="UNKNOWN:${unameOut}"
 esac
-echo "found a ${machine}"
+[ "$verbosity" != false ] && echo "found a ${machine}"
 if [ ${machine} = "Linux" ]
 then
     sources+=("apps_linux")
@@ -85,7 +84,6 @@ do
         echo "Sourcing $i with verbosity"
         source "$PROFILE_DIR/$i.sh"
     else
-        echo "Sourcing $i without verbosity"
         source "$PROFILE_DIR/$i.sh" > /dev/null
     fi
 done
@@ -101,9 +99,9 @@ brew_sources=(
     "/opt/asdf/asdf.sh" \
     "/opt/z/etc/profile.d/z.sh"
     )
-echo "loading brew sources"
+[ "$verbosity" != false ] && echo "loading brew sources"
 
-eval $(brew --prefix)/bin/brew shellenv
+eval "$(brew shellenv)"
 
 for i in "${brew_sources[@]}"
 do
@@ -112,7 +110,7 @@ do
             echo -e "\n \n$i"
             time ([[ -f "$(brew --prefix)/$i" ]] && echo "found $i" && source "$(brew --prefix)/$i" )
     fi
-    [[ -f "$(brew --prefix)/$i" ]] && echo "$i" && source "$(brew --prefix)/$i"    
+    [[ -f "$(brew --prefix)/$i" ]] && { [ "$verbosity" != false ] && echo "$i"; source "$(brew --prefix)/$i"; }
 done
 
 # # rbenv - 0.1 secs
@@ -128,13 +126,13 @@ done
 # fix copy-paste behavior
 printf '\e[?2004l'
 
-echo "Done: .profile loaded."
-echo "Welcome, $(whoami)!"
-echo "Uptime: $(uptime | awk -F 'up ' '{print $2}' | cut -d, -f1-2)"
-
-
-# clear
-splasher
+# Show welcome + splasher only on first init of the session
+if [ -z "$DOTS_SPLASH_SHOWN" ]; then
+    echo "Welcome, $(whoami)!"
+    echo "Uptime: $(uptime | awk -F 'up ' '{print $2}' | cut -d, -f1-2)"
+    splasher
+    export DOTS_SPLASH_SHOWN=1
+fi
 
 
 #asdf

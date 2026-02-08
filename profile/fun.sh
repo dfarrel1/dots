@@ -5,7 +5,9 @@ HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # custom prompts
 export PS1='\[\e[1;32m\][\W] \[\e[1;31m\] (V) (°,,,°) (V) \[\e[0m\] $ ' 
 
-chp() {    
+# @desc Interactive shell prompt theme picker
+# @usage chp [theme-name]
+chp() {
     local dflt='\h:\W \u\$'
     local flip='\[\e[1;33m\](/•-•)/ \[\e[1;32m\]>\[\e[0m\] '
     local pus='[\W] 🐙  ' 
@@ -34,6 +36,8 @@ chp() {
 
 
 
+# @desc Display random ASCII art from the art collection
+# @usage splasher
 splasher() {
     # 1. Set the type you want (SWORD, DRAGON, etc.)
     local art_type="SWORD"
@@ -63,6 +67,8 @@ splasher() {
     printf "\n\n${end}"
 }
 
+# @desc Open an asciiquarium screensaver in a fullscreen Terminal tab
+# @usage idler
 idler() {
     osascript -e """
         tell application \"Terminal\" 
@@ -78,8 +84,9 @@ idler() {
         """
 }
 
-tart() 
-# run a random tarts screensaver
+# @desc Run a random tarts ASCII screensaver
+# @usage tart
+tart()
 {
     "${HERE}/ascii_art/tarts/run_random_tarts.sh"
 }
