@@ -1,29 +1,27 @@
 # vscode settings
 
-### setup
+### Backup gist
 
 [settings-gist](https://gist.github.com/dfarrel1/a6bd450e6ce1355890c6c8bfafb737f3)
 
-using plugin: [settings-sync](https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync)
+Contains:
+- `settings.json` — editor settings
+- `keybindingsMac.json` — keybindings
+- `extensions.json` — installed extensions list
+- `install-extensions.sh` — bootstrap script for fresh machines
 
-needs github personal access token
-gist id: a6bd450e6ce1355890c6c8bfafb737f3
+### Settings Sync (built-in)
 
----------------
+VSCode has built-in Settings Sync — no plugin needed. Sign in with your GitHub account via the gear icon in the bottom-left corner, and settings/extensions/keybindings sync automatically across machines.
 
-### turn on settings sync
+The gist above is a manual backup for cases where you need to bootstrap without signing in first, or want a snapshot outside of Microsoft's sync.
 
-![vscode-settings-sync](vscode-settings-sync.png)
+### Bootstrap extensions on a new machine
 
-... and follow the prompts
+```bash
+bash xtra/IDEs/install-vscode-exts.sh
+```
 
----------------
+### Custom keybinding
 
-Shortcuts
-1. Upload Key : Shift + Alt + U
-2. Download Key : Shift + Alt + D
-
-(on macOS: Shift + Option + U / Shift + Option + D)
-
-custom key binding
 settings json file: shift+alt+cmd+p
