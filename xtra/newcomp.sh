@@ -181,6 +181,18 @@ echo "----------------------------------------------------------------"
 echo "🦀 PHASE 5: DEV TOOLS"
 echo "----------------------------------------------------------------"
 
+# uv (Python package manager — on macOS installed via Brewfile, curl method covers Linux)
+if [[ -f "$STATE_DIR/uv_complete" ]]; then
+    echo "   ✅ uv: Skipped."
+elif command -v uv &> /dev/null; then
+    echo "   ✅ uv: Already installed."
+    touch "$STATE_DIR/uv_complete"
+else
+    echo "   -> Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    touch "$STATE_DIR/uv_complete"
+fi
+
 # Rustup
 if [[ -f "$STATE_DIR/rust_complete" ]]; then
     echo "   ✅ Rust: Skipped."

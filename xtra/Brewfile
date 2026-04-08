@@ -45,6 +45,7 @@ brew "pyenv"
 brew "pyenv-virtualenv"
 brew "pipenv"
 brew "pipx"
+brew "uv"
 brew "postgresql@14"
 brew "sbt"
 brew "scala@2.13"
@@ -82,6 +83,41 @@ brew "qemu"
 brew "zstd"
 brew "gh"
 brew "ta-lib"
+
+# core UNIX utils
+brew "coreutils"
+brew "tree"
+brew "watch"
+
+# linters
+brew "tflint"
+brew "ruff"
+brew "yamllint"
+
+# git tools
+brew "git-filter-repo"
+brew "bfg"
+brew "gitleaks"
+
+# document & media tools
+brew "pandoc"
+brew "tesseract"
+brew "poppler"
+brew "yt-dlp"
+
+# python packaging
+brew "poetry"
+
+# infrastructure
+brew "pulumi"
+brew "cloudflared"
+brew "nmap"
+brew "wireguard-go"
+brew "wireguard-tools"
+
+# MongoDB companions
+brew "mongosh"
+brew "mongodb-database-tools"
 
 # packets
 brew "tcpdump"
@@ -140,6 +176,16 @@ brew "docker-compose"
 # Mac App Store
 mas "Bear", id: 1091189122
 
+# newwave CLI tools (see profile/newwave.sh)
+brew "zoxide"
+brew "fzf"
+brew "atuin"
+brew "bat"
+brew "eza"
+brew "git-delta"
+brew "fd"
+brew "ripgrep"
+
 # fun & ipfs
 brew "asciiquarium"
 brew "ipfs"
@@ -148,3 +194,14 @@ cask "ipfs"
 # cloud tools
 cask "google-cloud-sdk"
 brew "vagrant"
+
+# additional casks
+cask "adobe-acrobat-pro"
+cask "anaconda"
+cask "basictex"
+cask "blender"
+cask "cloudflare-warp"
+cask "libreoffice"
+cask "meshlab"
+cask "microsoft-word"
+cask "session-manager-plugin"
