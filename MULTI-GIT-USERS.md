@@ -267,6 +267,27 @@ git remote -v
 
 ---
 
+## Step 7: The `gh` CLI gap (manual check required)
+
+The mechanisms above govern Git itself and SSH transport. The **GitHub CLI (`gh`)** does not participate in any of them. It keeps a single globally-active account in the OS keyring and consults neither `includeIf`, SSH host aliases, nor the current working directory.
+
+That means `gh api`, `gh pr comment`, `gh issue create`, `gh release`, etc. are attributed to whichever account last ran `gh auth switch` — regardless of which repo you are in. This has caused PR review comments and issue replies to be posted from the wrong identity.
+
+No wrapper or automation is installed for this — deliberately. Any `gh` interception adds latency, edge cases, and a new failure mode to a daily-driver tool. The check stays manual and explicit.
+
+### Before any `gh` action in a fork or external-org repo
+
+```bash
+gh auth status                         # find active account
+gh auth switch -u <account-from-path>  # change if needed
+```
+
+The "account-from-path" is the `{account}` segment of `~/src/github.com/{account}/...` — the same segment `includeIf` keys on for Git. For external-org paths, look up the owning identity in `~/.gitconfig` (the `[includeIf "gitdir:~/src/github.com/{org}/"]` block names the `identity-<name>.ini` file).
+
+Both accounts must already be in the keyring (`gh auth login --hostname github.com --git-protocol ssh` once per identity).
+
+---
+
 ## Why This Pattern Is Robust
 
 - No hidden or mutable state
@@ -281,8 +302,8 @@ This is not a workaround — it is a disciplined composition of Git and SSH as d
 
 ## Mental Model (TL;DR)
 
-- **Path** selects identity.
-- **URL** selects SSH key.
-- **SSH alias** enforces isolation.
+- **Path** selects Git identity (name / email / GPG key) via `includeIf`.
+- **URL** selects SSH key via host alias.
+- **`gh` CLI is out-of-band** — verify the active account matches the path segment before posting.
 
 Once these invariants hold, identity errors simply stop happening.
