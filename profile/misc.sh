@@ -10,6 +10,19 @@ alias speed='speedtest-cli' # @desc Run internet speed test
 alias awake='caffeinate &' # @desc Prevent sleep (caffeinate)
 alias decaf='killall caffeinate' # @desc Stop caffeinate
 
+# @desc Snapshot memory pressure, swap usage, and the top RAM consumers
+# @usage warnmem
+# Watch the rate, not the totals: a high lifetime pageout count is normal,
+# but if it climbs fast between calls the disk is being used as RAM = grind.
+warnmem() {
+  echo "── memory pressure ──────────────"
+  memory_pressure 2>/dev/null | awk -F: '/free percentage/{printf "  free memory : %s\n",$2}'
+  sysctl -n vm.swapusage | sed 's/^/  swap        : /'
+  vm_stat | awk '/Pageouts/{gsub(/\./,"",$NF); printf "  pageouts    : %s (lifetime)\n",$NF}'
+  echo "── top RAM consumers ────────────"
+  ps -axo rss,comm -m | awk 'NR>1 && NR<=11 {n=$2; sub(/.*\//,"",n); printf "  %6.0f MB  %s\n",$1/1024,n}'
+}
+
 
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
