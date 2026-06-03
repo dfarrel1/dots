@@ -44,6 +44,16 @@ source ~/.bashrc
 
 >**[New computer script](../xtra/newcomp.sh)**
 
+## macOS memory-pressure notifier (optional)
+
+Background watcher that pings Notification Center (naming the top RAM hogs) when free memory runs low, so you can quit something before the machine starts swap-thrashing. Pairs with the `warnmem` shell function (in [`misc.sh`](./misc.sh)) for an on-demand snapshot. One-line install (idempotent, safe to re-run after a fresh clone):
+
+```
+./xtra/launchagents/install.sh
+```
+
+Remove with `./xtra/launchagents/install.sh uninstall`. Tune the poll interval / free-% threshold via the two trailing `ProgramArguments` in [`../xtra/launchagents/io.dlf-dds.warnmem.plist`](../xtra/launchagents/io.dlf-dds.warnmem.plist), then re-run the installer.
+
 ## Uninstall
 
 To remove, you just need to take out the line you added in `~/.bashrc`
