@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>            <string>io.dlf-dds.warnmem</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/dene/src/github.com/dfarrel1/dots/profile/warnmem-watch.sh</string>
+    <string>30</string>
+    <string>12</string>
+  </array>
+  <key>RunAtLoad</key>        <true/>
+  <key>KeepAlive</key>        <true/>
+  <key>ProcessType</key>      <string>Background</string>
+  <key>StandardOutPath</key>  <string>/Users/dene/Library/Logs/warnmem.out.log</string>
+  <key>StandardErrorPath</key><string>/Users/dene/Library/Logs/warnmem.err.log</string>
+</dict>
+</plist>
