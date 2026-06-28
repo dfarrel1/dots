@@ -24,7 +24,7 @@ export PATH=$PATH:/Users/dene/.local/bin
 export PATH=$PATH:/Users/dene/.cargo/bin
 
 # Setup environment for Rust toolchain
-source $HOME/.cargo/env
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
 # TeX tools for mactex
 export PATH=$PATH:/Library/TeX/texbin/
@@ -101,16 +101,16 @@ brew_sources=(
     )
 [ "$verbosity" != false ] && echo "loading brew sources"
 
-eval "$(brew shellenv)"
+command -v brew >/dev/null 2>&1 && eval "$(brew shellenv)"
 
 for i in "${brew_sources[@]}"
 do
     if [ ${timer} = true ]
         then
             echo -e "\n \n$i"
-            time ([[ -f "$(brew --prefix)/$i" ]] && echo "found $i" && source "$(brew --prefix)/$i" )
+            time ([[ -f "$(brew --prefix 2>/dev/null)/$i" ]] && echo "found $i" && source "$(brew --prefix 2>/dev/null)/$i" )
     fi
-    [[ -f "$(brew --prefix)/$i" ]] && { [ "$verbosity" != false ] && echo "$i"; source "$(brew --prefix)/$i"; }
+    [[ -f "$(brew --prefix 2>/dev/null)/$i" ]] && { [ "$verbosity" != false ] && echo "$i"; source "$(brew --prefix 2>/dev/null)/$i"; }
 done
 
 # # rbenv - 0.1 secs

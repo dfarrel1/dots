@@ -83,8 +83,8 @@ openjdk-17-jdk
 groovy
 
 # --- DOCKER ---
-docker.io
-docker-compose
+# docker.io (workstation.sh installs docker-ce from official repo)
+# docker-compose (workstation.sh installs compose v2 plugin)
 
 # --- VPN ---
 # openvpn (Listed above)
@@ -94,3 +94,12 @@ docker-compose
 # asciiquarium (Snap usually)
 # vagrant (Available but often outdated)
 vagrant
+# --- NEW WAVE / MODERN CLI (see xtra/linux/workstation.sh for non-apt: eza, atuin, starship) ---
+zsh
+tmux
+fzf
+ripgrep
+fd-find
+bat
+zoxide
+git-delta

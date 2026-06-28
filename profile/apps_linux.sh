@@ -1,31 +1,42 @@
 #!/usr/bin/env bash
-# Applications
-# instructions to install cli for code: https://code.visualstudio.com/docs/setup/mac
+# Linux application + dev-tool environment (sourced by .profile on Linux).
+# Provisioned by xtra/linux/workstation.sh.
 
+# --- PATH: user-local + language toolchains ---
+export PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/.atuin/bin" ] && export PATH="$HOME/.atuin/bin:$PATH"   # atuin
+[ -d "$HOME/.cargo/bin" ]   && export PATH="$HOME/.cargo/bin:$PATH"        # Rust
+[ -d "$HOME/go/bin" ]       && export PATH="$PATH:$HOME/go/bin"            # Go
+[ -d "$HOME/flutter/bin" ]  && export PATH="$PATH:$HOME/flutter/bin"       # Flutter
+export PATH="$PATH:$HOME/.pub-cache/bin"                                   # Dart pub
 
-# if using a mac arm M1 then export GOROOT="$(brew --prefix golang)/libexec"
-# otherwise export GOROOT=/usr/local/opt/go/libexec
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+# Android SDK
+if [ -d "$HOME/Android/sdk" ]; then
+  export ANDROID_HOME="$HOME/Android/sdk"
+  export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest/bin"
+fi
 
-alias c.='repo_info -s;code $git_local_path'
-alias a.='repo_info -s;atom $git_local_path'
-# after ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
-alias s.='repo_info -s;sublime $git_local_path'
-alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
-alias i.='repo_info -s;idea $git_local_path'
-# 'intellij' cli comes with the paid version of intellij
-# alias i.='repo_info -s;intellij $git_local_path'
-alias o.='nautilus .'
-alias chrome='google-chrome'
-alias pn.='chrome http://127.0.0.1:8192/ && /Applications/polynote/polynote'
-# stree alias comes from SourceTree, need to activate command line tools
-alias chfox='open -a Charles;open -a Firefox'
-alias excel='open -a "Microsoft Excel"'
-alias snowsql='/Applications/SnowSQL.app/Contents/MacOS/snowsql'
-alias ports='lsof -i | grep -E "(LISTEN|ESTABLISHED)"'
-alias epc='open_with_code $PROFILE_DIR' # [E]dit [P]rofile (with) [C]ode
-alias epa='atom $PROFILE_DIR'
+# Node via fnm
+if [ -x "$HOME/.local/share/fnm/fnm" ]; then
+  export PATH="$HOME/.local/share/fnm:$PATH"
+  eval "$("$HOME/.local/share/fnm/fnm" env 2>/dev/null)" 2>/dev/null
+fi
+
+# --- aliases (Linux) ---
+command -v eza    >/dev/null && { alias ls='eza --group-directories-first'; alias ll='eza -lah --git'; }
+command -v batcat >/dev/null && alias bat='batcat'
+command -v fdfind >/dev/null && alias fd='fdfind'
+alias o.='xdg-open .'
+command -v google-chrome >/dev/null && alias chrome='google-chrome'
+alias ports='ss -tulpn 2>/dev/null || lsof -i | grep -E "(LISTEN|ESTABLISHED)"'
+alias c.='repo_info -s 2>/dev/null; code "${git_local_path:-.}"'   # [E]dit repo in code
+alias epc='code "$PROFILE_DIR" 2>/dev/null || vim "$PROFILE_DIR"'  # edit profile
 alias ep='epc'
-alias stree='~/src/smartgit/bin/smartgit.sh &'
+
+# --- interactive-only tool init ---
+if [[ $- == *i* ]]; then
+  command -v zoxide   >/dev/null && eval "$(zoxide init bash)"
+  command -v starship >/dev/null && eval "$(starship init bash)"
+  command -v atuin    >/dev/null && eval "$(atuin init bash)" 2>/dev/null
+  [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && . /usr/share/doc/fzf/examples/key-bindings.bash
+fi
