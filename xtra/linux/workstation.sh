@@ -33,7 +33,11 @@ mark()        { touch "$STATE_DIR/$1"; }
 APT() {
   local have=() gone=() p
   for p in "$@"; do
-    if apt-cache show "$p" >/dev/null 2>&1; then have+=("$p"); else gone+=("$p"); fi
+    # apt-cache show also lists virtual/transitional names; only a real candidate installs
+    case "$(apt-cache policy "$p" 2>/dev/null | awk '/Candidate:/{print $2}')" in
+      ""|"(none)") gone+=("$p") ;;
+      *) have+=("$p") ;;
+    esac
   done
   ((${#gone[@]})) && log "no apt candidate on this release, skipped: ${gone[*]}"
   ((${#have[@]})) && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${have[@]}"
