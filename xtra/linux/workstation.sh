@@ -28,7 +28,16 @@ hdr()  { printf '\n\033[1m== %s ==\033[0m\n' "$*"; }
 
 done_marker() { [[ -z "$FORCE" && -f "$STATE_DIR/$1" ]]; }
 mark()        { touch "$STATE_DIR/$1"; }
-APT() { sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"; }
+# One apt batch fails as a whole when any package has no candidate on this release
+# (26.04 dropped tldr), so install what exists and name what does not.
+APT() {
+  local have=() gone=() p
+  for p in "$@"; do
+    if apt-cache show "$p" >/dev/null 2>&1; then have+=("$p"); else gone+=("$p"); fi
+  done
+  ((${#gone[@]})) && log "no apt candidate on this release, skipped: ${gone[*]}"
+  ((${#have[@]})) && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${have[@]}"
+}
 
 mod_base() {
   done_marker linux_base_complete && { skip base; return; }
