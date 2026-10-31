@@ -15,6 +15,8 @@ The design intentionally avoids per-repository manual configuration and instead 
 
 ---
 
+> The concrete identity map (logins, aliases, emails, which GitHub owners each identity covers) and the renderer that writes `~/.gitconfig` and `~/.gitconfig.d/` from it live in the private repo `dfarrel1/dotsprivate`; machines are provisioned from `dfarrel1/stable`. This document is the pattern.
+
 ## Core Design Principles
 
 1. **Identity is determined by repository location**, not by memory or manual flags
