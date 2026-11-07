@@ -1,0 +1,7 @@
+W explainer-template-demo.html  empty-space  19% of the drawing is one empty block (about 633 x 32 units, from 111,158) in [A message moves from the sender to t] at t=0.00 rest (step 1)  [light/900 light/680 dark/900 dark/680]
+W explainer-template-demo.html  empty-space  21% of the drawing is one empty block (about 348 x 63 units, from 16,158) in [A message moves from the sender to t] at t=2.40 rest (step 2); t=4.79 rest (step 3); print  [light/900 light/680 dark/900 dark/680 print/691]
+W explorer-demo.html  empty-space  24% of the drawing is one empty block (about 174 x 253 units, from 222,48) in [Choose a number of systems: the netw] at {"n":2}  [light/900 light/680 dark/900 dark/680]
+  explorer-demo.html: 17 frames checked
+  explainer-template-demo.html: 133 frames checked
+
+figlint: 2 files, 0 errors, 3 warnings

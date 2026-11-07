@@ -1,0 +1,24 @@
+name: agent-workflow
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: CLAUDE.md size
+        run: |
+          if [ -f CLAUDE.md ]; then bash .github/agent-workflow/check-claude-md-size.sh CLAUDE.md; else echo "no CLAUDE.md"; fi
+      - name: agent references (files and commit messages)
+        run: |
+          bash .github/agent-workflow/check-no-agent-references.sh
+          bash .github/agent-workflow/check-no-agent-references.sh --commits "origin/${{ github.base_ref }}..HEAD"
+      - name: tracker records parse
+        run: |
+          pip install --quiet pyyaml
+          bash .github/agent-workflow/check-active-work-parses.sh

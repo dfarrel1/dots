@@ -1,0 +1,17 @@
+{
+ "name": "visualization default",
+ "font": "\"Helvetica Neue\", Helvetica, Arial, \"Liberation Sans\", sans-serif",
+ "mono": "Menlo, Consolas, \"Courier New\", monospace",
+ "light": {
+  "ink": "#191c22", "quiet": "#555c68", "rule": "#dde1e6", "line": "#878f9c", "paper": "#ffffff", "panel": "#f5f6f8",
+  "accent": "#0b5a72", "accent-soft": "#e2f0f4", "on-accent": "#ffffff",
+  "good": "#2a6a35", "good-bg": "#e4f3e6", "warn": "#875200", "warn-bg": "#fcf0d7",
+  "info": "#285d9e", "info-bg": "#e6eff9", "crit": "#b0261d", "crit-bg": "#fbeae8", "mute": "#5a606a", "mute-bg": "#efeeeb"
+ },
+ "dark": {
+  "ink": "#e7e9ec", "quiet": "#a5acb7", "rule": "#30363e", "line": "#7b8592", "paper": "#121417", "panel": "#1a1d21",
+  "accent": "#6cc3da", "accent-soft": "#14303a", "on-accent": "#121417",
+  "good": "#6fc480", "good-bg": "#1b2e20", "warn": "#e2b04e", "warn-bg": "#32291a",
+  "info": "#86b3ea", "info-bg": "#1a2636", "crit": "#f08b80", "crit-bg": "#3a1f1f", "mute": "#9ba2ac", "mute-bg": "#24262b"
+ }
+}

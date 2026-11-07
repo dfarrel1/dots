@@ -1,0 +1,9 @@
+{
+  "name": "agent-workflow",
+  "version": "0.1.0",
+  "description": "Multi-session working machinery for Claude Code: safety guards, per-session worktrees, a session bus, handoff batons, cold start, close-out, and writing skills. Repo-shaped parts switch on only in repos that carry .claude/agent-workflow.yaml.",
+  "author": {
+    "name": "dfarrel1"
+  },
+  "homepage": "https://github.com/dfarrel1/dots/tree/main/claude/plugins/agent-workflow"
+}

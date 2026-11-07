@@ -93,6 +93,8 @@ clone() {
   clone_dir="$GOPATH/src/$clone_dir"
   git clone $repo $clone_dir
   cd $clone_dir
+  # Keep the agent workflow's runtime state out of `git status` (local exclude only).
+  if type claude-adopt >/dev/null 2>&1; then claude-adopt --local >/dev/null; fi
 }
 
 # @desc Clone via the dlf-dds GitHub SSH host

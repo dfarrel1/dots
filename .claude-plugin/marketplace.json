@@ -1,0 +1,17 @@
+{
+  "name": "dots",
+  "owner": {
+    "name": "dfarrel1"
+  },
+  "metadata": {
+    "description": "Claude Code plugins from the dots dotfiles repo"
+  },
+  "plugins": [
+    {
+      "name": "agent-workflow",
+      "source": "./claude/plugins/agent-workflow",
+      "description": "Guards, per-session worktrees, session bus, handoff, cold start, close-out and writing skills for Claude Code sessions.",
+      "category": "development"
+    }
+  ]
+}

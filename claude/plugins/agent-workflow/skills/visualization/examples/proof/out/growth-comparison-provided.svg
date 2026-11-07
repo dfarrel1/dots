@@ -1,0 +1,44 @@
+<svg class="viz" viewBox="0 0 760 299" role="img" aria-label="Linking six systems pair by pair needs fifteen links; connecting each once to a shared hub needs six connections">
+<text x="20" y="36" class="t" font-size="18" font-weight="700" data-role="title">Pair-by-pair links grow much faster than the systems</text>
+<path d="M210.39 80L238.11 96" class="ln" data-lint="nohead"/>
+<path d="M206 84.39L242.5 147.61" class="ln" data-lint="nohead"/>
+<path d="M200 86L200 174" class="ln" data-lint="nohead"/>
+<path d="M194 84.39L157.5 147.61" class="ln" data-lint="nohead"/>
+<path d="M189.61 80L161.89 96" class="ln" data-lint="nohead"/>
+<path d="M248.5 114L248.5 146" class="ln" data-lint="nohead"/>
+<path d="M242.5 112.39L206 175.61" class="ln" data-lint="nohead"/>
+<path d="M238.11 108L161.89 152" class="ln" data-lint="nohead"/>
+<path d="M236.5 102L163.5 102" class="ln" data-lint="nohead"/>
+<path d="M238.11 164L210.39 180" class="ln" data-lint="nohead"/>
+<path d="M236.5 158L163.5 158" class="ln" data-lint="nohead"/>
+<path d="M238.11 152L161.89 108" class="ln" data-lint="nohead"/>
+<path d="M189.61 180L161.89 164" class="ln" data-lint="nohead"/>
+<path d="M194 175.61L157.5 112.39" class="ln" data-lint="nohead"/>
+<path d="M151.5 146L151.5 114" class="ln" data-lint="nohead"/>
+<circle cx="200" cy="74" r="12" class="bx"/>
+<circle cx="248.5" cy="102" r="12" class="bx"/>
+<circle cx="248.5" cy="158" r="12" class="bx"/>
+<circle cx="200" cy="186" r="12" class="bx"/>
+<circle cx="151.5" cy="158" r="12" class="bx"/>
+<circle cx="151.5" cy="102" r="12" class="bx"/>
+<path d="M560 104L560 86" class="lna" data-lint="nohead"/>
+<path d="M582.52 117L598.11 108" class="lna" data-lint="nohead"/>
+<path d="M582.52 143L598.11 152" class="lna" data-lint="nohead"/>
+<path d="M560 156L560 174" class="lna" data-lint="nohead"/>
+<path d="M537.48 143L521.89 152" class="lna" data-lint="nohead"/>
+<path d="M537.48 117L521.89 108" class="lna" data-lint="nohead"/>
+<circle cx="560" cy="130" r="26" class="bxa"/>
+<circle cx="560" cy="74" r="12" class="bx"/>
+<circle cx="608.5" cy="102" r="12" class="bx"/>
+<circle cx="608.5" cy="158" r="12" class="bx"/>
+<circle cx="560" cy="186" r="12" class="bx"/>
+<circle cx="511.5" cy="158" r="12" class="bx"/>
+<circle cx="511.5" cy="102" r="12" class="bx"/>
+<text x="560" y="134.5" text-anchor="middle" class="t" font-size="13" font-weight="700">Hub</text>
+<text x="200" y="224" text-anchor="middle" class="t" font-size="15" font-weight="700">Pair by pair</text>
+<text x="200" y="246" text-anchor="middle" class="tw" font-size="14">6 systems, 15 links</text>
+<text x="560" y="224" text-anchor="middle" class="t" font-size="15" font-weight="700">Through one shared hub</text>
+<text x="560" y="246" text-anchor="middle" class="tg" font-size="14">6 systems, 6 connections</text>
+<path d="M380 60L380 249.36" class="lnr" data-lint="nohead"/>
+<text x="20" y="275.76" class="tq" font-size="13" data-role="note">Pair by pair, 20 systems need 190 links and 50 need 1,225. Through one hub: 20 and 50.</text>
+</svg>

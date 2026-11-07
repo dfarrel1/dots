@@ -1,0 +1,37 @@
+/* explainer.css: stage + player for timeline.js (pairs with viz.css or any role-token system).
+   Motion rules: references/animation.md. Nothing animates on first paint; the reader starts it. */
+.stage { border:1px solid var(--rule); border-radius:12px 12px 0 0; padding:12px; margin:22px 0 0; background:var(--paper); }
+.stage svg { width:100%; height:auto; display:block; font-family:var(--font); overflow:visible; font-variant-numeric: tabular-nums lining-nums; }
+.player { border:1px solid var(--rule); border-top:0; border-radius:0 0 12px 12px; padding:14px 18px 12px; margin:0 0 26px; background:var(--panel); }
+.caption { min-height:3.3em; margin:0 0 12px; font-size:17px; line-height:1.55; max-width:none; }
+.controls { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.controls button { font:inherit; font-size:15px; font-weight:600; min-height:36px; padding:6px 16px; border-radius:999px;
+  border:1px solid var(--accent); background:var(--paper); color:var(--accent); cursor:pointer; }
+.controls button#play { background:var(--accent); color:var(--on-accent); min-width:84px; }
+.controls button:disabled { opacity:.45; cursor:default; }
+.controls input[type=range] { flex:1 1 220px; min-width:160px; accent-color:var(--accent); min-height:28px; }
+.dots { display:flex; gap:0; margin:6px 0 0 -4px; flex-wrap:wrap; }
+.dots button { position:relative; width:24px; height:24px; min-height:0; padding:0; border:0; border-radius:50%; background:transparent; cursor:pointer; }
+.dots button::before { content:""; position:absolute; inset:7px; border-radius:50%; border:1.5px solid var(--accent); }
+.dots button[aria-current="step"]::before { background:var(--accent); }
+.lbl { color:var(--quiet); font-size:14.5px; font-variant-numeric:tabular-nums; min-width:7.5em; text-align:right; }
+.keys { color:var(--quiet); font-size:13.5px; margin:8px 0 0; max-width:none; }
+.print-steps { display:none; }
+.stage.solo { border-radius:12px; margin-bottom:6px; }
+.howto { color:var(--quiet); font-size:15px; margin:-12px 0 0; }
+/* Explorer controls (sliders with a live value) */
+.params { display:flex; gap:18px; flex-wrap:wrap; align-items:center; margin:10px 0 0; }
+.params label { display:flex; gap:10px; align-items:center; font-size:15px; }
+.params output { font-weight:700; min-width:2.5em; font-variant-numeric:tabular-nums; }
+@media (max-width: 640px) { .lbl { text-align:left; } .caption { font-size:16px; } }
+@media print {
+  .no-print, .howto { display:none !important; }
+  h1 { font-size:26px; margin:4px 0 6px; } .dek { font-size:15px; margin:0 0 10px; }
+  .callout { margin:8px 0; } .stage { margin-top:8px; }
+  .player .controls, .keys, .dots, .params { display:none; }
+  .player { background:none; border:0; padding:0; }
+  .caption { display:none; }
+  .stage { break-inside:avoid; border-radius:12px; }
+  .print-steps { display:block; font-size:12.5px; line-height:1.45; margin:10px 0 16px; padding-left:20px; }
+  .print-steps li { margin:2px 0; max-width:none; }
+}

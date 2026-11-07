@@ -1,0 +1,4 @@
+W pairs-explainer.html  empty-space  23% of the drawing is one empty block (about 269 x 190 units, from 95,95) in [Six systems added one at a time: pai] at t=2.40 rest (step 1)  [light/900 light/680 dark/900 dark/680]
+  pairs-explainer.html: 989 frames checked
+
+figlint: 1 files, 0 errors, 1 warnings

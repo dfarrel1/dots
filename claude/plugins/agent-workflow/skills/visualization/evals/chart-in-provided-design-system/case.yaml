@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: chart-in-provided-design-system
+expected_outcome: |
+  The provided tokens are detected and mapped to roles, contrast checked in light, dark and print, an annotated chart built with chartkit with source and date stated and bars or line from zero or a stated reason, linted with zero errors.
+context:
+  scaffold_script: place-files.sh

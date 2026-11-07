@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: animated-explainer-timeline
+expected_outcome: |
+  One self-contained HTML explainer using the skill's timeline engine: eased tweens of the range bounds, a counter, a formula whose terms highlight in sync with the drawing, scrubber and keys, reduced motion, print key frame; figlint run over rest and transition frames with zero errors.
