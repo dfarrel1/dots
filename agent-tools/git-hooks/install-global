@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# install-global — point git's global core.hooksPath at this dispatcher.
+#
+#   install-global            show what would change (default; changes nothing)
+#   install-global --apply    set it
+#   install-global --remove   unset it (only when it points here)
+#
+# A repo with its own local core.hooksPath keeps it (local config wins). Every
+# other repo's .git/hooks/<name> keeps running: the dispatcher chains to it.
+set -euo pipefail
+HOOKS="$(cd "$(dirname "$0")/hooks" && pwd)"
+cur="$(git config --global --get core.hooksPath || true)"
+case "${1:-}" in
+  --apply)
+    if [ -n "$cur" ] && [ "$cur" != "$HOOKS" ]; then
+      echo "install-global: core.hooksPath is already $cur; refusing to replace it. Unset it first if intended." >&2
+      exit 1
+    fi
+    git config --global core.hooksPath "$HOOKS"
+    echo "core.hooksPath = $HOOKS" ;;
+  --remove)
+    if [ "$cur" = "$HOOKS" ]; then git config --global --unset core.hooksPath; echo "core.hooksPath unset"; else echo "core.hooksPath is '${cur}', not this dispatcher; left alone"; fi ;;
+  ""|--check)
+    if [ "$cur" = "$HOOKS" ]; then echo "ok: core.hooksPath = $HOOKS"
+    elif [ -z "$cur" ]; then echo "would set: git config --global core.hooksPath $HOOKS"; exit 1
+    else echo "differs: core.hooksPath is $cur (want $HOOKS); --apply refuses to replace it"; exit 1; fi ;;
+  *) sed -n '2,9p' "$0"; exit 2 ;;
+esac

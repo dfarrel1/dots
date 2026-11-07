@@ -37,3 +37,9 @@ Aliases and Functions for a happy bash experience.
 ---
 
 **[Xtra](./xtra)** — Workstation bootstrap, IDE configs, and cross-machine migration
+
+---
+
+**[Claude Code agent workflow](./claude/README.md)** — the `agent-workflow` plugin, the `work` CLI, session tools and the git-hooks dispatcher, shared by every repo
+
+Install the plugin: `/plugin install agent-workflow --marketplace dfarrel1/dots`

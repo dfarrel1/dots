@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+# dispatch — one git hook for every repo, for use as a global core.hooksPath.
+#
+# Every file in hooks/ is a symlink to this script; git runs it under the hook's
+# name. It does two things:
+#
+#   1. In a repo that carries .claude/agent-workflow.yaml (and whose
+#      master_readonly is not false), the master-worktree checks:
+#        post-checkout  master HEAD must stay on the trunk; a branch checkout in
+#                       the master worktree is reverted (HEAD and working tree)
+#        pre-commit     refuse a commit in the master worktree off the trunk
+#        commit-msg     on track/<name> in a linked worktree, WARN when the
+#                       message lacks [track: <name>] (never blocks)
+#      Skipped when the repo's own .git/hooks/<name> already carries them.
+#   2. Always: run the repo's own hook, <common git dir>/hooks/<name>, with the
+#      same arguments and stdin, and return its exit status. A global
+#      core.hooksPath makes git ignore .git/hooks; this keeps every per-repo hook
+#      (pre-commit frameworks, LFS, hand-written hooks) running. A repo with its
+#      own local core.hooksPath never reaches this script.
+#
+# Bypass for one command: AGENT_GIT_HOOKS=off git ...
+set -u
+
+name="$(basename "$0")"
+[ "${AW_HOOK_DISPATCHED:-}" = "$name" ] && exit 0   # a repo hook that links back here
+export AW_HOOK_DISPATCHED="$name"
+
+# $0 is <git-hooks>/hooks/<name> (a symlink to ../dispatch); HERE is <git-hooks>.
+HERE="$(cd "$(dirname "$0")" && pwd)"
+[ "$(basename "$HERE")" = "hooks" ] && HERE="$(dirname "$HERE")"
+AWC="$HERE/../bin/aw-config"
+
+common="$(git rev-parse --git-common-dir 2>/dev/null || true)"
+[ -n "$common" ] && common="$(cd "$common" 2>/dev/null && pwd)"
+repo_hook="${common:+$common/hooks/$name}"
+
+own_checks() {
+  [ "${AGENT_GIT_HOOKS:-on}" = "off" ] && return 0
+  case "$name" in post-checkout|pre-commit|commit-msg) ;; *) return 0 ;; esac
+  [ -x "$AWC" ] || return 0
+  "$AWC" --marker >/dev/null 2>&1 || return 0
+  [ "$("$AWC" master_readonly true)" = "false" ] && return 0
+  # The repo still installs its own copy of these checks: let that one run alone.
+  [ -n "$repo_hook" ] && [ -f "$repo_hook" ] && grep -qE 'master-guard|track-trailer' "$repo_hook" 2>/dev/null && return 0
+
+  local abs_git trunk target branch track
+  abs_git="$(cd "$(git rev-parse --git-dir)" && pwd)"
+  trunk="$("$AWC" trunk main)"
+  if [ "$abs_git" = "$common" ]; then                       # master worktree
+    target="$(git symbolic-ref --quiet HEAD || true)"
+    case "$name" in
+      post-checkout)
+        [ "${3:-1}" = "1" ] || return 0                     # file checkout: HEAD did not move
+        if [ "$target" != "refs/heads/$trunk" ]; then
+          git symbolic-ref HEAD "refs/heads/$trunk"
+          git read-tree -u --reset HEAD
+          echo >&2 "master-guard: the master worktree stays on $trunk; reverted HEAD and working tree."
+          echo >&2 "  use: claude-session <name>   or   git worktree add $("$AWC" worktrees_dir .claude/worktrees)/<name> -b track/<name>"
+          command -v work >/dev/null 2>&1 && work bus warn "master-guard fired: refused checkout to ${target#refs/heads/}" >/dev/null 2>&1
+          return 1
+        fi ;;
+      pre-commit)
+        if [ "$target" != "refs/heads/$trunk" ]; then
+          echo >&2 "master-guard: refusing commit — the master worktree is on ${target:-a detached HEAD}, not $trunk"
+          return 1
+        fi ;;
+    esac
+    return 0
+  fi
+  if [ "$name" = "commit-msg" ]; then                       # linked worktree
+    branch="$(git symbolic-ref --quiet --short HEAD || true)"
+    case "$branch" in track/*) ;; *) return 0 ;; esac
+    track="${branch#track/}"
+    if [ -f "${1:-}" ] && ! grep -qE "\[track:[[:space:]]*${track}\]" "$1"; then
+      echo >&2 "warning: commit on $branch lacks [track: ${track}]. Add it with: git commit --amend --trailer \"track: ${track}\"  (or use: work commit ${track} -m ...)"
+    fi
+  fi
+  return 0
+}
+
+own_checks "$@"; rc=$?
+if [ "$rc" -ne 0 ] && [ "$name" != "post-checkout" ]; then exit "$rc"; fi
+
+if [ -n "$repo_hook" ] && [ -x "$repo_hook" ] && [ "$(cd "$(dirname "$repo_hook")" && pwd)" != "$HERE/hooks" ]; then
+  "$repo_hook" "$@"
+  chained=$?
+  [ "$rc" -ne 0 ] && exit "$rc"
+  exit "$chained"
+fi
+exit "$rc"

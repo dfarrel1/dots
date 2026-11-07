@@ -1,0 +1,3 @@
+# Local builds of the ./work wrapper (rebuilt each call, temp + atomic rename).
+.work-bin
+.work-bin.*

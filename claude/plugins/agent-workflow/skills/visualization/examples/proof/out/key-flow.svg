@@ -1,0 +1,37 @@
+<svg class="viz" viewBox="0 0 760 254" role="img" aria-label="The owner grants access; the key service wraps the data key to the reader&#x27;s public key; the wrapped key is stored beside the data; the reader fetches it and unwraps it with a private key that never leaves the reader&#x27;s device, then decrypts the data">
+<text x="20" y="36" class="t" font-size="18" font-weight="700" data-role="title">Only the named reader can ever open the key</text>
+<path d="M200 83L200 75L560 75L560 83" class="ln" data-lint="nohead"/>
+<text x="380" y="63" text-anchor="middle" class="ta" font-size="13" font-weight="700">the key is never in the clear</text>
+<path d="M101 102L175.5 102" class="ln"/><path d="M183.5 102L174.5 106.5L174.5 97.5z" class="fl"/>
+<path d="M221 102L295.5 102" class="ln"/><path d="M303.5 102L294.5 106.5L294.5 97.5z" class="fl"/>
+<path d="M341 102L415.5 102" class="ln"/><path d="M423.5 102L414.5 106.5L414.5 97.5z" class="fl"/>
+<path d="M461 102L535.5 102" class="ln"/><path d="M543.5 102L534.5 106.5L534.5 97.5z" class="fl"/>
+<path d="M581 102L655.5 102" class="ln"/><path d="M663.5 102L654.5 106.5L654.5 97.5z" class="fl"/>
+<circle cx="80" cy="102" r="15" class="fa"/>
+<text x="80" y="106.6" text-anchor="middle" class="ton" font-size="13">1</text>
+<text x="80" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Grant</text>
+<text x="80" y="165" text-anchor="middle" class="tq" font-size="13">names the reader</text>
+<circle cx="200" cy="102" r="15" class="fa"/>
+<text x="200" y="106.6" text-anchor="middle" class="ton" font-size="13">2</text>
+<text x="200" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Wrap</text>
+<text x="200" y="165" text-anchor="middle" class="tq" font-size="13">to reader&#x27;s key</text>
+<circle cx="320" cy="102" r="15" class="fa"/>
+<text x="320" y="106.6" text-anchor="middle" class="ton" font-size="13">3</text>
+<text x="320" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Store</text>
+<text x="320" y="165" text-anchor="middle" class="tq" font-size="13">beside the data</text>
+<circle cx="440" cy="102" r="15" class="fa"/>
+<text x="440" y="106.6" text-anchor="middle" class="ton" font-size="13">4</text>
+<text x="440" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Fetch</text>
+<text x="440" y="165" text-anchor="middle" class="tq" font-size="13">by the reader</text>
+<circle cx="560" cy="102" r="15" class="fa"/>
+<text x="560" y="106.6" text-anchor="middle" class="ton" font-size="13">5</text>
+<text x="560" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Unwrap</text>
+<text x="560" y="165" text-anchor="middle" class="tq" font-size="13">with private key</text>
+<circle cx="680" cy="102" r="15" class="fg"/>
+<text x="680" y="106.6" text-anchor="middle" class="ton" font-size="13">6</text>
+<text x="680" y="143" text-anchor="middle" class="tg" font-size="15" font-weight="700">Open</text>
+<text x="680" y="165" text-anchor="middle" class="tq" font-size="13">the data</text>
+<rect x="20" y="192.12" width="720" height="41" rx="8" class="bxp"/>
+<text x="36" y="216.54" class="t" font-size="15" font-weight="700">The private key</text>
+<text x="173.5" y="216.54" class="t" font-size="14" data-role="statement">never leaves the reader&#x27;s device, so a copy of the stored key opens nothing.</text>
+</svg>

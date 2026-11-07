@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: process-figure-from-pattern
+expected_outcome: |
+  A self-contained HTML page with an SVG process figure built from the process_line pattern, title stating a finding, alt text, figlint run with zero errors, PNGs rendered and read, and a short critique log.

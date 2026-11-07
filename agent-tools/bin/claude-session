@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# claude-session — provision a per-session git worktree on a fresh track branch
+# and launch Claude Code there. The master worktree's HEAD is never touched.
+#
+# Usage:
+#   claude-session <name>               worktree <worktrees_dir>/<name> on track/<name> from origin/<trunk>
+#   claude-session --autonomous <name>  the same, plus the repo's autonomous allowlist as the worktree's
+#                                       .claude/settings.local.json (no permission prompts; hard deny list stays)
+#   claude-session --master [<name>]    no worktree; operate on master (optionally register a master-mode track)
+#   claude-session --read-only          no track, no worktree
+#
+# worktrees_dir, trunk and autonomous_allowlist come from .claude/agent-workflow.yaml
+# (defaults .claude/worktrees, main, ops/scripts/permissions/overnight-allowlist.json).
+# The track is registered with `work pickup` when `work` is on PATH.
+set -euo pipefail
+
+usage() { sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; }
+
+cfg() { aw-config "$1" "$2" 2>/dev/null || printf '%s\n' "$2"; }
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+[ -n "$REPO_ROOT" ] || { echo "error: not in a git repository" >&2; exit 1; }
+
+abs_git=$(cd "$(git rev-parse --git-dir)" && pwd)
+abs_common=$(cd "$(git rev-parse --git-common-dir)" && pwd)
+if [ "$abs_git" != "$abs_common" ]; then
+  echo "error: claude-session runs from the master worktree; you are in $(git rev-parse --show-toplevel)" >&2
+  echo "       cd to ${abs_common%/.git} and re-run." >&2
+  exit 1
+fi
+
+MODE="worktree"; NAME=""; AUTONOMOUS=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help) usage; exit 0 ;;
+    --master) MODE="master" ;;
+    --read-only) MODE="read-only" ;;
+    --autonomous) AUTONOMOUS=1 ;;
+    --) shift; break ;;
+    -*) echo "error: unknown flag: $1" >&2; usage >&2; exit 1 ;;
+    *) if [ -z "$NAME" ]; then NAME="$1"; else echo "error: unexpected argument: $1" >&2; exit 1; fi ;;
+  esac
+  shift
+done
+
+if [ "$AUTONOMOUS" = "1" ] && [ "$MODE" != "worktree" ]; then
+  echo "error: --autonomous is only valid in worktree mode." >&2
+  exit 1
+fi
+
+have_work() { command -v work >/dev/null 2>&1; }
+
+case "$MODE" in
+  worktree)
+    [ -n "$NAME" ] || { echo "error: worktree mode requires a name" >&2; usage >&2; exit 1; }
+    [[ "$NAME" =~ ^[a-z0-9][a-z0-9._-]*$ ]] || { echo "error: name must be lowercase alphanumeric plus . _ -" >&2; exit 1; }
+    WT_DIR="$(cfg worktrees_dir .claude/worktrees)"; TRUNK="$(cfg trunk main)"
+    WORKTREE_ABS="${REPO_ROOT}/${WT_DIR%/}/${NAME}"; BRANCH="track/${NAME}"
+    if [ -d "$WORKTREE_ABS" ]; then
+      echo "worktree already exists at ${WORKTREE_ABS}; entering it" >&2
+    else
+      git -C "$REPO_ROOT" fetch origin "$TRUNK" --quiet
+      git -C "$REPO_ROOT" worktree add "$WORKTREE_ABS" -b "$BRANCH" "origin/$TRUNK"
+    fi
+    if have_work; then
+      ( cd "$REPO_ROOT" && work pickup "$NAME" --note "claude-session; worktree at ${WT_DIR%/}/${NAME}" ) 2>/dev/null \
+        || echo "note: 'work pickup ${NAME}' failed (non-fatal); the track may already be registered." >&2
+    else
+      echo "note: 'work' not on PATH; track not registered." >&2
+    fi
+    cat > "${WORKTREE_ABS}/.iso-mode.env" <<ENVEOF
+# claude-session anchor — every Bash call in this worktree starts with: cd "\$WORKTREE_ROOT" && ...
+WORKTREE_ROOT=${WORKTREE_ABS}
+TRACK=${NAME}
+BRANCH=${BRANCH}
+MODE=worktree
+AUTONOMOUS=${AUTONOMOUS}
+ENVEOF
+    if [ "$AUTONOMOUS" = "1" ]; then
+      ALLOWLIST="${REPO_ROOT}/$(cfg autonomous_allowlist ops/scripts/permissions/overnight-allowlist.json)"
+      [ -f "$ALLOWLIST" ] || { echo "error: --autonomous requested but no allowlist at ${ALLOWLIST}" >&2; exit 1; }
+      mkdir -p "${WORKTREE_ABS}/.claude"
+      cp "$ALLOWLIST" "${WORKTREE_ABS}/.claude/settings.local.json"
+      echo "claude-session: --autonomous: allowlist installed (rollback: rm ${WORKTREE_ABS}/.claude/settings.local.json)"
+    fi
+    cd "$WORKTREE_ABS"
+    echo "claude-session: in ${WORKTREE_ABS} on ${BRANCH}; master at ${REPO_ROOT} untouched"
+    echo "  release with: work release ${NAME}"
+    ;;
+  master)
+    cd "$REPO_ROOT"
+    if [ -n "$NAME" ] && have_work; then
+      work pickup "$NAME" --master --note "claude-session --master" 2>/dev/null \
+        || echo "note: 'work pickup ${NAME} --master' failed (non-fatal)." >&2
+    fi
+    echo "claude-session: master mode at ${REPO_ROOT} (HEAD is shared with every other session here)"
+    ;;
+  read-only)
+    cd "$REPO_ROOT"
+    echo "claude-session: read-only at ${REPO_ROOT}; no track, no worktree, no commits"
+    ;;
+esac
+
+if command -v claude >/dev/null 2>&1; then
+  exec claude "$@"
+else
+  echo "note: 'claude' not on PATH; setup done, start it from this directory." >&2
+  exec "${SHELL:-bash}"
+fi

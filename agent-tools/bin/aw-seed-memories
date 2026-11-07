@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# aw-seed-memories — copy the agent-workflow feedback memories into a project's
+# Claude Code memory directory, without overwriting anything already there.
+#
+#   aw-seed-memories [--dry-run] [<project dir>]   default: the master worktree of the current repo
+#
+# The memory directory is ~/.claude/projects/<project path with / and . as ->/memory.
+# Each seeded file gets one line in that directory's MEMORY.md index.
+set -euo pipefail
+
+DRY=0
+[ "${1:-}" = "--dry-run" ] && { DRY=1; shift; }
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SEEDS="$HERE/../../claude/plugins/agent-workflow/memory-seeds"
+[ -d "$SEEDS" ] || { echo "aw-seed-memories: no seeds at $SEEDS" >&2; exit 2; }
+
+PROJ="${1:-}"
+if [ -z "$PROJ" ]; then
+  common="$(git rev-parse --git-common-dir 2>/dev/null)" || { echo "aw-seed-memories: not in a git repo; pass the project dir" >&2; exit 2; }
+  common="$(cd "$common" && pwd)"; PROJ="${common%/.git}"
+fi
+PROJ="$(cd "$PROJ" && pwd)"
+MEM="$HOME/.claude/projects/$(printf '%s' "$PROJ" | sed 's|[/.]|-|g')/memory"
+INDEX="$MEM/MEMORY.md"
+
+added=0
+for f in "$SEEDS"/feedback_*.md; do
+  b="$(basename "$f")"
+  if [ -e "$MEM/$b" ]; then echo "keep    $b (already present)"; continue; fi
+  name="$(sed -n -E 's/^name:[[:space:]]*//p' "$f" | head -1)"
+  desc="$(sed -n -E 's/^description:[[:space:]]*//p' "$f" | head -1)"
+  line="- [${name}](${b}) — ${desc}"
+  if [ "$DRY" = 1 ]; then echo "would add $b"; continue; fi
+  mkdir -p "$MEM"
+  cp "$f" "$MEM/$b"
+  grep -qF "($b)" "$INDEX" 2>/dev/null || printf '%s\n' "$line" >> "$INDEX"
+  echo "added   $b"
+  added=$((added + 1))
+done
+echo "memory dir: $MEM ($added added)"

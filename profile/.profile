@@ -36,7 +36,7 @@ timer=${SRC_TIMER:-false}
 verbosity=${SRC_VERBOSE:-false}
 
 # these are for everyone
-sources=( core navigation docker git vim python aws misc fun newwave )
+sources=( core navigation docker git vim python aws misc fun newwave claude )
 
 # these are for just me
 if [ -d "$PROFILE_DIR/private" ]; then

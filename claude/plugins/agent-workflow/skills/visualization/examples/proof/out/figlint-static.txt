@@ -1,0 +1,8 @@
+  onboard-process.svg: 5 frames checked
+  growth-comparison.svg: 5 frames checked
+  key-flow.svg: 5 frames checked
+  ds-default.html: 5 frames checked
+  proof-doc.html: 5 frames checked
+  key-flow.html: 5 frames checked
+
+figlint: 6 files, 0 errors, 0 warnings

@@ -1,0 +1,34 @@
+<svg class="viz" viewBox="0 0 760 274" role="img" aria-label="A person joins in five steps: a sponsor invites, the person applies, the sponsor vouches, an administrator approves, and credentials are issued automatically in about 30 seconds">
+<text x="20" y="36" class="t" font-size="18" font-weight="700" data-role="title">One path for every person: nothing is issued until two people approve</text>
+<path d="M380 83L380 75L524 75L524 83" class="ln" data-lint="nohead"/>
+<text x="452" y="63" text-anchor="middle" class="ta" font-size="13" font-weight="700">the two approvals</text>
+<path d="M113 102L211.5 102" class="ln"/><path d="M219.5 102L210.5 106.5L210.5 97.5z" class="fl"/>
+<path d="M257 102L355.5 102" class="ln"/><path d="M363.5 102L354.5 106.5L354.5 97.5z" class="fl"/>
+<path d="M401 102L499.5 102" class="ln"/><path d="M507.5 102L498.5 106.5L498.5 97.5z" class="fl"/>
+<path d="M545 102L643.5 102" class="ln"/><path d="M651.5 102L642.5 106.5L642.5 97.5z" class="fl"/>
+<circle cx="92" cy="102" r="15" class="fa"/>
+<text x="92" y="106.6" text-anchor="middle" class="ton" font-size="13">1</text>
+<text x="92" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Sponsor invites</text>
+<text x="92" y="165" text-anchor="middle" class="tq" font-size="13">single-use link</text>
+<circle cx="236" cy="102" r="15" class="fa"/>
+<text x="236" y="106.6" text-anchor="middle" class="ton" font-size="13">2</text>
+<text x="236" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Person applies</text>
+<text x="236" y="165" text-anchor="middle" class="tq" font-size="13">their own details</text>
+<circle cx="380" cy="102" r="15" class="fa"/>
+<text x="380" y="106.6" text-anchor="middle" class="ton" font-size="13">3</text>
+<text x="380" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Sponsor vouches</text>
+<text x="380" y="165" text-anchor="middle" class="tq" font-size="13">for them</text>
+<circle cx="524" cy="102" r="15" class="fa"/>
+<text x="524" y="106.6" text-anchor="middle" class="ton" font-size="13">4</text>
+<text x="524" y="143" text-anchor="middle" class="t" font-size="15" font-weight="700">Administrator</text>
+<text x="524" y="163" text-anchor="middle" class="t" font-size="15" font-weight="700">approves</text>
+<text x="524" y="185" text-anchor="middle" class="tq" font-size="13">the second check</text>
+<circle cx="668" cy="102" r="15" class="fg"/>
+<text x="668" y="106.6" text-anchor="middle" class="ton" font-size="13">5</text>
+<text x="668" y="143" text-anchor="middle" class="tg" font-size="15" font-weight="700">Credentials</text>
+<text x="668" y="163" text-anchor="middle" class="tg" font-size="15" font-weight="700">issued</text>
+<text x="668" y="185" text-anchor="middle" class="tq" font-size="13">in about 30 seconds</text>
+<rect x="20" y="212.12" width="720" height="41" rx="8" class="bxp"/>
+<text x="36" y="236.54" class="t" font-size="15" font-weight="700">Machines</text>
+<text x="130.49" y="236.54" class="t" font-size="14" data-role="statement">are enrolled by a vetted custodian, each with its own certificate and access.</text>
+</svg>
