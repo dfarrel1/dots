@@ -81,8 +81,33 @@ own_checks() {
 own_checks "$@"; rc=$?
 if [ "$rc" -ne 0 ] && [ "$name" != "post-checkout" ]; then exit "$rc"; fi
 
+# pre-push: git hands the refs on stdin once. Keep them, so the configured scan
+# and the repo's own hook both read the same list.
+push_refs=""
+[ "$name" = "pre-push" ] && push_refs="$(cat)"
+
+# pre-push scan: when git config names one (agent.prePushScan, usually set for a
+# family of remotes with includeIf "hasconfig:remote.*.url:..."), run it with the
+# hook's arguments and refs. A non-zero exit refuses the push.
+# Bypass for one push: AGENT_PRE_PUSH_SCAN=off git push ...
+if [ "$name" = "pre-push" ] && [ "${AGENT_PRE_PUSH_SCAN:-on}" != "off" ]; then
+  scan="$(git config --get agent.prePushScan 2>/dev/null || true)"
+  if [ -n "$scan" ]; then
+    scan="${scan/#\~/$HOME}"
+    if [ ! -x "$scan" ]; then
+      echo >&2 "pre-push: agent.prePushScan names $scan, which is not an executable; refusing the push."
+      exit 1
+    fi
+    printf '%s\n' "$push_refs" | "$scan" "$@" || exit 1
+  fi
+fi
+
 if [ -n "$repo_hook" ] && [ -x "$repo_hook" ] && [ "$(cd "$(dirname "$repo_hook")" && pwd)" != "$HERE/hooks" ]; then
-  "$repo_hook" "$@"
+  if [ "$name" = "pre-push" ]; then
+    printf '%s\n' "$push_refs" | "$repo_hook" "$@"
+  else
+    "$repo_hook" "$@"
+  fi
   chained=$?
   [ "$rc" -ne 0 ] && exit "$rc"
   exit "$chained"
