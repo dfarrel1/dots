@@ -12,6 +12,18 @@ repo runs `dispatch`, which:
    arguments and stdin, so pre-commit frameworks, LFS and hand-written hooks
    keep working under a global hooks path.
 
+3. on `pre-push`, runs the scanner that git config names in `agent.prePushScan`
+   with the hook's arguments and the pushed refs on stdin, and refuses the push
+   when it exits non-zero. Set the key for a family of remotes, not globally:
+
+   ```ini
+   [includeIf "hasconfig:remote.*.url:**/<owner>/**"]
+   	path = ~/.gitconfig.d/pre-push-scan.ini   # [agent] prePushScan = <scanner>
+   ```
+
+   A configured scanner that is missing or not executable refuses the push.
+   `AGENT_PRE_PUSH_SCAN=off` skips it for one push.
+
 A repo whose own `.git/hooks/<name>` already carries the master-guard checks
 keeps them and the dispatcher's copy stays silent. A repo with a local
 `core.hooksPath` never reaches the dispatcher. `AGENT_GIT_HOOKS=off` skips the
