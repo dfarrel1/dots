@@ -5,7 +5,7 @@ repo without collisions. What runs where, the knobs, and how to switch it on:
 [claude/README.md](../../README.md) in the dots repo.
 
 Skills: `bus`, `closeout`, `coldstart`, `claude-md-frugality`, `design-work`,
-`handoff`, `inchworm`, `iso`, `loose-end`, `visualization`.
+`handoff`, `inchworm`, `iso`, `loose-end`, `merge-train`, `visualization`.
 
 Install: `/plugin install agent-workflow --marketplace dfarrel1/dots`, or from a
 local checkout, `claude plugin marketplace add <dots checkout>` then

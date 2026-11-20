@@ -1,0 +1,26 @@
+#!/bin/bash
+# pr-overlap <repo dir> [branch] — open PRs that conflict with main, overlap a branch, or share files.
+set -u
+dir=${1:?usage: pr-overlap <repo dir> [branch]}; br=${2:-}
+ignore=${PR_OVERLAP_IGNORE:-README.md}
+cd "$dir" || exit 1
+git fetch -q origin
+tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
+gh pr list --limit 200 --json number,headRefName --jq '.[]|"\(.number) \(.headRefName)"' > "$tmp/prs"
+ign=$(printf '%s\n' $ignore | sed 's/[.]/\\./g; s/^/^/; s/$/$/' | paste -sd'|' -)
+while read -r n b; do
+  git diff --name-only "origin/main...origin/$b" 2>/dev/null | grep -vE "$ign" | sed "s|^|$n |"
+done < "$tmp/prs" > "$tmp/files"
+while read -r n b; do
+  git merge-tree --write-tree origin/main "origin/$b" >/dev/null 2>&1 || echo "CONFLICTS-WITH-MAIN #$n $b"
+done < "$tmp/prs"
+if [ -n "$br" ]; then
+  ref=$br; git rev-parse -q --verify "origin/$br" >/dev/null && ref=origin/$br
+  git diff --name-only "origin/main...$ref" | grep -vE "$ign" | while read -r f; do
+    awk -v f="$f" -v me="$br" '$2==f {print "OVERLAP #"$1, f}' "$tmp/files"
+  done | sort -u
+else
+  awk '{print $2}' "$tmp/files" | sort | uniq -d | while read -r f; do
+    echo "SHARED $f: $(awk -v f="$f" '$2==f {printf "#%s ", $1}' "$tmp/files")"
+  done
+fi
