@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""scratch-sweep — keep Claude Code's per-session temp space from filling the disk.
+
+Every session gets <tmp>/claude-<uid>/<project>/<session-id>/ (its scratchpad and
+background-task output). Nothing removes it, so assembled trees, clones and build
+output pile up across sessions until the disk is full and every session's shell
+stops. Three commands, one per moment:
+
+  scratch-sweep stale  [--hours 12] [--except <session>] [--apply]
+      Sessions whose transcript has not changed for --hours are over: remove their
+      directories. Dry run unless --apply.
+  scratch-sweep session <session-id> [--project <slug>] [--apply]
+      Remove one session's directory (used when that session ends).
+  scratch-sweep watch --session <id> --project <slug> [--disk-min-gb 5] [--self-max-gb 2] [--every-min 15]
+      Print a hook JSON message when free disk is below --disk-min-gb or this
+      session's own directory is over --self-max-gb; at most once per --every-min.
+  scratch-sweep report
+      Size of every session directory, largest first, and free disk.
+
+The temp root is $CLAUDE_CODE_TMPDIR (else /tmp) + /claude-<uid>; --root overrides it.
+Transcripts are read from ~/.claude/projects/<project>/<session>.jsonl.
+"""
+import argparse, json, os, shutil, sys, time
+from pathlib import Path
+
+GB = 1024 ** 3
+
+
+def tmp_root(arg):
+    if arg:
+        return Path(arg)
+    base = os.environ.get("CLAUDE_CODE_TMPDIR") or "/tmp"
+    return Path(os.path.realpath(base)) / f"claude-{os.getuid()}"
+
+
+def transcripts():
+    return Path(os.environ.get("CLAUDE_CONFIG_DIR") or Path.home() / ".claude") / "projects"
+
+
+def size(p: Path) -> int:
+    total = 0
+    for dirpath, _dirs, files in os.walk(p, onerror=lambda e: None):
+        for f in files:
+            try:
+                total += os.lstat(os.path.join(dirpath, f)).st_size
+            except OSError:
+                pass
+    return total
+
+
+def sessions(root: Path):
+    """(project slug, session id, path) for every session directory under root."""
+    if not root.is_dir():
+        return
+    for proj in sorted(root.iterdir()):
+        if not proj.is_dir() or proj.is_symlink():
+            continue
+        for s in sorted(proj.iterdir()):
+            if s.is_dir() and not s.is_symlink() and len(s.name) >= 32 and s.name.count("-") == 4:
+                yield proj.name, s.name, s
+
+
+def last_active(project: str, sid: str, path: Path) -> float:
+    t = transcripts() / project / f"{sid}.jsonl"
+    try:
+        return t.stat().st_mtime
+    except OSError:
+        return path.stat().st_mtime
+
+
+def remove(path: Path, apply: bool) -> int:
+    n = size(path)
+    if apply:
+        shutil.rmtree(path, ignore_errors=True)
+    return n
+
+
+def free_gb(root: Path) -> float:
+    p = root if root.exists() else root.parent
+    return shutil.disk_usage(p).free / GB
+
+
+def cmd_stale(a):
+    root = tmp_root(a.root); now = time.time(); freed = 0; gone = []
+    for proj, sid, path in sessions(root):
+        if sid == a.except_:
+            continue
+        idle_h = (now - last_active(proj, sid, path)) / 3600
+        if idle_h >= a.hours:
+            n = remove(path, a.apply); freed += n; gone.append((sid, n, idle_h))
+    verb = "removed" if a.apply else "would remove"
+    for sid, n, h in gone:
+        print(f"{verb} {sid}  {n / GB:.2f} GB  idle {h:.0f} h")
+    print(f"scratch-sweep: {verb} {len(gone)} finished session(s), {freed / GB:.2f} GB; "
+          f"{free_gb(root):.1f} GB free")
+    return 0
+
+
+def cmd_session(a):
+    root = tmp_root(a.root)
+    hits = [p for proj, sid, p in sessions(root) if sid == a.session and (not a.project or proj == a.project)]
+    freed = sum(remove(p, a.apply) for p in hits)
+    print(f"scratch-sweep: {'removed' if a.apply else 'would remove'} {len(hits)} dir(s), {freed / GB:.2f} GB")
+    return 0
+
+
+def cmd_watch(a):
+    root = tmp_root(a.root)
+    stamp = root / f".scratch-watch-{a.session}"
+    try:
+        if time.time() - stamp.stat().st_mtime < a.every_min * 60:
+            return 0
+    except OSError:
+        pass
+    own = root / a.project / a.session
+    own_gb = size(own) / GB if own.is_dir() else 0.0
+    free = free_gb(root)
+    if free >= a.disk_min_gb and own_gb <= a.self_max_gb:
+        return 0
+    try:
+        root.mkdir(parents=True, exist_ok=True); stamp.touch()
+    except OSError:
+        pass
+    others = sorted(((size(p), sid) for proj, sid, p in sessions(root) if sid != a.session), reverse=True)[:3]
+    biggest = ", ".join(f"{sid[:8]} {n / GB:.1f} GB" for n, sid in others if n > 0.2 * GB) or "none over 0.2 GB"
+    msg = (f"Scratch space: {free:.1f} GB free on the temp volume; this session's temp dir {own} holds "
+           f"{own_gb:.1f} GB. Delete what you no longer need there now (assembled trees, clones, build "
+           f"output, venvs), and reuse one directory instead of making new copies. Largest other "
+           f"sessions: {biggest}. Never delete another live session's files; ask it on the bus.")
+    print(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": msg}}))
+    return 0
+
+
+def cmd_report(a):
+    root = tmp_root(a.root); now = time.time()
+    rows = sorted(((size(p), sid, proj, (now - last_active(proj, sid, p)) / 3600) for proj, sid, p in sessions(root)),
+                  reverse=True)
+    for n, sid, proj, h in rows:
+        print(f"{n / GB:6.2f} GB  idle {h:5.1f} h  {sid}  {proj}")
+    print(f"{sum(r[0] for r in rows) / GB:.2f} GB in {len(rows)} session(s); {free_gb(root):.1f} GB free")
+    return 0
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--root")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    s = sub.add_parser("stale"); s.add_argument("--hours", type=float, default=12)
+    s.add_argument("--except", dest="except_", default=""); s.add_argument("--apply", action="store_true")
+    s = sub.add_parser("session"); s.add_argument("session"); s.add_argument("--project", default="")
+    s.add_argument("--apply", action="store_true")
+    s = sub.add_parser("watch"); s.add_argument("--session", required=True); s.add_argument("--project", required=True)
+    s.add_argument("--disk-min-gb", type=float, default=5); s.add_argument("--self-max-gb", type=float, default=2)
+    s.add_argument("--every-min", type=float, default=15)
+    sub.add_parser("report")
+    a = ap.parse_args(argv)
+    return {"stale": cmd_stale, "session": cmd_session, "watch": cmd_watch, "report": cmd_report}[a.cmd](a)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
