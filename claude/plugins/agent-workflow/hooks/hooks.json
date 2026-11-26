@@ -1,5 +1,5 @@
 {
-  "description": "agent-workflow: always-on guards (destructive git, container VM launch, agent references in commits), cold start and title rule; worktree guards, session bus, handoff nudges and tracker context only in repos with .claude/agent-workflow.yaml",
+  "description": "agent-workflow: always-on guards and temp-space sweeping (destructive git, container VM launch, agent references in commits), cold start and title rule; worktree guards, session bus, handoff nudges and tracker context only in repos with .claude/agent-workflow.yaml",
   "hooks": {
     "PreToolUse": [
       {
@@ -40,6 +40,11 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-bus-tail.sh\"",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scratch-sweep-hook.sh\" prompt",
+            "timeout": 10
           }
         ]
       }
@@ -61,6 +66,11 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/context-tab-title.sh\"",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scratch-sweep-hook.sh\" start",
+            "timeout": 30
           }
         ]
       },
@@ -109,6 +119,11 @@
           {
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/session-end-handoff.sh\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scratch-sweep-hook.sh\" end",
             "timeout": 5
           }
         ]

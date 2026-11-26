@@ -40,7 +40,17 @@ git -C "$R" status --short                                  # uncommitted files?
 gh pr list --state open --limit 40 --json number,title -q '.[] | "#\(.number) \(.title)"'
 git -C "$R" ls-remote origin 'refs/heads/track/*'           # branches left after merge?
 git -C "$R" log origin/main --oneline -10                   # is the work in main?
+scratch-sweep report | tail -4                              # temp space per session, free disk
 ```
+
+Before the verdict, empty this session's own temp directory (the scratchpad and
+task output under `<tmp>/claude-<uid>/<project>/<session>/`): delete assembled
+trees, clones, venvs and build output you made, keeping only a file the close-out
+report still needs. Name what you kept and its size in the summary. A session
+whose temp directory is over 1 GB at close-out is **Not clean**. The plugin also
+removes the directory when the session ends and sweeps finished sessions at start
+(`hooks/scratch-sweep-hook.sh`), but a session that is resumed or left open keeps
+its directory, so close-out does it by hand.
 
 The verdict is exactly one of:
 
@@ -56,6 +66,7 @@ Common leftovers:
 | One-off scripts written as workarounds | Delete if the blocker they existed for is fixed. |
 | Tracker yaml moved aside to allow a fast-forward | Confirm the repo copy exists before dropping the backup. |
 | Private keys, cert bundles, tarballs in the scratch directory | Remove. |
+| Assembled trees, clones, venvs, build output in the scratch directory | Remove; one reused directory, never a copy per attempt. |
 | Commits on `track/*` missing `[track: <name>]` | Amend; push with `--force-with-lease`. |
 
 ## 2. Prompt/response table

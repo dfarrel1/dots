@@ -23,6 +23,7 @@ The plugin fires in every session in every repo. Its parts split in two:
 | agent-reference guard on commits and PR bodies (refuses) | session-bus delivery |
 | cold start (`.claude/coldstart.md`) | handoff nudges (PreCompact, Stop, SessionEnd) |
 | session-title rule | tracker context and release reminder |
+| temp-space sweep: finished sessions at start, a warning when disk is low, own dir at end (`scratch-sweep`) | |
 
 Every hook does nothing when the repo's own `.claude/settings.json` still wires
 a hook of the same name, so a repo that carries its own copies is not served
@@ -39,6 +40,7 @@ Knobs are `AGENT_*`; the older `GOAT_*` names are accepted as aliases.
 | `AGENT_ALLOW_MASTER_WRITE=1` | session-wide override of the master-worktree write guard (set before `claude`) |
 | `AGENT_DOCKER_DESKTOP_OK=1`, or the file `~/.config/agent-workflow/docker-desktop-allowed` | machine-wide container-VM opt-out; `AGENT_DOCKER_DESKTOP_SENTINELS` lists more sentinel files |
 | `AGENT_COLDSTART=off` | no cold start |
+| `AGENT_SCRATCH_SWEEP=off`; `AGENT_SCRATCH_STALE_HOURS`, `AGENT_SCRATCH_DISK_MIN_GB`, `AGENT_SCRATCH_SELF_MAX_GB` | no temp-space sweep; its limits (12 h idle, 5 GB free, 2 GB per session) |
 | `AGENT_CLOSEOUT_PROTOCOL=off` | `/closeout` skips itself |
 | `AGENT_BUS_INFO_CAP`, `AGENT_BUS_WARN_CAP`, `AGENT_BUS_CATCHUP_HOURS`, `AGENT_BUS_CATCHUP_TRUNC` | bus delivery limits (5, 8, 24, 300) |
 | `AGENT_GIT_HOOKS=off <git cmd>` | skip the dispatcher's own checks for one command |
